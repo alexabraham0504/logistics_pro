@@ -51,14 +51,16 @@
     }
 }
 
-.sidebarFooter {
+/* User Info at Top of Sidebar */
+.userInfoTop {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: var(--spacing-4);
     background: var(--gray-50);
     border-radius: var(--radius-lg);
-    margin-top: var(--spacing-4);
+    margin-bottom: var(--spacing-4);
+    border: 1px solid var(--gray-200);
 }
 
 .userInfo {
@@ -81,6 +83,7 @@
     font-weight: 700;
     font-size: var(--font-size-sm);
     flex-shrink: 0;
+    box-shadow: var(--shadow-sm);
 }
 
 .userDetails {
@@ -103,6 +106,7 @@
     font-size: var(--font-size-xs);
     color: var(--gray-600);
     text-transform: capitalize;
+    font-weight: 500;
 }
 
 .logoutBtn {

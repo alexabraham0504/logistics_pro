@@ -107,6 +107,22 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                     <span style={{ fontSize: '1.25rem', fontWeight: 700 }}>Bharat Logistics</span>
                 </div>
 
+                {/* User Info Section - Moved to top */}
+                <div className={styles.userInfoTop}>
+                    <div className={styles.userInfo}>
+                        <div className={styles.userAvatar}>
+                            {user?.firstName?.charAt(0)}{user?.lastName?.charAt(0)}
+                        </div>
+                        <div className={styles.userDetails}>
+                            <span className={styles.userName}>{user?.fullName}</span>
+                            <span className={styles.userRole}>{user?.role}</span>
+                        </div>
+                    </div>
+                    <button className={styles.logoutBtn} onClick={handleLogout}>
+                        <FiLogOut size={18} />
+                    </button>
+                </div>
+
                 <nav className="sidebar-nav">
                     {navItems.map((item, index) => {
                         const showSection = item.section && item.section !== currentSection;
@@ -129,21 +145,6 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                         );
                     })}
                 </nav>
-
-                <div className={styles.sidebarFooter}>
-                    <div className={styles.userInfo}>
-                        <div className={styles.userAvatar}>
-                            {user?.firstName?.charAt(0)}{user?.lastName?.charAt(0)}
-                        </div>
-                        <div className={styles.userDetails}>
-                            <span className={styles.userName}>{user?.fullName}</span>
-                            <span className={styles.userRole}>{user?.role}</span>
-                        </div>
-                    </div>
-                    <button className={styles.logoutBtn} onClick={handleLogout}>
-                        <FiLogOut size={18} />
-                    </button>
-                </div>
             </aside>
 
             {/* Backdrop for mobile */}
