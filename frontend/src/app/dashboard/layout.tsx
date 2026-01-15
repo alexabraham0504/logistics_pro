@@ -93,10 +93,12 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
     return (
         <div className={styles.dashboardLayout}>
-            {/* Mobile Menu Toggle */}
-            <button className={styles.mobileMenuBtn} onClick={() => setSidebarOpen(!sidebarOpen)}>
-                <FiMenu size={24} />
-            </button>
+            {/* Mobile Menu Toggle - only show when sidebar is closed */}
+            {!sidebarOpen && (
+                <button className={styles.mobileMenuBtn} onClick={() => setSidebarOpen(true)}>
+                    <FiMenu size={24} />
+                </button>
+            )}
 
             {/* Sidebar */}
             <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>

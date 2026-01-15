@@ -33,12 +33,6 @@
     .mobileMenuBtn {
         display: flex;
     }
-
-    /* Hide button when sidebar is open */
-    .dashboardLayout:has(.sidebar.open) .mobileMenuBtn {
-        opacity: 0;
-        pointer-events: none;
-    }
 }
 
 /* Backdrop for mobile sidebar */
