@@ -1,0 +1,261 @@
+.searchCard {
+    background: white;
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 2rem;
+}
+
+.searchForm {
+    display: flex;
+    gap: 1rem;
+}
+
+.searchInputWrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0 1.5rem;
+    background: var(--gray-50);
+    border: 2px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    transition: border-color var(--transition-fast);
+}
+
+.searchInputWrapper:focus-within {
+    border-color: var(--primary-500);
+    background: white;
+}
+
+.searchInputWrapper svg {
+    color: var(--gray-400);
+}
+
+.searchInput {
+    flex: 1;
+    padding: 1rem 0;
+    border: none;
+    background: none;
+    font-size: 1rem;
+}
+
+.searchInput:focus {
+    outline: none;
+}
+
+.error {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.5rem;
+    background: var(--error-50);
+    color: var(--error-600);
+    border-radius: var(--radius-lg);
+    margin-bottom: 2rem;
+}
+
+.trackingResults {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.statusHeader {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: white;
+    padding: 2rem;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+}
+
+.statusIcon {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, var(--primary-500) 0%, var(--secondary-500) 100%);
+    border-radius: var(--radius-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.statusInfo h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.delayAlert {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.5rem;
+    background: var(--error-50);
+    color: var(--error-600);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.routeInfo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: white;
+    padding: 2rem;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+}
+
+.routePoint {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-width: 120px;
+}
+
+.routeLabel {
+    font-size: 0.75rem;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+}
+
+.routeValue {
+    font-weight: 600;
+    color: var(--gray-900);
+}
+
+.routeLine {
+    flex: 1;
+    height: 4px;
+    background: var(--gray-200);
+    border-radius: 2px;
+    position: relative;
+}
+
+.routeProgress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-500), var(--secondary-500));
+    border-radius: 2px;
+    width: 100%;
+}
+
+.etaCard {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: linear-gradient(135deg, var(--primary-500) 0%, var(--primary-600) 100%);
+    color: white;
+    padding: 1.5rem 2rem;
+    border-radius: var(--radius-xl);
+}
+
+.etaLabel {
+    display: block;
+    font-size: 0.75rem;
+    opacity: 0.8;
+    margin-bottom: 0.25rem;
+}
+
+.etaValue {
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.historyCard {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+}
+
+.historyCard h3 {
+    margin-bottom: 1.5rem;
+}
+
+.timeline {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--gray-200);
+}
+
+.timelineItem {
+    position: relative;
+    padding-bottom: 1.5rem;
+}
+
+.timelineItem:last-child {
+    padding-bottom: 0;
+}
+
+.timelineDot {
+    position: absolute;
+    left: -2rem;
+    top: 4px;
+    width: 14px;
+    height: 14px;
+    background: var(--primary-500);
+    border: 3px solid white;
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px var(--primary-500);
+}
+
+.timelineItem:first-child .timelineDot {
+    background: var(--success-500);
+    box-shadow: 0 0 0 2px var(--success-500);
+}
+
+.timelineContent {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.timelineStatus {
+    font-weight: 600;
+    text-transform: capitalize;
+    color: var(--gray-900);
+}
+
+.timelineDesc {
+    color: var(--gray-600);
+    font-size: 0.875rem;
+}
+
+.timelineTime {
+    color: var(--gray-400);
+    font-size: 0.75rem;
+}
+
+@media (max-width: 768px) {
+    .searchForm {
+        flex-direction: column;
+    }
+
+    .routeInfo {
+        flex-direction: column;
+    }
+
+    .routeLine {
+        width: 4px;
+        height: 40px;
+    }
+}

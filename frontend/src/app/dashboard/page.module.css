@@ -1,0 +1,203 @@
+.loadingContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+    gap: 1rem;
+    color: var(--gray-500);
+}
+
+.todayStats {
+    font-size: 0.875rem;
+    color: var(--gray-600);
+    background: white;
+    padding: 0.75rem 1.25rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.todayStats strong {
+    color: var(--primary-600);
+}
+
+/* Alerts Grid */
+.alertsGrid {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.alertCard {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius-lg);
+    font-size: 0.875rem;
+    flex: 1;
+    min-width: 200px;
+}
+
+.alertCard strong {
+    font-weight: 700;
+}
+
+.alertWarning {
+    background: var(--warning-50);
+    color: var(--warning-600);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.alertError {
+    background: var(--error-50);
+    color: var(--error-600);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.alertInfo {
+    background: var(--info-50);
+    color: var(--info-600);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.alertSuccess {
+    background: var(--success-50);
+    color: var(--success-600);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+/* Stat Change */
+.statChange {
+    font-size: 0.75rem;
+    color: var(--success-500);
+    margin-top: 0.25rem;
+}
+
+/* Order List */
+.orderList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.orderItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background: var(--gray-50);
+    border-radius: var(--radius-lg);
+    transition: background var(--transition-fast);
+}
+
+.orderItem:hover {
+    background: var(--gray-100);
+}
+
+.orderInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.orderNumber {
+    font-weight: 600;
+    color: var(--gray-900);
+}
+
+.orderDate,
+.orderAmount {
+    font-size: 0.75rem;
+    color: var(--gray-500);
+}
+
+.orderAmount {
+    font-weight: 600;
+    color: var(--gray-700);
+}
+
+/* Status Grid */
+.statusGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.statusItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.25rem;
+    background: var(--gray-50);
+    border-radius: var(--radius-lg);
+    text-align: center;
+}
+
+.statusValue {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--primary-600);
+}
+
+.statusLabel {
+    font-size: 0.75rem;
+    color: var(--gray-500);
+    text-transform: capitalize;
+    margin-top: 0.25rem;
+}
+
+/* Empty State */
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    color: var(--gray-400);
+    text-align: center;
+}
+
+.emptyState p {
+    margin-top: 1rem;
+    color: var(--gray-500);
+}
+
+/* Quick Actions */
+.quickActions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.quickActionBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    font-size: 0.875rem;
+    color: var(--gray-700);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.quickActionBtn:hover {
+    background: var(--primary-50);
+    border-color: var(--primary-200);
+    color: var(--primary-600);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .alertsGrid {
+        flex-direction: column;
+    }
+
+    .statusGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

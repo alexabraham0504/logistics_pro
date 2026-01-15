@@ -1,0 +1,347 @@
+.loginPage {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+/* Left Panel */
+.leftPanel {
+    background: linear-gradient(135deg, #0f172a 0%, #1a202c 100%);
+    /* Overlay for Indian pattern or warmth */
+    background-image:
+        linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(0, 0, 128, 0.9)),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ff9933' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.leftPanel::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(0, 102, 255, 0.1) 0%, transparent 50%);
+    animation: pulse 15s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+.leftContent {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    color: white;
+    max-width: 400px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 3rem;
+}
+
+.logoIcon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--saffron-500) 0%, var(--saffron-600) 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.logoText {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: white;
+}
+
+.illustration {
+    margin-bottom: 3rem;
+}
+
+.illustrationCard {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+}
+
+.characterContainer {
+    position: relative;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+    animation: walkIn 4s ease-out forwards;
+    transform-origin: bottom center;
+}
+
+.character {
+    max-height: 100%;
+    width: auto;
+    filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.3));
+    /* Bounce 5 times (4s total) then stop */
+    animation: walkingBounce 0.8s ease-in-out 5;
+    transform-origin: bottom center;
+}
+
+@keyframes walkIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.4) translateY(50px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes walkingBounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(1deg);
+    }
+}
+
+.illustrationHeader {
+    background: linear-gradient(135deg, #0066ff 0%, #00d98f 100%);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    display: inline-block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.illustrationMap {
+    height: 120px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.mapDot {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #0066ff;
+    border-radius: 50%;
+    animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.mapDot::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    background: rgba(0, 102, 255, 0.4);
+    border-radius: 50%;
+}
+
+@keyframes ping {
+
+    75%,
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+.mapLine {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #0066ff, #00d98f, transparent);
+}
+
+.leftContent h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.leftContent p {
+    color: #94a3b8;
+    line-height: 1.6;
+}
+
+/* Right Panel */
+.rightPanel {
+    background: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+}
+
+.formContainer {
+    width: 100%;
+    max-width: 420px;
+}
+
+.formHeader {
+    margin-bottom: 2rem;
+}
+
+.formHeader h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 0.5rem;
+}
+
+.formHeader p {
+    color: #64748b;
+}
+
+.errorAlert {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: #fef2f2;
+    color: #dc2626;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+}
+
+.form {
+    margin-bottom: 2rem;
+}
+
+.inputWrapper {
+    position: relative;
+}
+
+.inputIcon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+}
+
+.passwordToggle {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #64748b;
+    cursor: pointer;
+    padding: 0.25rem;
+}
+
+.passwordToggle:hover {
+    color: #0f172a;
+}
+
+.submitBtn {
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+.demoCredentials {
+    background: #e0f2fe;
+    border: 1px solid #bae6fd;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.demoCredentials>p {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #0369a1;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+}
+
+.credentialsList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.credential {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.8rem;
+    color: #0c4a6e;
+}
+
+.credentialRole {
+    background: #0284c7;
+    color: white;
+    padding: 0.125rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.7rem;
+    min-width: 60px;
+    text-align: center;
+}
+
+.formFooter {
+    text-align: center;
+}
+
+.formFooter a {
+    color: #64748b;
+    font-size: 0.875rem;
+    transition: color 0.2s ease;
+}
+
+.formFooter a:hover {
+    color: #0066ff;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .loginPage {
+        grid-template-columns: 1fr;
+    }
+
+    .leftPanel {
+        display: none;
+    }
+
+    .rightPanel {
+        min-height: 100vh;
+    }
+}

@@ -1,0 +1,86 @@
+.filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.searchInput {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+    min-width: 300px;
+    padding: 0 1rem;
+    background: white;
+    border: 2px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+}
+
+.searchInput:focus-within {
+    border-color: var(--primary-500);
+}
+
+.searchInput input {
+    flex: 1;
+    padding: 0.75rem 0;
+    border: none;
+    background: none;
+}
+
+.searchInput input:focus {
+    outline: none;
+}
+
+.loadingState,
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    color: var(--gray-500);
+}
+
+.sku {
+    font-family: monospace;
+    color: var(--primary-600);
+}
+
+.warehouse {
+    font-size: 0.75rem;
+    color: var(--gray-500);
+}
+
+.lowStock {
+    color: var(--error-600);
+    font-weight: 600;
+}
+
+.alertRow {
+    background: var(--warning-50) !important;
+}
+
+.actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.actionBtn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gray-100);
+    border: none;
+    border-radius: var(--radius-md);
+    color: var(--gray-600);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.actionBtn:hover {
+    background: var(--primary-100);
+    color: var(--primary-600);
+}

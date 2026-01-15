@@ -1,0 +1,108 @@
+.dashboardLayout {
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Mobile Menu Button */
+.mobileMenuBtn {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 150;
+    width: 44px;
+    height: 44px;
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+}
+
+@media (max-width: 768px) {
+    .mobileMenuBtn {
+        display: flex;
+    }
+}
+
+/* Sidebar Footer */
+.sidebarFooter {
+    margin-top: auto;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.userInfo {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.userAvatar {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--primary-500) 0%, var(--secondary-500) 100%);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.userDetails {
+    display: flex;
+    flex-direction: column;
+}
+
+.userName {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: white;
+}
+
+.userRole {
+    font-size: 0.75rem;
+    color: var(--gray-400);
+    text-transform: capitalize;
+}
+
+.logoutBtn {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: var(--radius-lg);
+    color: var(--gray-400);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+}
+
+.logoutBtn:hover {
+    background: var(--error-500);
+    color: white;
+}
+
+/* Mobile Backdrop */
+.backdrop {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .backdrop {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 90;
+    }
+}

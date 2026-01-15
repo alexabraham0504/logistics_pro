@@ -1,0 +1,146 @@
+.accessDenied {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    color: var(--gray-400);
+    text-align: center;
+}
+
+.accessDenied h2 {
+    margin-top: 1rem;
+    color: var(--gray-600);
+}
+
+.accessDenied p {
+    color: var(--gray-500);
+}
+
+.roleDistribution {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.roleCard {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: white;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    border: 2px solid var(--gray-100);
+}
+
+.roleCount {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-600);
+}
+
+.roleLabel {
+    font-size: 0.875rem;
+    color: var(--gray-500);
+    text-transform: capitalize;
+}
+
+.filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.searchInput {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+    max-width: 400px;
+    padding: 0 1rem;
+    background: white;
+    border: 2px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+}
+
+.searchInput:focus-within {
+    border-color: var(--primary-500);
+}
+
+.searchInput input {
+    flex: 1;
+    padding: 0.75rem 0;
+    border: none;
+    background: none;
+}
+
+.searchInput input:focus {
+    outline: none;
+}
+
+.loadingState {
+    display: flex;
+    justify-content: center;
+    padding: 4rem;
+}
+
+.userCell {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.userAvatar {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, var(--primary-500) 0%, var(--secondary-500) 100%);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.actionBtn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gray-100);
+    border: none;
+    border-radius: var(--radius-md);
+    color: var(--gray-600);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.actionBtn:hover {
+    background: var(--primary-100);
+    color: var(--primary-600);
+}
+
+.actionBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.deactivateBtn:hover {
+    background: var(--error-50);
+    color: var(--error-600);
+}
+
+.activateBtn:hover {
+    background: var(--success-50);
+    color: var(--success-600);
+}

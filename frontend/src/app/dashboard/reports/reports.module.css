@@ -1,0 +1,62 @@
+.loadingState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+    gap: 1rem;
+    color: var(--gray-500);
+}
+
+.kpiCard {
+    position: relative;
+    overflow: hidden;
+}
+
+.kpiDescription {
+    font-size: 0.7rem;
+    color: var(--gray-400);
+    margin-top: 0.25rem;
+}
+
+.summaryCard {
+    background: linear-gradient(135deg, var(--gray-900) 0%, var(--gray-800) 100%);
+    color: white;
+}
+
+.summaryCard h3 {
+    color: white;
+}
+
+.summaryGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    text-align: center;
+}
+
+.summaryItem {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.summaryValue {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #0066ff 0%, #00d98f 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.summaryLabel {
+    font-size: 0.875rem;
+    color: var(--gray-400);
+}
+
+@media (max-width: 768px) {
+    .summaryGrid {
+        grid-template-columns: 1fr;
+    }
+}
