@@ -125,16 +125,18 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
-httpServer.listen(PORT, () => {
-    console.log(`
-  ╔═══════════════════════════════════════════════════════════╗
-  ║                                                           ║
-  ║   🚀 LOGISTICS ERP Backend Server                         ║
-  ║   📍 Running on: http://localhost:${PORT}                   ║
-  ║   📊 Environment: ${process.env.NODE_ENV || 'development'}                        ║
-  ║                                                           ║
-  ╚═══════════════════════════════════════════════════════════╝
-  `);
-});
+if (require.main === module) {
+    httpServer.listen(PORT, () => {
+        console.log(`
+      ╔═══════════════════════════════════════════════════════════╗
+      ║                                                           ║
+      ║   🚀 LOGISTICS ERP Backend Server                         ║
+      ║   📍 Running on: http://localhost:${PORT}                   ║
+      ║   📊 Environment: ${process.env.NODE_ENV || 'development'}                        ║
+      ║                                                           ║
+      ╚═══════════════════════════════════════════════════════════╝
+      `);
+    });
+}
 
 module.exports = { app, io };
