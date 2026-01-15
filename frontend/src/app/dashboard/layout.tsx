@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import {
     FiTruck, FiHome, FiPackage, FiMapPin, FiBox,
-    FiUsers, FiBarChart2, FiLogOut, FiMenu, FiX, FiArchive
+    FiUsers, FiBarChart2, FiLogOut, FiMenu, FiArchive
 } from 'react-icons/fi';
 import { FaRupeeSign } from 'react-icons/fa';
 import styles from './dashboard.module.css';
@@ -95,7 +95,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         <div className={styles.dashboardLayout}>
             {/* Mobile Menu Toggle */}
             <button className={styles.mobileMenuBtn} onClick={() => setSidebarOpen(!sidebarOpen)}>
-                {sidebarOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+                <FiMenu size={24} />
             </button>
 
             {/* Sidebar */}
