@@ -312,3 +312,21 @@
     align-items: center;
     gap: var(--spacing-1);
 }
+
+/* Sidebar Hover Trigger Zone - invisible strip on left edge */
+.sidebarTrigger {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 16px;
+    height: 100vh;
+    z-index: 99;
+    cursor: pointer;
+}
+
+/* Hide trigger on mobile */
+@media (max-width: 768px) {
+    .sidebarTrigger {
+        display: none;
+    }
+}

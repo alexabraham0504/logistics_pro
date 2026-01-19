@@ -568,6 +568,8 @@ p {
   z-index: 100;
   transition: transform var(--transition-normal);
   box-shadow: var(--shadow-sm);
+  /* Hidden by default on desktop */
+  transform: translateX(-100%);
 }
 
 .sidebar-logo {
@@ -657,10 +659,11 @@ p {
 
 /* ===== Main Content ===== */
 .main-content {
-  margin-left: 280px;
+  margin-left: 0;
   min-height: 100vh;
   padding: var(--spacing-8);
   background: var(--bg-page);
+  transition: margin-left var(--transition-normal);
 }
 
 @media (max-width: 1024px) {
@@ -792,6 +795,27 @@ p {
   .sidebar.open {
     transform: translateX(0);
   }
+}
+
+/* Collapsed sidebar state for desktop */
+.sidebar.collapsed {
+  transform: translateX(-100%);
+}
+
+/* When sidebar is collapsed, main content expands */
+.sidebarCollapsed .main-content {
+  margin-left: 0;
+}
+
+/* Sidebar shows on hover (desktop) */
+.sidebar.hovered {
+  transform: translateX(0);
+  box-shadow: var(--shadow-xl);
+}
+
+/* Main content shifts when sidebar is visible */
+.main-content.sidebar-visible {
+  margin-left: 280px;
 }
 
 /* ===== Loading Spinner ===== */

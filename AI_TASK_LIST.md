@@ -1,0 +1,22 @@
+# Task: Implement Logistics Intelligence Hub (Agent Studio)
+
+- [ ] Implemented AI Feature Plan <!-- id: 1 -->
+- [ ] **Backend Implementation** <!-- id: 4 -->
+    - [ ] Create `ai.routes.js` and `Ai.controller.js` <!-- id: 5 -->
+    - [ ] Implement simulated logic for Fleet, Inventory, Contract, and Tracking agents <!-- id: 6 -->
+    - [ ] Register routes in `server.js` <!-- id: 7 -->
+- [ ] **Frontend Implementation** <!-- id: 8 -->
+    - [ ] Create `AiDashboard` page (`/dashboard/ai`) <!-- id: 9 -->
+    - [ ] Create `AgentChat` dynamic page (`/dashboard/ai/agent/[id]`) <!-- id: 10 -->
+    - [ ] Build `ContractView` component (Split View) <!-- id: 11 -->
+    - [ ] Build `TrackingMap` component (Map + Timeline) <!-- id: 12 -->
+    - [ ] Build `ZoneHeatmap` component (ZoneCast) <!-- id: 20 -->
+    -   [ ] Build `CarrierProposal` component (Workflow + Savings) <!-- id: 21 -->
+    -   [ ] Build `MarketLens` component (News + Financials) <!-- id: 22 -->
+    - [ ] Implement `AiComponents` (Cards, Sidebar) <!-- id: 13 -->
+    - [ ] Add "AI Intelligence" link to main Sidebar <!-- id: 14 -->
+- [ ] **Verification** <!-- id: 15 -->
+    - [ ] Verify Dashboard UI matches "Agent Studio" aesthetic <!-- id: 16 -->
+    - [ ] Test Fleet/Inventory text chat <!-- id: 17 -->
+    - [ ] Test Contract Split-View functionality <!-- id: 18 -->
+    - [ ] Test Tracking Map visualization <!-- id: 19 -->

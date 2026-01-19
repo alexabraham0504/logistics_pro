@@ -19,15 +19,22 @@ const fleetRoutes = require('./routes/fleet.routes');
 const invoiceRoutes = require('./routes/invoice.routes');
 const reportRoutes = require('./routes/report.routes');
 const dashboardRoutes = require('./routes/dashboard.routes');
+const aiRoutes = require('./routes/ai.routes');
 
 const app = express();
 const httpServer = createServer(app);
 
+// Parse allowed origins
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+    ? process.env.ALLOWED_ORIGINS.split(',')
+    : [process.env.FRONTEND_URL || 'http://localhost:3000'];
+
 // Socket.io setup for real-time tracking
 const io = new Server(httpServer, {
     cors: {
-        origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-        methods: ['GET', 'POST']
+        origin: allowedOrigins,
+        methods: ['GET', 'POST'],
+        credentials: true
     }
 });
 
@@ -45,8 +52,16 @@ const limiter = rateLimit({
 app.use('/api/', limiter);
 
 // CORS configuration
+// CORS configuration
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+            return callback(new Error('The CORS policy for this site does not allow access from the specified Origin.'), false);
+        }
+        return callback(null, true);
+    },
     credentials: true
 }));
 
@@ -75,6 +90,7 @@ app.use('/api/fleet', fleetRoutes);
 app.use('/api/invoices', invoiceRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/ai', aiRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

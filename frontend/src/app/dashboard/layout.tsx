@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import {
     FiTruck, FiHome, FiPackage, FiMapPin, FiBox,
-    FiUsers, FiBarChart2, FiLogOut, FiMenu, FiArchive
+    FiUsers, FiBarChart2, FiLogOut, FiMenu, FiArchive, FiCpu
 } from 'react-icons/fi';
 import { FaRupeeSign } from 'react-icons/fa';
 import styles from './dashboard.module.css';
@@ -28,6 +28,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     const router = useRouter();
     const pathname = usePathname();
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [sidebarHovered, setSidebarHovered] = useState(false);
 
     useEffect(() => {
         if (!isLoading && !isAuthenticated) {
@@ -79,6 +80,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             { href: '/dashboard/fleet', icon: FiTruck, label: 'Fleet', section: 'Assets' },
             { href: '/dashboard/invoices', icon: FaRupeeSign, label: 'Invoices', section: 'Finance' },
             { href: '/dashboard/reports', icon: FiBarChart2, label: 'Reports', section: 'Analytics' },
+            { href: '/dashboard/ai', icon: FiCpu, label: 'AI Intelligence', section: 'Intelligence' },
         ];
 
         if (user?.role === 'admin') {
@@ -100,8 +102,17 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 </button>
             )}
 
-            {/* Sidebar */}
-            <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+            {/* Hover trigger zone on left edge - desktop only */}
+            <div
+                className={styles.sidebarTrigger}
+                onMouseEnter={() => setSidebarHovered(true)}
+            />
+
+            {/* Sidebar - shows on hover or mobile toggle */}
+            <aside
+                className={`sidebar ${sidebarOpen ? 'open' : ''} ${sidebarHovered ? 'hovered' : ''}`}
+                onMouseLeave={() => setSidebarHovered(false)}
+            >
                 <div className="sidebar-logo">
                     <div className="sidebar-logo-icon">
                         <FiTruck size={20} />
@@ -155,7 +166,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             )}
 
             {/* Main Content */}
-            <main className="main-content">
+            <main className={`main-content ${sidebarHovered ? 'sidebar-visible' : ''}`}>
                 {children}
             </main>
         </div>
