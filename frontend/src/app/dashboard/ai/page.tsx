@@ -11,8 +11,9 @@ import {
     FiCpu, FiUsers, FiLayers, FiMessageSquare, FiFileText,
     FiTool, FiZap, FiPlus, FiBox, FiEdit3, FiGrid,
     FiTruck, FiPackage, FiMap, FiClipboard, FiBarChart2,
-    FiDatabase, FiWifi, FiServer, FiGlobe
+    FiDatabase, FiWifi, FiServer, FiGlobe, FiMenu, FiX
 } from 'react-icons/fi';
+
 import {
     HiOutlineCube, HiOutlineSparkles, HiOutlineDocumentText,
     HiOutlineTemplate, HiOutlinePencil, HiOutlineLightningBolt
@@ -53,6 +54,7 @@ export default function AiDashboard() {
     const [loading, setLoading] = useState(true);
     const [activeNav, setActiveNav] = useState('dashboard');
     const [showAllAgents, setShowAllAgents] = useState(false);
+    const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
     useEffect(() => {
         fetchAgents();
@@ -147,8 +149,24 @@ export default function AiDashboard() {
 
     return (
         <div className={styles.pageWrapper}>
+            {/* Mobile Header */}
+            <div className={styles.mobileHeader}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <div className={styles.logoIcon}>
+                        <FiCpu size={18} />
+                    </div>
+                    <span className={styles.logoText}>Agent Studio</span>
+                </div>
+                <button
+                    className={styles.menuToggle}
+                    onClick={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
+                >
+                    {isMobileSidebarOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+                </button>
+            </div>
+
             {/* Left Sidebar */}
-            <aside className={styles.sidebar}>
+            <aside className={`${styles.sidebar} ${isMobileSidebarOpen ? styles.open : ''}`}>
                 <div className={styles.sidebarHeader}>
                     <div className={styles.logoIcon}>
                         <FiCpu size={18} />
@@ -160,7 +178,10 @@ export default function AiDashboard() {
                         <button
                             key={item.id}
                             className={`${styles.navItem} ${activeNav === item.id ? styles.navItemActive : ''}`}
-                            onClick={() => setActiveNav(item.id)}
+                            onClick={() => {
+                                setActiveNav(item.id);
+                                setIsMobileSidebarOpen(false);
+                            }}
                         >
                             <span className={styles.navIcon}>{item.icon}</span>
                             <span className={styles.navLabel}>{item.label}</span>
@@ -168,6 +189,14 @@ export default function AiDashboard() {
                     ))}
                 </nav>
             </aside>
+
+            {/* Overlay for mobile sidebar */}
+            {isMobileSidebarOpen && (
+                <div
+                    style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 999 }}
+                    onClick={() => setIsMobileSidebarOpen(false)}
+                />
+            )}
 
             {/* Main Content or Clipped View */}
             {activeNav === 'clipped' ? (
