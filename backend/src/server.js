@@ -22,6 +22,8 @@ const dashboardRoutes = require('./routes/dashboard.routes');
 const aiRoutes = require('./routes/ai.routes');
 
 const app = express();
+// Enable trust proxy for Render deployment to fix rate limiting
+app.set('trust proxy', 1);
 const httpServer = createServer(app);
 
 // Parse allowed origins
