@@ -554,8 +554,9 @@
 @media (max-width: 768px) {
     .pageWrapper {
         flex-direction: column;
-        margin: -16px;
-        width: 100vw;
+        margin: 0;
+        padding: 0;
+        width: 100%;
         min-height: 100vh;
         overflow-x: hidden;
     }

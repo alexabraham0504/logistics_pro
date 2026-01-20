@@ -218,8 +218,8 @@ export default function ClippedView({ onBack }: ClippedViewProps) {
         <div className={styles.container}>
             {/* Header */}
             <header className={styles.header}>
-                <button onClick={handleBack} className={styles.backBtn}>
-                    <FiArrowLeft /> {selectedCategory ? 'Back' : 'Back to Agent Studio'}
+                <button onClick={handleBack} className={styles.backBtn} title="Back to Agent Studio">
+                    <FiArrowLeft /> <span className={styles.backText}>{selectedCategory ? 'Back' : 'Back to Studio'}</span>
                 </button>
                 <div className={styles.headerCenter}>
                     <h1>{selectedCategory ? selectedCategory.name : 'Clipped'}</h1>
