@@ -153,6 +153,14 @@
     margin: 0.125rem 0 0 0;
 }
 
+.mobileHeader {
+    display: none !important;
+}
+
+.menuToggle {
+    display: none !important;
+}
+
 /* ==================== STATS ROW ==================== */
 .statsRow {
     display: grid;
@@ -579,7 +587,7 @@
     }
 
     .mobileHeader {
-        display: flex;
+        display: flex !important;
         align-items: center;
         justify-content: space-between;
         padding: 1rem;
@@ -591,6 +599,7 @@
     }
 
     .menuToggle {
+        display: block !important;
         background: none;
         border: none;
         color: white;
