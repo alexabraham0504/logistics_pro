@@ -166,7 +166,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             )}
 
             {/* Main Content */}
-            <main className={`main-content ${sidebarHovered ? 'sidebar-visible' : ''}`}>
+            <main className={`main-content ${sidebarHovered ? 'sidebar-visible' : ''} ${pathname.startsWith('/dashboard/ai') ? styles.fullBleed : ''}`}>
                 {children}
             </main>
         </div>

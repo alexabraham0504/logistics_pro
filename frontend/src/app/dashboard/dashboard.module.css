@@ -4,6 +4,12 @@
     background: var(--bg-page);
 }
 
+.fullBleed {
+    padding: 0 !important;
+    margin: 0 !important;
+    background: #000 !important;
+}
+
 /* Mobile Menu Button */
 .mobileMenuBtn {
     position: fixed;
