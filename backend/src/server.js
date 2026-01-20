@@ -52,18 +52,27 @@ const limiter = rateLimit({
 app.use('/api/', limiter);
 
 // CORS configuration
-// CORS configuration
+// CORS configuration - handle preflight properly
 app.use(cors({
     origin: function (origin, callback) {
         // Allow requests with no origin (like mobile apps or curl requests)
         if (!origin) return callback(null, true);
+        // In development, allow all localhost origins
+        if (process.env.NODE_ENV === 'development' && origin.includes('localhost')) {
+            return callback(null, true);
+        }
         if (allowedOrigins.indexOf(origin) === -1) {
             return callback(new Error('The CORS policy for this site does not allow access from the specified Origin.'), false);
         }
         return callback(null, true);
     },
-    credentials: true
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin']
 }));
+
+// Handle preflight requests explicitly
+app.options('*', cors());
 
 // Body parser
 app.use(express.json({ limit: '10mb' }));
@@ -148,7 +157,7 @@ if (require.main === module) {
       ║                                                           ║
       ║   🚀 LOGISTICS ERP Backend Server                         ║
       ║   📍 Running on: http://localhost:${PORT}                   ║
-      ║   📊 Environment: ${process.env.NODE_ENV || 'development'}                        ║
+      ║   📊 Environment: ${process.env.NODE_ENV || 'development'} - Yahoo Finance Enabled ║
       ║                                                           ║
       ╚═══════════════════════════════════════════════════════════╝
       `);

@@ -1,3 +1,5 @@
+/* Market Dashboard - Premium Shining Black Theme */
+
 .dashboard {
     height: 100dvh;
     width: 100%;
@@ -8,9 +10,23 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0f0f1a 100%);
+    background: #0a0a0a;
     color: #e0e0e0;
     overflow-y: auto;
+}
+
+.dashboard::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        radial-gradient(ellipse 80% 50% at 20% 40%, rgba(30, 30, 30, 0.4) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 40% at 80% 20%, rgba(40, 40, 40, 0.3) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
 }
 
 .header {
@@ -18,9 +34,11 @@
     align-items: center;
     justify-content: space-between;
     padding: 1rem 2rem;
-    background: rgba(20, 20, 35, 0.8);
-    border-bottom: 1px solid rgba(255, 140, 0, 0.2);
+    background: linear-gradient(180deg, rgba(15, 15, 15, 0.95) 0%, rgba(10, 10, 10, 0.9) 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 10;
 }
 
 .backBtn {
@@ -31,7 +49,7 @@
 }
 
 .backBtn:hover {
-    color: #ff8c00;
+    color: #f97316;
 }
 
 .headerCenter {
@@ -44,7 +62,7 @@
     font-size: 1.5rem;
     font-weight: 600;
     margin: 0;
-    background: linear-gradient(90deg, #ff8c00, #ffa500);
+    background: linear-gradient(90deg, #f97316, #fb923c);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -62,16 +80,18 @@
 .dataSource {
     font-size: 0.75rem;
     color: #666;
-    background: rgba(255, 140, 0, 0.1);
+    background: rgba(249, 115, 22, 0.1);
     padding: 0.25rem 0.75rem;
     border-radius: 1rem;
-    border: 1px solid rgba(255, 140, 0, 0.2);
+    border: 1px solid rgba(249, 115, 22, 0.2);
 }
 
 .content {
     padding: 2rem;
     max-width: 1400px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
 .sectionTitle {
@@ -191,48 +211,99 @@
 }
 
 .companyCard {
-    background: rgba(25, 25, 40, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
+    background: linear-gradient(145deg, #141414 0%, #0f0f0f 50%, #0a0a0a 100%);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
     padding: 1.25rem;
     cursor: pointer;
     transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.companyCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse at top left, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
+    pointer-events: none;
+    border-radius: 16px;
 }
 
 .companyCard:hover {
-    background: rgba(30, 30, 50, 0.9);
-    border-color: rgba(255, 140, 0, 0.3);
+    border-color: rgba(249, 115, 22, 0.3);
     transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
 .companyCard.selected {
-    border-color: #ff8c00;
-    box-shadow: 0 0 20px rgba(255, 140, 0, 0.2);
+    border-color: #f97316;
+    box-shadow: 0 0 20px rgba(249, 115, 22, 0.2);
 }
 
 .cardHeader {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 0.75rem;
+    gap: 1rem;
 }
 
 .companyLogo {
-    width: 32px;
-    height: 32px;
-    border-radius: 6px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
     object-fit: contain;
     background: #fff;
-    padding: 2px;
+    padding: 4px;
+    flex-shrink: 0;
+}
+
+.companyInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    flex: 1;
+}
+
+.companyName {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+}
+
+.companyCategory {
+    font-size: 0.8rem;
+    color: #71717a;
 }
 
 .cardTicker {
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: #fff;
-    background: rgba(255, 140, 0, 0.15);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #71717a;
+    background: rgba(255, 255, 255, 0.05);
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
+    margin-left: auto;
+}
+
+.viewDetails {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.85rem;
+    color: #60a5fa;
+    text-decoration: none;
+    transition: color 0.2s;
+    margin-top: auto;
+}
+
+.viewDetails:hover {
+    color: #93c5fd;
 }
 
 .cardPrice {
@@ -258,38 +329,202 @@
 /* Detail Section */
 .detailSection {
     margin-bottom: 3rem;
-    background: rgba(25, 25, 40, 0.6);
+    background: linear-gradient(145deg, #141414 0%, #0f0f0f 50%, #0a0a0a 100%);
     border-radius: 16px;
-    padding: 1.5rem;
+    padding: 2rem;
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+/* Detail Header - Centered Company Info */
+.detailHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    margin-bottom: 1.5rem;
+}
+
+.detailLogo {
+    width: 80px;
+    height: 80px;
+    border-radius: 12px;
+    object-fit: contain;
+    background: #fff;
+    padding: 8px;
+    margin-bottom: 1rem;
+}
+
+.detailCompanyName {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 0.25rem 0;
+}
+
+.detailCategory {
+    font-size: 0.85rem;
+    color: #71717a;
+    margin-bottom: 1rem;
+}
+
+.detailQuickStats {
+    display: flex;
+    gap: 2rem;
+    margin-top: 0.5rem;
+}
+
+.quickStat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.quickLabel {
+    font-size: 0.75rem;
+    color: #71717a;
+}
+
+.quickValue {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+.quickValue.positive {
+    color: #00d26a;
+}
+
+.quickValue.negative {
+    color: #ff4757;
+}
+
+/* Description Block */
+.descriptionBlock {
+    margin-bottom: 1.5rem;
+}
+
+.descriptionTitle {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 0.5rem 0;
+}
+
+.descriptionText {
+    font-size: 0.875rem;
+    color: #a1a1aa;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Overview Tab */
+.overviewTab {
+    margin-bottom: 1.5rem;
+}
+
+.tabActive {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    font-size: 0.875rem;
+    color: #fff;
+    font-weight: 500;
+}
+
+/* Stats Grid */
 .detailGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .detailCard {
-    background: rgba(20, 20, 35, 0.8);
-    border-radius: 10px;
-    padding: 1rem;
-    text-align: center;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 1.25rem;
+}
+
+.detailCardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
 }
 
 .detailLabel {
-    display: block;
     font-size: 0.75rem;
-    color: #888;
-    margin-bottom: 0.5rem;
+    color: #71717a;
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
 
+.detailIcon {
+    font-size: 1rem;
+    opacity: 0.6;
+}
+
 .detailValue {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-weight: 600;
     color: #fff;
+}
+
+/* Chart Section */
+.chartSection {
+    margin-top: 1.5rem;
+}
+
+.chartsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.chartBlock {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 1.25rem;
+}
+
+.chartTitle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 0.25rem 0;
+}
+
+.chartSubtitle {
+    font-size: 0.75rem;
+    color: #71717a;
+    margin: 0 0 1rem 0;
+}
+
+.chartContainer {
+    height: 200px;
+}
+
+.chartFooter {
+    display: block;
+    font-size: 0.75rem;
+    color: #22c55e;
+    margin-top: 0.75rem;
+}
+
+.chartLoading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #71717a;
+    font-size: 0.85rem;
 }
 
 /* Company Toggle */

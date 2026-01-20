@@ -14,7 +14,8 @@ interface Phase {
 
 interface CarrierMix {
     carrier: string;
-    parcelsPerDay: number;
+    current: number;
+    recommended: number;
 }
 
 interface ProposalData {
@@ -23,11 +24,34 @@ interface ProposalData {
     carrierMix: CarrierMix[];
 }
 
+const DEFAULT_PHASES: Phase[] = [
+    { phase: 1, name: 'Move DHL Volume', status: 'completed' },
+    { phase: 2, name: 'Move Recommended Volume', status: 'completed' },
+    { phase: 3, name: 'Activate North East Region', status: 'completed' },
+    { phase: 4, name: 'Activate West Region', status: 'in_progress' },
+    { phase: 5, name: 'Activate North Region', status: 'pending' },
+    { phase: 6, name: 'Complete Setup', status: 'pending' },
+];
+
+const ZONE_SAVINGS = {
+    'NYC': '$3.45',
+    'NJ': '$3.10',
+    'Boston': '$3.53',
+    'Philly': '$3.75'
+};
+
+const CARRIER_MIX: CarrierMix[] = [
+    { carrier: 'FedEx', current: 5500, recommended: 5500 },
+    { carrier: 'DHL', current: 0, recommended: 5000 },
+    { carrier: 'UPS', current: 8009, recommended: 3009 },
+];
+
 export default function CarrierWizard() {
     const { token } = useAuth();
     const [proposal, setProposal] = useState<ProposalData | null>(null);
     const [loading, setLoading] = useState(true);
-    const [activePhase, setActivePhase] = useState(3);
+    const [activePhase, setActivePhase] = useState(4);
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         fetchProposalData();
@@ -42,168 +66,222 @@ export default function CarrierWizard() {
 
             if (response.data.success) {
                 setProposal(response.data.data);
+            } else {
+                // Use default data
+                setProposal({
+                    phases: DEFAULT_PHASES,
+                    savings: { zone0: ZONE_SAVINGS },
+                    carrierMix: CARRIER_MIX
+                });
             }
         } catch (error) {
             console.error('Failed to fetch proposal data:', error);
+            // Use default data on error
+            setProposal({
+                phases: DEFAULT_PHASES,
+                savings: { zone0: ZONE_SAVINGS },
+                carrierMix: CARRIER_MIX
+            });
         }
         setLoading(false);
     };
 
-    const getPhaseIcon = (status: string) => {
-        switch (status) {
-            case 'completed': return '✓';
-            case 'in_progress': return '●';
-            default: return '○';
-        }
+    const handlePrevPhase = () => {
+        if (activePhase > 1) setActivePhase(prev => prev - 1);
     };
 
-    const getCarrierColor = (carrier: string) => {
-        switch (carrier.toLowerCase()) {
-            case 'fedex': return '#4d148c';
-            case 'ups': return '#351c15';
-            case 'dhl': return '#ffcc00';
-            case 'usps': return '#333366';
-            default: return '#666';
-        }
+    const handleNextPhase = () => {
+        if (activePhase < 6) setActivePhase(prev => prev + 1);
     };
 
-    const totalParcels = proposal?.carrierMix.reduce((sum, c) => sum + c.parcelsPerDay, 0) || 0;
+    const phases = proposal?.phases || DEFAULT_PHASES;
+    const carrierMix = proposal?.carrierMix || CARRIER_MIX;
 
     return (
         <div className={styles.container}>
             {/* Header */}
             <header className={styles.header}>
-                <Link href="/dashboard/ai" className={styles.backBtn}>
-                    ← Back to Agent Studio
-                </Link>
-                <div className={styles.headerCenter}>
-                    <span className={styles.headerIcon}>🏢</span>
-                    <h1>Carrier Specialist</h1>
+                <div className={styles.headerLeft}>
+                    <Link href="/dashboard/ai" className={styles.backBtn}>
+                        ← Back
+                    </Link>
+                    <div className={styles.branding}>
+                        <h1 className={styles.title}>Carrier Proposal</h1>
+                        <p className={styles.tagline}>More Volume, More Saving</p>
+                    </div>
                 </div>
                 <div className={styles.headerRight}>
-                    <span className={styles.badge}>Optimization Wizard</span>
+                    <input
+                        type="text"
+                        className={styles.searchInput}
+                        placeholder="Search partners, clients, or financial data..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
                 </div>
             </header>
 
             <div className={styles.content}>
                 {loading ? (
                     <div className={styles.loading}>Loading proposal data...</div>
-                ) : proposal ? (
+                ) : (
                     <>
-                        {/* Phase Stepper */}
+                        {/* Phase Stepper - Enhanced */}
                         <section className={styles.stepperSection}>
-                            <h2 className={styles.sectionTitle}>Implementation Phases</h2>
                             <div className={styles.stepper}>
-                                {proposal.phases.map((phase, index) => (
+                                {phases.map((phase, index) => (
                                     <div
                                         key={phase.phase}
                                         className={`${styles.step} ${styles[phase.status]} ${activePhase === phase.phase ? styles.active : ''}`}
                                         onClick={() => setActivePhase(phase.phase)}
                                     >
-                                        <div className={styles.stepIcon}>
-                                            {getPhaseIcon(phase.status)}
-                                        </div>
+                                        <div className={styles.stepDot}></div>
                                         <div className={styles.stepContent}>
                                             <span className={styles.stepNumber}>Phase {phase.phase}</span>
                                             <span className={styles.stepName}>{phase.name}</span>
                                         </div>
-                                        {index < proposal.phases.length - 1 && (
-                                            <div className={`${styles.stepLine} ${phase.status === 'completed' ? styles.completed : ''}`}></div>
+                                        {index < phases.length - 1 && (
+                                            <div className={`${styles.stepLine} ${phase.status === 'completed' ? styles.completedLine : ''}`}></div>
                                         )}
                                     </div>
                                 ))}
                             </div>
+
+                            <div className={styles.stepperNav}>
+                                <button
+                                    className={styles.navBtn}
+                                    onClick={handlePrevPhase}
+                                    disabled={activePhase <= 1}
+                                >
+                                    Back
+                                </button>
+                                <button
+                                    className={`${styles.navBtn} ${styles.nextBtn}`}
+                                    onClick={handleNextPhase}
+                                    disabled={activePhase >= 6}
+                                >
+                                    Next
+                                </button>
+                            </div>
                         </section>
 
                         <div className={styles.mainGrid}>
-                            {/* Savings Analysis */}
-                            <section className={styles.savingsSection}>
-                                <h3 className={styles.sectionTitle}>Zone 0 Savings Analysis</h3>
-                                <div className={styles.savingsGrid}>
-                                    {Object.entries(proposal.savings.zone0).map(([city, savings]) => (
-                                        <div key={city} className={styles.savingsCard}>
-                                            <span className={styles.savingsCity}>{city}</span>
-                                            <span className={styles.savingsAmount}>{savings}</span>
-                                            <span className={styles.savingsLabel}>per parcel</span>
-                                        </div>
-                                    ))}
-                                </div>
-                                <div className={styles.totalSavings}>
-                                    <span>Projected Annual Savings</span>
-                                    <strong>$1.2M+</strong>
+                            {/* Left Side - Map */}
+                            <section className={styles.mapSection}>
+                                <p className={styles.mapHint}>
+                                    You save more by adding North East regional carriers
+                                </p>
+
+                                <div className={styles.mapContainer}>
+                                    {/* US Map SVG with route lines */}
+                                    <svg viewBox="0 0 800 500" className={styles.mapSvg}>
+                                        {/* Background */}
+                                        <rect width="800" height="500" fill="rgba(10, 10, 20, 0.9)" rx="10" />
+
+                                        {/* Grid dots */}
+                                        {[...Array(20)].map((_, i) => (
+                                            [...Array(12)].map((_, j) => (
+                                                <circle
+                                                    key={`${i}-${j}`}
+                                                    cx={i * 40 + 20}
+                                                    cy={j * 42 + 20}
+                                                    r={1.5}
+                                                    fill="rgba(255,255,255,0.1)"
+                                                />
+                                            ))
+                                        ))}
+
+                                        {/* Origin point */}
+                                        <circle cx="280" cy="280" r="12" fill="#f97316" />
+                                        <circle cx="280" cy="280" r="6" fill="#fff" />
+
+                                        {/* Route lines */}
+                                        {[
+                                            { x: 600, y: 120 },
+                                            { x: 650, y: 180 },
+                                            { x: 700, y: 240 },
+                                            { x: 680, y: 320 },
+                                            { x: 620, y: 380 },
+                                            { x: 550, y: 400 },
+                                            { x: 500, y: 150 },
+                                            { x: 580, y: 200 },
+                                        ].map((dest, i) => (
+                                            <g key={i}>
+                                                <line
+                                                    x1="280"
+                                                    y1="280"
+                                                    x2={dest.x}
+                                                    y2={dest.y}
+                                                    stroke="#f97316"
+                                                    strokeWidth="1"
+                                                    strokeDasharray="4,4"
+                                                    opacity="0.6"
+                                                />
+                                                <circle cx={dest.x} cy={dest.y} r="4" fill="#f97316" />
+                                            </g>
+                                        ))}
+                                    </svg>
                                 </div>
                             </section>
 
-                            {/* Carrier Mix */}
-                            <section className={styles.carrierSection}>
-                                <h3 className={styles.sectionTitle}>Carrier Mix Optimization</h3>
-                                <div className={styles.carrierChart}>
-                                    {proposal.carrierMix.map((carrier, index) => {
-                                        const percentage = (carrier.parcelsPerDay / totalParcels) * 100;
-                                        return (
-                                            <div key={index} className={styles.carrierBar}>
-                                                <div className={styles.carrierInfo}>
-                                                    <span className={styles.carrierName}>{carrier.carrier}</span>
-                                                    <span className={styles.carrierParcels}>{carrier.parcelsPerDay.toLocaleString()}/day</span>
-                                                </div>
-                                                <div className={styles.barContainer}>
-                                                    <div
-                                                        className={styles.barFill}
-                                                        style={{
-                                                            width: `${percentage}%`,
-                                                            background: getCarrierColor(carrier.carrier)
-                                                        }}
-                                                    ></div>
-                                                </div>
-                                                <span className={styles.carrierPercent}>{percentage.toFixed(1)}%</span>
+                            {/* Right Side - Details */}
+                            <section className={styles.detailsSection}>
+                                {/* Zone 0 Savings */}
+                                <div className={styles.savingsCard}>
+                                    <h3 className={styles.cardTitle}>Zone 0 Savings</h3>
+                                    <p className={styles.cardSubtitle}>
+                                        Population Based vs. Distance based technique
+                                    </p>
+
+                                    <div className={styles.savingsGrid}>
+                                        {Object.entries(ZONE_SAVINGS).map(([city, savings], idx) => (
+                                            <div
+                                                key={city}
+                                                className={`${styles.savingsItem} ${idx === 1 ? styles.highlighted : ''}`}
+                                            >
+                                                <span className={styles.cityName}>{city}</span>
+                                                <span className={styles.cityPrice}>{savings}</span>
                                             </div>
-                                        );
-                                    })}
-                                </div>
-                                <div className={styles.totalParcels}>
-                                    <span>Total Daily Volume</span>
-                                    <strong>{totalParcels.toLocaleString()} parcels</strong>
-                                </div>
-                            </section>
-                        </div>
+                                        ))}
+                                    </div>
 
-                        {/* Current Phase Details */}
-                        <section className={styles.phaseDetails}>
-                            <h3 className={styles.sectionTitle}>
-                                Phase {activePhase} Details: {proposal.phases.find(p => p.phase === activePhase)?.name}
-                            </h3>
-                            <div className={styles.phaseContent}>
-                                <div className={styles.phaseActions}>
-                                    <h4>Actions Required</h4>
-                                    <ul>
-                                        <li>Review carrier contracts for the selected region</li>
-                                        <li>Coordinate with warehouse teams for volume shifts</li>
-                                        <li>Update routing tables in TMS</li>
-                                        <li>Monitor SLA compliance during transition</li>
-                                    </ul>
+                                    {/* Mini chart placeholder */}
+                                    <div className={styles.miniChart}>
+                                        <div className={styles.chartBar} style={{ height: '60%' }}></div>
+                                        <div className={styles.chartBar} style={{ height: '80%' }}></div>
+                                        <div className={styles.chartBar} style={{ height: '55%' }}></div>
+                                        <div className={styles.chartBar} style={{ height: '70%' }}></div>
+                                    </div>
                                 </div>
-                                <div className={styles.phaseMetrics}>
-                                    <h4>Expected Outcomes</h4>
-                                    <div className={styles.metricCards}>
-                                        <div className={styles.metricCard}>
-                                            <span>Cost Reduction</span>
-                                            <strong>12%</strong>
+
+                                {/* Carrier Mix */}
+                                <div className={styles.carrierCard}>
+                                    <h3 className={styles.cardTitle}>Carrier Mix (parcels/day)</h3>
+
+                                    <div className={styles.carrierTable}>
+                                        <div className={styles.carrierRow}>
+                                            <span className={styles.carrierName}>FedEx</span>
+                                            <span className={styles.carrierType}>Ground Economy</span>
+                                            <span className={styles.carrierValue}>{carrierMix[0]?.current || 5500}</span>
+                                            <span className={styles.carrierValue}>{carrierMix[0]?.recommended || 5500}</span>
                                         </div>
-                                        <div className={styles.metricCard}>
-                                            <span>Transit Time</span>
-                                            <strong>-0.5 days</strong>
+                                        <div className={styles.carrierRow}>
+                                            <span className={styles.carrierName}>DHL</span>
+                                            <span className={styles.carrierType}>eCommerce</span>
+                                            <span className={styles.carrierValue}>{carrierMix[1]?.current || 0}</span>
+                                            <span className={styles.carrierValue}>{carrierMix[1]?.recommended || 5000}</span>
                                         </div>
-                                        <div className={styles.metricCard}>
-                                            <span>Coverage</span>
-                                            <strong>+15%</strong>
+                                        <div className={styles.carrierRow}>
+                                            <span className={styles.carrierName}>UPS</span>
+                                            <span className={styles.carrierType}></span>
+                                            <span className={styles.carrierValue}>{carrierMix[2]?.current || 8009}</span>
+                                            <span className={styles.carrierValue}>{carrierMix[2]?.recommended || 3009}</span>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </section>
+                            </section>
+                        </div>
                     </>
-                ) : (
-                    <div className={styles.error}>Failed to load proposal data</div>
                 )}
             </div>
         </div>

@@ -1,3 +1,5 @@
+/* Tracking View - Premium Shining Black Theme */
+
 .container {
     height: 100dvh;
     width: 100%;
@@ -8,9 +10,23 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0f0f1a 100%);
-    color: #e0e0e0;
+    background: #0a0a0a;
+    color: #e4e4e7;
     overflow-y: auto;
+}
+
+.container::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        radial-gradient(ellipse 80% 50% at 20% 40%, rgba(30, 30, 30, 0.4) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 40% at 80% 20%, rgba(40, 40, 40, 0.3) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
 }
 
 .header {
@@ -18,23 +34,28 @@
     align-items: center;
     justify-content: space-between;
     padding: 1rem 2rem;
-    background: rgba(20, 20, 35, 0.8);
-    border-bottom: 1px solid rgba(0, 180, 216, 0.2);
+    background: linear-gradient(180deg, rgba(15, 15, 15, 0.95) 0%, rgba(10, 10, 10, 0.9) 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 10;
 }
 
 .backBtn {
-    color: #888;
+    color: #71717a;
     text-decoration: none;
     font-size: 0.9rem;
     transition: color 0.2s;
 }
 
 .backBtn:hover {
-    color: #00b4d8;
+    color: #f97316;
 }
 
 .headerCenter {
+    position: absolute;
+    left: calc(50% - 25px);
+    transform: translateX(-50%);
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -44,7 +65,7 @@
     font-size: 1.5rem;
     font-weight: 600;
     margin: 0;
-    background: linear-gradient(90deg, #00b4d8, #0077b6);
+    background: linear-gradient(90deg, #f97316, #ea580c);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -56,361 +77,435 @@
 
 .badge {
     font-size: 0.75rem;
-    color: #00b4d8;
-    background: rgba(0, 180, 216, 0.1);
+    color: #f97316;
+    background: rgba(249, 115, 22, 0.1);
     padding: 0.25rem 0.75rem;
     border-radius: 1rem;
-    border: 1px solid rgba(0, 180, 216, 0.3);
+    border: 1px solid rgba(249, 115, 22, 0.3);
 }
 
 .content {
     padding: 2rem;
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
-.sectionTitle {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: #fff;
-}
-
-/* Search Section */
-.searchSection {
+/* Title Section */
+.titleSection {
+    text-align: center;
     margin-bottom: 2rem;
 }
 
-.searchBox {
-    display: flex;
-    gap: 1rem;
+.pageTitle {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 0.5rem 0;
+}
+
+.pageSubtitle {
+    font-size: 0.9rem;
+    color: #71717a;
     max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Circular Progress Wheel */
+.wheelSection {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.progressWheel {
+    position: relative;
+    width: 400px;
+    height: 400px;
+}
+
+.wheelSvg {
+    width: 100%;
+    height: 100%;
+}
+
+.progressArc {
+    transition: stroke-dasharray 0.5s ease;
+}
+
+.currentDot {
+    animation: pulseDot 2s infinite;
+}
+
+@keyframes pulseDot {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: 0.8;
+    }
+}
+
+.stageLabel {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Center Input Area */
+.centerInput {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    width: 180px;
+}
+
+.inputLabel {
+    font-size: 0.75rem;
+    color: #71717a;
+    text-align: center;
+}
+
+.searchWrapper {
+    position: relative;
+    width: 100%;
 }
 
 .searchInput {
-    flex: 1;
-    padding: 1rem 1.25rem;
-    background: rgba(25, 25, 40, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
     color: #fff;
-    font-size: 1rem;
+    font-size: 0.875rem;
+    text-align: center;
     outline: none;
     transition: border-color 0.2s;
 }
 
 .searchInput:focus {
-    border-color: #00b4d8;
+    border-color: #f97316;
 }
 
 .searchInput::placeholder {
-    color: #666;
+    color: #52525b;
 }
 
-.searchBtn {
-    padding: 1rem 2rem;
-    background: linear-gradient(135deg, #00b4d8, #0077b6);
+/* Suggestions Dropdown */
+.suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(20, 20, 35, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    margin-top: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 100;
+    animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.suggestionItem {
+    display: block;
+    width: 100%;
+    padding: 0.625rem 1rem;
+    background: none;
     border: none;
-    border-radius: 10px;
+    color: #a1a1aa;
+    font-size: 0.875rem;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.suggestionItem:hover {
+    background: rgba(249, 115, 22, 0.1);
+    color: #fff;
+}
+
+.trackBtn {
+    padding: 0.625rem 1.5rem;
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    border: none;
+    border-radius: 8px;
     color: #fff;
     font-weight: 600;
+    font-size: 0.875rem;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: all 0.2s;
 }
 
-.searchBtn:hover {
+.trackBtn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0, 180, 216, 0.3);
+    box-shadow: 0 4px 16px rgba(249, 115, 22, 0.3);
 }
 
-.searchBtn:disabled {
+.trackBtn:disabled {
     opacity: 0.6;
     cursor: not-allowed;
 }
 
 .error {
-    color: #ff4757;
-    margin-top: 0.75rem;
-    font-size: 0.9rem;
-}
-
-/* Results Grid */
-.resultsGrid {
-    display: grid;
-    grid-template-columns: 1fr 400px;
-    gap: 2rem;
-}
-
-/* Map Section */
-.mapSection {
-    background: rgba(25, 25, 40, 0.6);
-    border-radius: 16px;
-    padding: 1.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.mapTitle {
-    font-size: 1rem;
-    color: #fff;
-    margin: 0 0 1rem 0;
-}
-
-.mapPlaceholder {
-    position: relative;
-    height: 400px;
-    background: rgba(20, 20, 35, 0.8);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
-.mapRoute {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 80%;
-    position: relative;
-    z-index: 2;
-}
-
-.routePoint {
+    color: #ef4444;
     text-align: center;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
 }
 
-.routePoint span {
-    font-size: 2.5rem;
-    display: block;
-    margin-bottom: 0.5rem;
+/* Results Section */
+.resultsSection {
+    margin-top: 2rem;
 }
 
-.routePoint p {
-    margin: 0;
-    font-weight: 600;
-    color: #fff;
-}
-
-.routePoint small {
-    color: #888;
-    font-size: 0.75rem;
-    display: block;
-    max-width: 120px;
-}
-
-.routeLine {
-    flex: 1;
-    height: 4px;
-    background: rgba(255, 255, 255, 0.1);
-    margin: 0 2rem;
-    border-radius: 2px;
-    position: relative;
-}
-
-.routeProgress {
-    height: 100%;
-    background: linear-gradient(90deg, #00b4d8, #00d26a);
-    border-radius: 2px;
-    transition: width 0.5s ease;
-}
-
-.currentLocation {
-    position: absolute;
-    top: 50%;
-    right: 40%;
-    transform: translate(50%, -50%);
-    font-size: 1.5rem;
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-
-    0%,
-    100% {
-        transform: translate(50%, -50%) scale(1);
-    }
-
-    50% {
-        transform: translate(50%, -50%) scale(1.2);
-    }
-}
-
-.mapOverlay {
-    position: absolute;
-    bottom: 1rem;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.6);
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    font-size: 0.8rem;
-    color: #888;
-}
-
-/* Timeline Section */
-.timelineSection {
-    background: rgba(25, 25, 40, 0.6);
-    border-radius: 16px;
-    padding: 1.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.timelineTitle {
-    font-size: 1rem;
-    color: #fff;
-    margin: 0 0 1rem 0;
-}
-
-.shipmentInfo {
+.infoCards {
     display: grid;
-    gap: 0.75rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
     margin-bottom: 1.5rem;
 }
 
 .infoCard {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 1.25rem;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(20, 20, 35, 0.8);
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .infoLabel {
-    font-size: 0.8rem;
-    color: #888;
+    font-size: 0.75rem;
+    color: #71717a;
     text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .infoValue {
+    font-size: 1rem;
     font-weight: 600;
     color: #fff;
 }
 
-.statusBadge {
-    padding: 0.25rem 0.75rem;
-    border-radius: 1rem;
-    font-size: 0.75rem;
-    font-weight: 600;
+.infoLink {
+    background: none;
+    border: none;
+    color: #f97316;
+    font-size: 0.8rem;
+    cursor: pointer;
+    padding: 0;
+    text-align: left;
+}
+
+.infoLink:hover {
+    text-decoration: underline;
+}
+
+.viewMapBtn {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    color: #a1a1aa;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.viewMapBtn:hover {
+    background: rgba(249, 115, 22, 0.1);
+    border-color: #f97316;
     color: #fff;
 }
 
-.timeline {
-    position: relative;
-    padding-left: 1.5rem;
-}
-
-.timeline::before {
-    content: '';
-    position: absolute;
-    left: 6px;
+/* Map Modal */
+.modalOverlay {
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     bottom: 0;
-    width: 2px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 2rem;
+}
+
+.mapModal {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16162a 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 900px;
+    max-height: 80vh;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.closeModal {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: #71717a;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.closeModal:hover {
+    color: #fff;
+}
+
+.modalTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #fff;
+    padding: 1.5rem 1.5rem 0.5rem;
+    margin: 0;
+}
+
+.modalSubtitle {
+    font-size: 0.75rem;
+    color: #71717a;
+    padding: 0 1.5rem 1rem;
+    margin: 0;
+}
+
+.modalContent {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    flex: 1;
+    overflow: hidden;
+}
+
+.mapPlaceholder {
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+}
+
+.mapRoute {
+    color: #52525b;
+    font-size: 1rem;
+}
+
+.modalTimeline {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    overflow-y: auto;
+    max-height: 400px;
 }
 
 .timelineItem {
-    position: relative;
-    padding-bottom: 1.5rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1rem;
+    align-items: start;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .timelineItem:last-child {
-    padding-bottom: 0;
+    border-bottom: none;
 }
 
-.timelineDot {
-    position: absolute;
-    left: -1.5rem;
-    top: 0;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    border: 3px solid rgba(20, 20, 35, 1);
+.timelineTime {
+    font-size: 0.75rem;
+    color: #71717a;
+    white-space: nowrap;
 }
 
-.timelineContent h4 {
-    margin: 0;
-    font-size: 0.95rem;
+.timelineInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.timelineStatus {
+    font-size: 0.875rem;
     color: #fff;
     text-transform: capitalize;
 }
 
-.timelineContent p {
-    margin: 0.25rem 0 0 0;
-    font-size: 0.85rem;
-    color: #888;
-}
-
-.timelineContent time {
+.timelineLocation {
     font-size: 0.75rem;
-    color: #666;
+    color: #71717a;
 }
 
-.noTimeline {
-    text-align: center;
-    padding: 2rem;
-    color: #666;
-}
-
-.noTimeline p {
-    margin: 0;
-}
-
-.noTimeline small {
-    font-size: 0.8rem;
-}
-
-/* Empty State */
-.emptyState {
-    text-align: center;
-    padding: 4rem 2rem;
-}
-
-.emptyIcon {
-    font-size: 4rem;
-    margin-bottom: 1rem;
-}
-
-.emptyState h3 {
-    margin: 0 0 0.5rem 0;
-    color: #fff;
-    font-size: 1.5rem;
-}
-
-.emptyState p {
-    margin: 0;
-    color: #888;
-    max-width: 400px;
-    margin: 0 auto 1rem;
-}
-
-.sampleNumbers {
-    margin-top: 1rem;
-}
-
-.sampleNumbers code {
-    background: rgba(0, 180, 216, 0.1);
-    color: #00b4d8;
+.timelineBadge {
+    font-size: 0.65rem;
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
-    margin: 0 0.25rem;
+    color: #fff;
+    text-transform: capitalize;
 }
 
 /* Responsive */
 @media (max-width: 900px) {
-    .resultsGrid {
+    .modalContent {
         grid-template-columns: 1fr;
     }
 
+    .mapPlaceholder {
+        min-height: 200px;
+    }
+
+    .infoCards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
     .header {
         flex-direction: column;
         gap: 1rem;
         padding-top: 5rem;
-        /* Space for mobile menu button */
     }
 
-    .searchBox {
-        flex-direction: column;
+    .progressWheel {
+        width: 300px;
+        height: 300px;
+    }
+
+    .centerInput {
+        width: 140px;
+    }
+
+    .infoCards {
+        grid-template-columns: 1fr;
     }
 }

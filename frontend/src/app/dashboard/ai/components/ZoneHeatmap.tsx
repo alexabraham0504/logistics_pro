@@ -13,12 +13,21 @@ interface ZoneData {
     name: string;
 }
 
+const TABS = ['Carriers', 'States', 'Compare', 'History'];
+const SERVICE_TYPES = ['DAS', 'EDAS'];
+
 export default function ZoneHeatmap() {
     const { token } = useAuth();
     const [zones, setZones] = useState<ZoneData[]>([]);
     const [totalShipments, setTotalShipments] = useState(0);
     const [loading, setLoading] = useState(true);
     const [selectedZone, setSelectedZone] = useState<ZoneData | null>(null);
+
+    // New filter states
+    const [activeTab, setActiveTab] = useState('Carriers');
+    const [carrierType, setCarrierType] = useState('UPS');
+    const [serviceType, setServiceType] = useState('DAS');
+    const [year, setYear] = useState(2022);
 
     useEffect(() => {
         fetchZoneData();
@@ -42,11 +51,13 @@ export default function ZoneHeatmap() {
     };
 
     const getIntensityColor = (intensity: number) => {
-        if (intensity >= 0.8) return 'rgba(255, 60, 60, 0.8)';
-        if (intensity >= 0.6) return 'rgba(255, 140, 0, 0.8)';
-        if (intensity >= 0.4) return 'rgba(255, 200, 0, 0.8)';
-        return 'rgba(0, 200, 100, 0.8)';
+        // Red gradient for heatmap
+        const red = Math.floor(255 * intensity);
+        return `rgba(${red}, ${Math.floor(60 * (1 - intensity))}, ${Math.floor(60 * (1 - intensity))}, 0.8)`;
     };
+
+    const minValue = 15424;
+    const maxValue = 32678687;
 
     return (
         <div className={styles.container}>
@@ -57,60 +68,78 @@ export default function ZoneHeatmap() {
                 </Link>
                 <div className={styles.headerCenter}>
                     <span className={styles.headerIcon}>🗺️</span>
-                    <h1>Zone Analytics</h1>
+                    <h1>ZoneCast</h1>
                 </div>
                 <div className={styles.headerRight}>
-                    <span className={styles.badge}>Heatmap View</span>
+                    <span className={styles.badge}>DAS/EDAS Coverage</span>
                 </div>
             </header>
 
             <div className={styles.content}>
-                {/* Stats Bar */}
-                <div className={styles.statsBar}>
-                    <div className={styles.stat}>
-                        <span className={styles.statValue}>{zones.length}</span>
-                        <span className={styles.statLabel}>Active Zones</span>
-                    </div>
-                    <div className={styles.stat}>
-                        <span className={styles.statValue}>{totalShipments}</span>
-                        <span className={styles.statLabel}>Total Shipments</span>
-                    </div>
-                    <div className={styles.stat}>
-                        <span className={styles.statValue}>95.2%</span>
-                        <span className={styles.statLabel}>Avg Coverage</span>
-                    </div>
-                    <div className={styles.stat}>
-                        <span className={styles.statValue}>$3.45</span>
-                        <span className={styles.statLabel}>Avg DAS Fee</span>
-                    </div>
+                {/* Title and Description */}
+                <div className={styles.titleSection}>
+                    <p className={styles.description}>
+                        ZoneCast has an exclusive capability of mapping all the destinations, finding and
+                        quantifying the real-life grantees with DAS EDAS.
+                    </p>
+                </div>
+
+                {/* Tab Navigation */}
+                <div className={styles.tabNav}>
+                    {TABS.map((tab) => (
+                        <button
+                            key={tab}
+                            className={`${styles.tab} ${activeTab === tab ? styles.activeTab : ''}`}
+                            onClick={() => setActiveTab(tab)}
+                        >
+                            {tab}
+                        </button>
+                    ))}
+                    <button className={styles.comingSoonTab}>Coming Soon</button>
                 </div>
 
                 <div className={styles.mainGrid}>
-                    {/* Heatmap Visualization */}
+                    {/* Map Section */}
                     <section className={styles.mapSection}>
-                        <h3 className={styles.sectionTitle}>Delivery Density Heatmap</h3>
+                        <h3 className={styles.sectionTitle}>DAS/EDAS Coverage</h3>
 
                         {loading ? (
                             <div className={styles.loading}>Loading zone data...</div>
                         ) : (
                             <div className={styles.heatmapContainer}>
                                 <div className={styles.usMap}>
-                                    {/* Simplified US Map Representation */}
+                                    {/* US Map SVG with heatmap dots */}
                                     <svg viewBox="0 0 800 500" className={styles.mapSvg}>
                                         {/* Background */}
-                                        <rect width="800" height="500" fill="rgba(20, 30, 50, 0.3)" rx="10" />
+                                        <rect width="800" height="500" fill="rgba(10, 10, 15, 0.8)" rx="10" />
 
                                         {/* Grid lines */}
                                         {[...Array(8)].map((_, i) => (
-                                            <line key={`h${i}`} x1="0" y1={i * 62.5} x2="800" y2={i * 62.5} stroke="rgba(255,255,255,0.05)" />
+                                            <line key={`h${i}`} x1="0" y1={i * 62.5} x2="800" y2={i * 62.5} stroke="rgba(255,255,255,0.03)" />
                                         ))}
                                         {[...Array(10)].map((_, i) => (
-                                            <line key={`v${i}`} x1={i * 80} y1="0" x2={i * 80} y2="500" stroke="rgba(255,255,255,0.05)" />
+                                            <line key={`v${i}`} x1={i * 80} y1="0" x2={i * 80} y2="500" stroke="rgba(255,255,255,0.03)" />
                                         ))}
+
+                                        {/* Heatmap dots - Dense coverage */}
+                                        {[...Array(200)].map((_, i) => {
+                                            const x = 100 + Math.random() * 600;
+                                            const y = 80 + Math.random() * 350;
+                                            const intensity = Math.random();
+                                            return (
+                                                <circle
+                                                    key={i}
+                                                    cx={x}
+                                                    cy={y}
+                                                    r={3 + intensity * 4}
+                                                    fill={getIntensityColor(intensity)}
+                                                    className={styles.heatDot}
+                                                />
+                                            );
+                                        })}
 
                                         {/* Zone heat points */}
                                         {zones.map((zone, index) => {
-                                            // Map lat/lng to SVG coordinates (simplified)
                                             const x = ((zone.lng + 130) / 60) * 800;
                                             const y = ((50 - zone.lat) / 25) * 500;
 
@@ -119,25 +148,16 @@ export default function ZoneHeatmap() {
                                                     <circle
                                                         cx={x}
                                                         cy={y}
-                                                        r={zone.intensity * 60}
+                                                        r={zone.intensity * 40}
                                                         fill={getIntensityColor(zone.intensity)}
                                                         className={styles.heatCircle}
                                                     />
                                                     <circle
                                                         cx={x}
                                                         cy={y}
-                                                        r={10}
+                                                        r={6}
                                                         fill="#fff"
                                                     />
-                                                    <text
-                                                        x={x}
-                                                        y={y + zone.intensity * 60 + 20}
-                                                        fill="#fff"
-                                                        fontSize="12"
-                                                        textAnchor="middle"
-                                                    >
-                                                        {zone.name}
-                                                    </text>
                                                 </g>
                                             );
                                         })}
@@ -146,35 +166,70 @@ export default function ZoneHeatmap() {
 
                                 {/* Legend */}
                                 <div className={styles.legend}>
-                                    <h4>Delivery Intensity</h4>
-                                    <div className={styles.legendItems}>
-                                        <div className={styles.legendItem}>
-                                            <span style={{ background: 'rgba(255, 60, 60, 0.8)' }}></span>
-                                            Very High (80%+)
-                                        </div>
-                                        <div className={styles.legendItem}>
-                                            <span style={{ background: 'rgba(255, 140, 0, 0.8)' }}></span>
-                                            High (60-80%)
-                                        </div>
-                                        <div className={styles.legendItem}>
-                                            <span style={{ background: 'rgba(255, 200, 0, 0.8)' }}></span>
-                                            Medium (40-60%)
-                                        </div>
-                                        <div className={styles.legendItem}>
-                                            <span style={{ background: 'rgba(0, 200, 100, 0.8)' }}></span>
-                                            Low (&lt;40%)
-                                        </div>
-                                    </div>
+                                    <span>{minValue.toLocaleString()}</span>
+                                    <div className={styles.legendGradient}></div>
+                                    <span>{maxValue.toLocaleString()}</span>
                                 </div>
                             </div>
                         )}
                     </section>
 
-                    {/* Zone Details Sidebar */}
-                    <section className={styles.detailsSidebar}>
-                        <h3 className={styles.sectionTitle}>Zone Details</h3>
+                    {/* Filters Sidebar */}
+                    <section className={styles.filtersSidebar}>
+                        {/* Carrier Type */}
+                        <div className={styles.filterGroup}>
+                            <label className={styles.filterLabel}>Carrier Type</label>
+                            <select
+                                className={styles.filterSelect}
+                                value={carrierType}
+                                onChange={(e) => setCarrierType(e.target.value)}
+                            >
+                                <option value="UPS">UPS</option>
+                                <option value="FedEx">FedEx</option>
+                                <option value="USPS">USPS</option>
+                                <option value="DHL">DHL</option>
+                            </select>
+                        </div>
 
-                        {selectedZone ? (
+                        {/* Service Type */}
+                        <div className={styles.filterGroup}>
+                            <label className={styles.filterLabel}>Service Type</label>
+                            <div className={styles.toggleGroup}>
+                                <span className={styles.toggleLabel}>DAS-EDAS</span>
+                                <div className={styles.toggleButtons}>
+                                    {SERVICE_TYPES.map((type) => (
+                                        <button
+                                            key={type}
+                                            className={`${styles.toggleBtn} ${serviceType === type ? styles.activeToggle : ''}`}
+                                            onClick={() => setServiceType(type)}
+                                        >
+                                            {type}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Year Slider */}
+                        <div className={styles.filterGroup}>
+                            <label className={styles.filterLabel}>Year</label>
+                            <div className={styles.yearDisplay}>{year}</div>
+                            <input
+                                type="range"
+                                min="2018"
+                                max="2024"
+                                value={year}
+                                onChange={(e) => setYear(parseInt(e.target.value))}
+                                className={styles.yearSlider}
+                            />
+                            <div className={styles.yearLabels}>
+                                <span>2018</span>
+                                <span>2024</span>
+                            </div>
+                        </div>
+
+                        {/* Zone Details */}
+                        {selectedZone && (
                             <div className={styles.zoneCard}>
                                 <h4>{selectedZone.name}</h4>
                                 <div className={styles.zoneStats}>
@@ -192,32 +247,7 @@ export default function ZoneHeatmap() {
                                     </div>
                                 </div>
                             </div>
-                        ) : (
-                            <div className={styles.selectPrompt}>
-                                <p>Click on a zone to see details</p>
-                            </div>
                         )}
-
-                        <div className={styles.allZones}>
-                            <h4>All Zones</h4>
-                            <div className={styles.zoneList}>
-                                {zones.map((zone, index) => (
-                                    <div
-                                        key={index}
-                                        className={`${styles.zoneListItem} ${selectedZone?.name === zone.name ? styles.active : ''}`}
-                                        onClick={() => setSelectedZone(zone)}
-                                    >
-                                        <span className={styles.zoneName}>{zone.name}</span>
-                                        <span
-                                            className={styles.zoneIntensity}
-                                            style={{ color: getIntensityColor(zone.intensity) }}
-                                        >
-                                            {(zone.intensity * 100).toFixed(0)}%
-                                        </span>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
                     </section>
                 </div>
             </div>

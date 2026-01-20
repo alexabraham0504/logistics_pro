@@ -5,6 +5,18 @@ import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import axios from 'axios';
 import styles from './ai.module.css';
+import ClippedView from './components/ClippedView';
+import NewsView from './components/NewsView';
+import {
+    FiCpu, FiUsers, FiLayers, FiMessageSquare, FiFileText,
+    FiTool, FiZap, FiPlus, FiBox, FiEdit3, FiGrid,
+    FiTruck, FiPackage, FiMap, FiClipboard, FiBarChart2,
+    FiDatabase, FiWifi, FiServer, FiGlobe
+} from 'react-icons/fi';
+import {
+    HiOutlineCube, HiOutlineSparkles, HiOutlineDocumentText,
+    HiOutlineTemplate, HiOutlinePencil, HiOutlineLightningBolt
+} from 'react-icons/hi';
 
 interface Agent {
     id: string;
@@ -22,11 +34,25 @@ interface AgentStats {
     executionsToday: number;
 }
 
+// Agent icon mapping
+const agentIcons: { [key: string]: React.ReactNode } = {
+    'fleet': <FiTruck size={16} />,
+    'inventory': <FiPackage size={16} />,
+    'shipment': <FiMap size={16} />,
+    'contract': <FiClipboard size={16} />,
+    'zone': <FiGrid size={16} />,
+    'carrier': <FiTruck size={16} />,
+    'market': <FiBarChart2 size={16} />,
+    'logistics': <FiBox size={16} />,
+};
+
 export default function AiDashboard() {
     const { token } = useAuth();
     const [agents, setAgents] = useState<Agent[]>([]);
     const [stats, setStats] = useState<AgentStats | null>(null);
     const [loading, setLoading] = useState(true);
+    const [activeNav, setActiveNav] = useState('dashboard');
+    const [showAllAgents, setShowAllAgents] = useState(false);
 
     useEffect(() => {
         fetchAgents();
@@ -51,134 +77,246 @@ export default function AiDashboard() {
 
     if (loading) {
         return (
-            <div className={styles.aiContainer}>
+            <div className={styles.pageWrapper}>
                 <div className={styles.loadingState}>
                     <div className={styles.spinner}></div>
-                    <p>Loading AI Agents...</p>
+                    <p>Loading Agent Studio...</p>
                 </div>
             </div>
         );
     }
 
+    const navItems = [
+        { id: 'dashboard', label: 'Dashboard', icon: <FiLayers size={16} /> },
+        { id: 'news', label: 'News', icon: <FiGlobe size={16} /> },
+        { id: 'clipped', label: 'Clipped', icon: <FiClipboard size={16} /> },
+        { id: 'agents', label: 'Agents', icon: <FiCpu size={16} /> },
+        { id: 'models', label: 'Models', icon: <HiOutlineSparkles size={16} /> },
+        { id: 'prompts', label: 'Prompts', icon: <FiMessageSquare size={16} /> },
+        { id: 'templates', label: 'Templates', icon: <FiFileText size={16} /> },
+        { id: 'tools', label: 'Tools', icon: <FiTool size={16} /> },
+        { id: 'workflows', label: 'Workflows', icon: <FiZap size={16} /> },
+    ];
+
+    const quickActions = [
+        {
+            id: 'create-agent',
+            title: 'Create New Agent',
+            description: 'Create a new agent with custom configurations',
+            icon: <FiCpu size={18} />,
+            color: '#f97316',
+            href: '/dashboard/ai/create-agent',
+        },
+        {
+            id: 'add-model',
+            title: 'Add Model',
+            description: 'Connect a new AI model to the platform',
+            icon: <HiOutlineCube size={18} />,
+            color: '#f59e0b',
+            href: '/dashboard/ai/add-model',
+        },
+        {
+            id: 'write-prompt',
+            title: 'Write Prompt',
+            description: 'Create a new prompt template',
+            icon: <HiOutlinePencil size={18} />,
+            color: '#a855f7',
+            href: '/dashboard/ai/write-prompt',
+        },
+        {
+            id: 'browse-templates',
+            title: 'Browse Templates',
+            description: 'Find ready-to-use templates',
+            icon: <HiOutlineDocumentText size={18} />,
+            color: '#ec4899',
+            href: '/dashboard/ai/templates',
+        },
+    ];
+
+    const displayedAgents = showAllAgents ? agents : agents.slice(0, 4);
+
+    const getAgentIcon = (agentId: string) => {
+        const key = agentId.toLowerCase();
+        for (const [iconKey, icon] of Object.entries(agentIcons)) {
+            if (key.includes(iconKey)) {
+                return icon;
+            }
+        }
+        return <FiCpu size={16} />;
+    };
+
     return (
-        <div className={styles.aiContainer}>
-            {/* Header */}
-            <header className={styles.aiHeader}>
-                <div className={styles.headerLeft}>
-                    <div className={styles.logoIcon}>🤖</div>
-                    <div>
-                        <h1 className={styles.title}>Agent Studio</h1>
-                        <p className={styles.subtitle}>Logistics Intelligence Hub</p>
+        <div className={styles.pageWrapper}>
+            {/* Left Sidebar */}
+            <aside className={styles.sidebar}>
+                <div className={styles.sidebarHeader}>
+                    <div className={styles.logoIcon}>
+                        <FiCpu size={18} />
                     </div>
+                    <span className={styles.logoText}>Agent Studio</span>
                 </div>
-                <div className={styles.headerRight}>
-                    <div className={styles.systemStatus}>
-                        <span className={styles.statusDot}></span>
-                        <span>System Operational</span>
-                    </div>
-                </div>
-            </header>
-
-            {/* Stats Row */}
-            <div className={styles.statsRow}>
-                <div className={styles.statCard}>
-                    <div className={styles.statIcon}>🤖</div>
-                    <div className={styles.statContent}>
-                        <span className={styles.statValue}>{stats?.totalAgents || 0}</span>
-                        <span className={styles.statLabel}>Total Agents</span>
-                    </div>
-                </div>
-                <div className={styles.statCard}>
-                    <div className={styles.statIcon}>✅</div>
-                    <div className={styles.statContent}>
-                        <span className={styles.statValue}>{stats?.activeAgents || 0}</span>
-                        <span className={styles.statLabel}>Active Models</span>
-                    </div>
-                </div>
-                <div className={styles.statCard}>
-                    <div className={styles.statIcon}>📊</div>
-                    <div className={styles.statContent}>
-                        <span className={styles.statValue}>{stats?.executionsToday || 0}</span>
-                        <span className={styles.statLabel}>Executions Today</span>
-                    </div>
-                </div>
-                <div className={styles.statCard}>
-                    <div className={styles.statIcon}>⚡</div>
-                    <div className={styles.statContent}>
-                        <span className={styles.statValue}>99.8%</span>
-                        <span className={styles.statLabel}>Accuracy</span>
-                    </div>
-                </div>
-            </div>
-
-            {/* Quick Actions */}
-            <section className={styles.quickActions}>
-                <h2 className={styles.sectionTitle}>Quick Actions</h2>
-                <div className={styles.actionGrid}>
-                    <Link href="/dashboard/ai/agent/support" className={styles.actionCard}>
-                        <div className={styles.actionIcon}>💬</div>
-                        <div>
-                            <h3>New Chat</h3>
-                            <p>Start a conversation</p>
-                        </div>
-                    </Link>
-                    <Link href="/dashboard/ai/agent/fleet" className={styles.actionCard}>
-                        <div className={styles.actionIcon}>🚛</div>
-                        <div>
-                            <h3>Fleet Status</h3>
-                            <p>Check vehicle locations</p>
-                        </div>
-                    </Link>
-                    <Link href="/dashboard/ai/agent/inventory" className={styles.actionCard}>
-                        <div className={styles.actionIcon}>📦</div>
-                        <div>
-                            <h3>Low Stock Alert</h3>
-                            <p>View inventory warnings</p>
-                        </div>
-                    </Link>
-                    <Link href="/dashboard/ai/agent/market" className={styles.actionCard}>
-                        <div className={styles.actionIcon}>📊</div>
-                        <div>
-                            <h3>Market Lens</h3>
-                            <p>Industry intelligence</p>
-                        </div>
-                    </Link>
-                </div>
-            </section>
-
-            {/* Agents Grid */}
-            <section className={styles.agentsSection}>
-                <div className={styles.sectionHeader}>
-                    <h2 className={styles.sectionTitle}>Available Agents</h2>
-                    <span className={styles.agentCount}>{agents.length} agents</span>
-                </div>
-                <div className={styles.agentsGrid}>
-                    {agents.map((agent) => (
-                        <Link
-                            key={agent.id}
-                            href={`/dashboard/ai/agent/${agent.id}`}
-                            className={styles.agentCard}
+                <nav className={styles.sidebarNav}>
+                    {navItems.map((item) => (
+                        <button
+                            key={item.id}
+                            className={`${styles.navItem} ${activeNav === item.id ? styles.navItemActive : ''}`}
+                            onClick={() => setActiveNav(item.id)}
                         >
-                            <div className={styles.agentHeader}>
-                                <span className={styles.agentIcon}>{agent.icon}</span>
-                                <span className={`${styles.agentStatus} ${agent.status === 'active' ? styles.active : ''}`}>
-                                    {agent.status}
-                                </span>
-                            </div>
-                            <h3 className={styles.agentName}>{agent.name}</h3>
-                            <p className={styles.agentDescription}>{agent.description}</p>
-                            <div className={styles.agentCapabilities}>
-                                {agent.capabilities.slice(0, 2).map((cap, idx) => (
-                                    <span key={idx} className={styles.capabilityTag}>{cap}</span>
-                                ))}
-                                {agent.capabilities.length > 2 && (
-                                    <span className={styles.capabilityMore}>+{agent.capabilities.length - 2}</span>
-                                )}
-                            </div>
-                        </Link>
+                            <span className={styles.navIcon}>{item.icon}</span>
+                            <span className={styles.navLabel}>{item.label}</span>
+                        </button>
                     ))}
+                </nav>
+            </aside>
+
+            {/* Main Content or Clipped View */}
+            {activeNav === 'clipped' ? (
+                <div style={{ flex: 1, position: 'relative' }}>
+                    <ClippedView onBack={() => setActiveNav('dashboard')} />
                 </div>
-            </section>
+            ) : activeNav === 'news' ? (
+                <div style={{ flex: 1, position: 'relative' }}>
+                    <NewsView onBack={() => setActiveNav('dashboard')} />
+                </div>
+            ) : (
+                <main className={styles.mainContent}>
+                    {/* Dashboard Header */}
+                    <header className={styles.dashboardHeader}>
+                        <div>
+                            <h1 className={styles.dashboardTitle}>Dashboard</h1>
+                            <p className={styles.dashboardSubtitle}>Welcome to the Agent Studio</p>
+                        </div>
+                    </header>
+
+                    {/* Stats Row */}
+                    <div className={styles.statsRow}>
+                        <div className={styles.statCard}>
+                            <div className={styles.statContent}>
+                                <span className={styles.statLabel}>Total Agents</span>
+                                <span className={styles.statValue}>{stats?.totalAgents || agents.length}</span>
+                                <span className={styles.statTrend}>+2 from last week</span>
+                            </div>
+                            <div className={`${styles.statIconBox} ${styles.blue}`}>
+                                <FiCpu size={20} />
+                            </div>
+                        </div>
+                        <div className={styles.statCard}>
+                            <div className={styles.statContent}>
+                                <span className={styles.statLabel}>Active Models</span>
+                                <span className={styles.statValue}>{stats?.activeAgents || agents.filter(a => a.status === 'active').length}</span>
+                                <span className={`${styles.statTrend} ${styles.green}`}>Connected &amp; ready</span>
+                            </div>
+                            <div className={`${styles.statIconBox} ${styles.orange}`}>
+                                <HiOutlineSparkles size={20} />
+                            </div>
+                        </div>
+                        <div className={styles.statCard}>
+                            <div className={styles.statContent}>
+                                <span className={styles.statLabel}>Prompts</span>
+                                <span className={styles.statValue}>4</span>
+                                <span className={styles.statTrend}>Reusable prompts</span>
+                            </div>
+                            <div className={`${styles.statIconBox} ${styles.purple}`}>
+                                <FiFileText size={20} />
+                            </div>
+                        </div>
+                        <div className={styles.statCard}>
+                            <div className={styles.statContent}>
+                                <span className={styles.statLabel}>Executions Today</span>
+                                <span className={styles.statValue}>{stats?.executionsToday || 0}</span>
+                                <span className={styles.statTrend}>0% success rate</span>
+                            </div>
+                            <div className={`${styles.statIconBox} ${styles.teal}`}>
+                                <HiOutlineLightningBolt size={20} />
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Quick Actions */}
+                    <section className={styles.quickActionsSection}>
+                        <h2 className={styles.sectionTitle}>Quick Actions</h2>
+                        <div className={styles.quickActionsGrid}>
+                            {quickActions.map((action) => (
+                                <Link key={action.id} href={action.href} className={styles.quickActionCard}>
+                                    <div
+                                        className={styles.quickActionIcon}
+                                        style={{ backgroundColor: `${action.color}20`, color: action.color }}
+                                    >
+                                        {action.icon}
+                                    </div>
+                                    <h3 className={styles.quickActionTitle}>{action.title}</h3>
+                                    <p className={styles.quickActionDesc}>{action.description}</p>
+                                    <span className={styles.quickActionLink}>
+                                        Get started <span className={styles.arrow}>→</span>
+                                    </span>
+                                </Link>
+                            ))}
+                        </div>
+                    </section>
+
+                    {/* Bottom Section: Recent Agents + System Status */}
+                    <div className={styles.bottomSection}>
+                        {/* Recent Agents */}
+                        <section className={styles.recentAgentsSection}>
+                            <div className={styles.sectionHeader}>
+                                <div>
+                                    <h2 className={styles.sectionTitle}>Recent Agents</h2>
+                                    <p className={styles.sectionSubtitle}>Your most recently created agents</p>
+                                </div>
+                                <button
+                                    className={styles.viewAllBtn}
+                                    onClick={() => setShowAllAgents(!showAllAgents)}
+                                >
+                                    {showAllAgents ? 'Show Less' : 'View all agents'}
+                                </button>
+                            </div>
+                            <div className={styles.agentsList}>
+                                {displayedAgents.map((agent, index) => (
+                                    <Link
+                                        key={agent.id}
+                                        href={`/dashboard/ai/agent/${agent.id}`}
+                                        className={styles.recentAgentItem}
+                                    >
+                                        <span className={styles.recentAgentIcon}>
+                                            {getAgentIcon(agent.id)}
+                                        </span>
+                                        <span className={styles.recentAgentName}>{agent.name}</span>
+                                    </Link>
+                                ))}
+                            </div>
+                        </section>
+
+                        {/* System Status */}
+                        <section className={styles.systemStatusSection}>
+                            <h2 className={styles.sectionTitle}>System Status</h2>
+                            <p className={styles.sectionSubtitle}>Current platform performance</p>
+                            <div className={styles.statusList}>
+                                <div className={styles.statusItem}>
+                                    <span className={styles.statusIcon}>
+                                        <FiServer size={14} />
+                                    </span>
+                                    <span className={styles.statusLabel}>API Health</span>
+                                    <span className={styles.statusBadge}>Operational</span>
+                                </div>
+                                <div className={styles.statusItem}>
+                                    <span className={styles.statusIcon}>
+                                        <FiWifi size={14} />
+                                    </span>
+                                    <span className={styles.statusLabel}>Model Connectivity</span>
+                                    <span className={styles.statusBadge}>Operational</span>
+                                </div>
+                                <div className={styles.statusItem}>
+                                    <span className={styles.statusIcon}>
+                                        <FiDatabase size={14} />
+                                    </span>
+                                    <span className={styles.statusLabel}>Database</span>
+                                    <span className={styles.statusBadge}>Operational</span>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </main>
+            )}
         </div>
     );
 }

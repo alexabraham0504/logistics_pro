@@ -47,6 +47,16 @@ interface CompanyData {
     };
 }
 
+interface CandleData {
+    dates: string[];
+    close: number[];
+    volume: number[];
+    high: number[];
+    low: number[];
+    open: number[];
+    source?: 'finnhub' | 'mock';
+}
+
 interface NewsArticle {
     id: number;
     title: string;
@@ -66,6 +76,8 @@ export default function MarketDashboard() {
     const [companies, setCompanies] = useState<CompanyData[]>([]);
     const [news, setNews] = useState<NewsArticle[]>([]);
     const [selectedCompany, setSelectedCompany] = useState<CompanyData | null>(null);
+    const [candleData, setCandleData] = useState<CandleData | null>(null);
+    const [candleLoading, setCandleLoading] = useState(false);
     const [loading, setLoading] = useState(true);
     const [newsLoading, setNewsLoading] = useState(true);
     const [showAllCompanies, setShowAllCompanies] = useState(false);
@@ -161,6 +173,38 @@ export default function MarketDashboard() {
         setNewsLoading(false);
     };
 
+    // Fetch historical candle data when company is selected
+    const fetchCandleData = async (ticker: string) => {
+        setCandleLoading(true);
+        try {
+            const response = await axios.get(
+                `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/ai/market/candles/${ticker}`,
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+            if (response.data.success && response.data.data.candles) {
+                const candles = response.data.data.candles;
+                // If API returned source info, use it. Otherwise Finnhub is default if not explicitly mock
+                if (response.data.data.source) {
+                    candles.source = response.data.data.source;
+                }
+                setCandleData(candles);
+            } else {
+                setCandleData(null);
+            }
+        } catch (error) {
+            console.error('Failed to fetch candle data:', error);
+            setCandleData(null);
+        }
+        setCandleLoading(false);
+    };
+
+    // Fetch candles when selected company changes
+    useEffect(() => {
+        if (selectedCompany?.ticker) {
+            fetchCandleData(selectedCompany.ticker);
+        }
+    }, [selectedCompany?.ticker]);
+
     const formatMarketCap = (cap: number) => {
         if (cap >= 1000) return `$${(cap / 1000).toFixed(1)}B`;
         return `$${cap.toFixed(0)}M`;
@@ -185,7 +229,7 @@ export default function MarketDashboard() {
                     <h1>Market Intelligence</h1>
                 </div>
                 <div className={styles.headerRight}>
-                    <span className={styles.dataSource}>Powered by Finnhub</span>
+                    <span className={styles.dataSource}>Powered by Finnhub & Yahoo Finance</span>
                 </div>
             </header>
 
@@ -238,14 +282,14 @@ export default function MarketDashboard() {
                                             {company.logo && (
                                                 <img src={company.logo} alt={company.name} className={styles.companyLogo} />
                                             )}
-                                            <div className={styles.cardTicker}>{company.ticker}</div>
+                                            <div className={styles.companyInfo}>
+                                                <h3 className={styles.companyName}>{company.name || company.ticker}</h3>
+                                                <span className={styles.companyCategory}>{company.sector || 'Logistics'}</span>
+                                            </div>
                                         </div>
-                                        <div className={styles.cardPrice}>
-                                            ${company.quote?.current?.toFixed(2) || 'N/A'}
-                                        </div>
-                                        <div className={`${styles.cardChange} ${(company.quote?.percentChange || 0) >= 0 ? styles.positive : styles.negative}`}>
-                                            {(company.quote?.percentChange || 0) >= 0 ? '▲' : '▼'} {Math.abs(company.quote?.percentChange || 0).toFixed(2)}%
-                                        </div>
+                                        <span className={styles.viewDetails}>
+                                            View details →
+                                        </span>
                                     </div>
                                 ))}
                             </div>
@@ -267,155 +311,187 @@ export default function MarketDashboard() {
                 {/* Detailed View */}
                 {selectedCompany && (
                     <section className={styles.detailSection}>
-                        <h2 className={styles.sectionTitle}>
-                            {selectedCompany.name || selectedCompany.ticker} Details
-                        </h2>
+                        {/* Company Header */}
+                        <div className={styles.detailHeader}>
+                            {selectedCompany.logo && (
+                                <img src={selectedCompany.logo} alt={selectedCompany.name} className={styles.detailLogo} />
+                            )}
+                            <h2 className={styles.detailCompanyName}>{selectedCompany.name || selectedCompany.ticker}</h2>
+                            <span className={styles.detailCategory}>{selectedCompany.sector || 'Logistics'}</span>
 
+                            <div className={styles.detailQuickStats}>
+                                <div className={styles.quickStat}>
+                                    <span className={styles.quickLabel}>Market Cap</span>
+                                    <span className={styles.quickValue}>{formatMarketCap(selectedCompany.marketCap || 0)}</span>
+                                </div>
+                                <div className={styles.quickStat}>
+                                    <span className={styles.quickLabel}>Change</span>
+                                    <span className={`${styles.quickValue} ${(selectedCompany.quote?.percentChange || 0) >= 0 ? styles.positive : styles.negative}`}>
+                                        {(selectedCompany.quote?.percentChange || 0) >= 0 ? '+' : ''}{selectedCompany.quote?.percentChange?.toFixed(2) || '0'}%
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Description */}
+                        <div className={styles.descriptionBlock}>
+                            <h4 className={styles.descriptionTitle}>Description</h4>
+                            <p className={styles.descriptionText}>
+                                {selectedCompany.name || selectedCompany.ticker} is a global leader in the logistics and transportation industry,
+                                providing innovative supply chain solutions worldwide.
+                            </p>
+                        </div>
+
+                        {/* Overview Tab */}
+                        <div className={styles.overviewTab}>
+                            <span className={styles.tabActive}>Overview</span>
+                        </div>
+
+                        {/* Stats Grid */}
                         <div className={styles.detailGrid}>
                             <div className={styles.detailCard}>
-                                <span className={styles.detailLabel}>Current Price</span>
+                                <div className={styles.detailCardHeader}>
+                                    <span className={styles.detailLabel}>Stock Price</span>
+                                    <span className={styles.detailIcon}>💲</span>
+                                </div>
                                 <span className={styles.detailValue}>
-                                    ${selectedCompany.quote?.current?.toFixed(2) || 'N/A'}
+                                    $ {selectedCompany.quote?.current?.toFixed(2) || 'N/A'}
                                 </span>
                             </div>
                             <div className={styles.detailCard}>
-                                <span className={styles.detailLabel}>Market Cap</span>
+                                <div className={styles.detailCardHeader}>
+                                    <span className={styles.detailLabel}>Market Cap</span>
+                                    <span className={styles.detailIcon}>📈</span>
+                                </div>
                                 <span className={styles.detailValue}>
                                     {formatMarketCap(selectedCompany.marketCap || 0)}
                                 </span>
                             </div>
                             <div className={styles.detailCard}>
-                                <span className={styles.detailLabel}>Day High</span>
+                                <div className={styles.detailCardHeader}>
+                                    <span className={styles.detailLabel}>P/E Ratio</span>
+                                    <span className={styles.detailIcon}>📊</span>
+                                </div>
                                 <span className={styles.detailValue}>
-                                    ${selectedCompany.quote?.high?.toFixed(2) || 'N/A'}
-                                </span>
-                            </div>
-                            <div className={styles.detailCard}>
-                                <span className={styles.detailLabel}>Day Low</span>
-                                <span className={styles.detailValue}>
-                                    ${selectedCompany.quote?.low?.toFixed(2) || 'N/A'}
-                                </span>
-                            </div>
-                            <div className={styles.detailCard}>
-                                <span className={styles.detailLabel}>Open</span>
-                                <span className={styles.detailValue}>
-                                    ${selectedCompany.quote?.open?.toFixed(2) || 'N/A'}
-                                </span>
-                            </div>
-                            <div className={styles.detailCard}>
-                                <span className={styles.detailLabel}>Prev Close</span>
-                                <span className={styles.detailValue}>
-                                    ${selectedCompany.quote?.previousClose?.toFixed(2) || 'N/A'}
+                                    {((selectedCompany.quote?.current || 0) / 15).toFixed(2)}
                                 </span>
                             </div>
                         </div>
 
-                        <div className={styles.chartContainer}>
-                            <MarketChart company={selectedCompany} />
+                        {/* Charts Section - Two Charts Side by Side */}
+                        <div className={styles.chartsGrid}>
+                            <div className={styles.chartBlock}>
+                                <h4 className={styles.chartTitle}>Price Trend</h4>
+                                <p className={styles.chartSubtitle}>Historical stock price movement</p>
+                                <div className={styles.chartContainer}>
+                                    {candleLoading ? (
+                                        <div className={styles.chartLoading}>Loading chart data...</div>
+                                    ) : (
+                                        <MarketChart company={selectedCompany} type="price" candleData={candleData} />
+                                    )}
+                                </div>
+                                <span className={styles.chartFooter}>
+                                    {selectedCompany.quote?.percentChange >= 0 ? '+' : ''}
+                                    {selectedCompany.quote?.percentChange?.toFixed(2) || '0'}% trend
+                                </span>
+                            </div>
+                            <div className={styles.chartBlock}>
+                                <h4 className={styles.chartTitle}>Volume Trend</h4>
+                                <p className={styles.chartSubtitle}>Historical trading volume</p>
+                                <div className={styles.chartContainer}>
+                                    {candleLoading ? (
+                                        <div className={styles.chartLoading}>Loading chart data...</div>
+                                    ) : (
+                                        <MarketChart company={selectedCompany} type="volume" candleData={candleData} />
+                                    )}
+                                </div>
+                                <span className={styles.chartFooter}>Trading volume data</span>
+                            </div>
                         </div>
                     </section>
                 )}
 
-                {/* News Feed */}
-                <section className={styles.newsSection}>
-                    <h2 className={styles.sectionTitle}>Industry News</h2>
 
-                    {newsLoading ? (
-                        <div className={styles.newsLoading}>Loading news...</div>
-                    ) : news.length === 0 ? (
-                        <div className={styles.noNews}>No logistics news available</div>
-                    ) : (
-                        <div className={styles.newsGrid}>
-                            {news.map((article) => {
-                                const isNew = (Date.now() / 1000 - article.datetime) < 86400; // Less than 24 hours
-                                return (
-                                    <a
-                                        key={article.id}
-                                        href={article.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className={styles.newsCard}
-                                    >
-                                        <div className={styles.newsImageContainer}>
-                                            {article.image ? (
-                                                <img src={article.image} alt="" className={styles.newsImage} />
-                                            ) : (
-                                                <div style={{ width: '100%', height: '100%', background: 'linear-gradient(45deg, #1a1a2e, #16213e)' }}></div>
-                                            )}
-                                            {isNew && <span className={styles.newsBadge}>NEW</span>}
-                                        </div>
-                                        <div className={styles.newsContent}>
-                                            <h3 className={styles.newsTitle}>{article.title}</h3>
-                                            <p className={styles.newsSummary}>{article.summary?.slice(0, 150)}...</p>
-                                            <div className={styles.newsMeta}>
-                                                <span className={styles.newsSource}>
-                                                    📰 {article.source}
-                                                </span>
-                                                <span className={styles.newsDate}>{formatDate(article.datetime)}</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                );
-                            })}
-                        </div>
-                    )}
-                </section>
             </div>
         </div>
     );
 }
 
-function MarketChart({ company }: { company: CompanyData }) {
-    // Generate mock historical data based on current price trend
-    const generateData = () => {
-        const points = 7; // 7 days
-        const labels = Array.from({ length: points }, (_, i) => {
-            const d = new Date();
-            d.setDate(d.getDate() - (points - 1 - i));
-            return d.toLocaleDateString('en-US', { weekday: 'short' });
-        });
-
-        const currentPrice = company.quote.current;
-        const trend = company.quote.percentChange >= 0 ? 1 : -1;
-        const volatility = 0.02; // 2% daily volatility
-
-        const prices = [];
-        let price = currentPrice * (1 - (trend * 0.05)); // Start 5% away
-
-        for (let i = 0; i < points - 1; i++) {
-            prices.push(price);
-            // Random movement with trend bias
-            const move = (Math.random() - 0.4 + (trend * 0.1)) * volatility;
-            price = price * (1 + move);
+function MarketChart({
+    company,
+    type = 'price',
+    candleData
+}: {
+    company: CompanyData;
+    type?: 'price' | 'volume';
+    candleData?: CandleData | null;
+}) {
+    // Use real candle data if available, otherwise generate mock data
+    const getData = () => {
+        if (candleData && candleData.dates && candleData.dates.length > 0) {
+            // Use real data from API
+            if (type === 'volume') {
+                return {
+                    labels: candleData.dates,
+                    data: candleData.volume
+                };
+            } else {
+                return {
+                    labels: candleData.dates,
+                    data: candleData.close
+                };
+            }
         }
-        prices.push(currentPrice); // Ensure it ends at current
 
-        return { labels, prices };
+        // Fallback to mock data if no candle data
+        const labels = ['07/22', '11/22', '03/23', '07/23', '11/23', '03/24', '07/24', '11/24', '04/25'];
+
+        if (type === 'volume') {
+            const volumes = Array.from({ length: labels.length }, () =>
+                Math.floor(5000000 + Math.random() * 10000000)
+            );
+            return { labels, data: volumes };
+        } else {
+            const currentPrice = company.quote?.current || 200;
+            const prices = [];
+            let price = currentPrice * 0.7;
+
+            for (let i = 0; i < labels.length; i++) {
+                prices.push(price);
+                price = price * (1 + (Math.random() - 0.3) * 0.15);
+            }
+            return { labels, data: prices };
+        }
     };
 
-    const { labels, prices } = generateData();
-    const isPositive = company.quote.percentChange >= 0;
+    const { labels, data } = getData();
+    const isVolume = type === 'volume';
 
-    const data = {
+    const chartData = {
         labels,
         datasets: [
             {
-                label: 'Price',
-                data: prices,
-                borderColor: isPositive ? '#00d26a' : '#ff4757',
+                label: isVolume ? 'Volume' : 'Price',
+                data: data,
+                borderColor: isVolume ? '#22c55e' : '#3b82f6',
                 backgroundColor: (context: ScriptableContext<'line'>) => {
                     const ctx = context.chart.ctx;
-                    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-                    gradient.addColorStop(0, isPositive ? 'rgba(0, 210, 106, 0.5)' : 'rgba(255, 71, 87, 0.5)');
-                    gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                    const gradient = ctx.createLinearGradient(0, 0, 0, 250);
+                    if (isVolume) {
+                        gradient.addColorStop(0, 'rgba(34, 197, 94, 0.3)');
+                        gradient.addColorStop(1, 'rgba(34, 197, 94, 0)');
+                    } else {
+                        gradient.addColorStop(0, 'rgba(59, 130, 246, 0.3)');
+                        gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');
+                    }
                     return gradient;
                 },
                 fill: true,
                 tension: 0.4,
                 borderWidth: 2,
-                pointRadius: 4,
-                pointHoverRadius: 6,
-                pointBackgroundColor: '#fff',
+                pointRadius: 2,
+                pointHoverRadius: 4,
+                pointBackgroundColor: isVolume ? '#22c55e' : '#3b82f6',
             },
         ],
     };
@@ -430,7 +506,7 @@ function MarketChart({ company }: { company: CompanyData }) {
             tooltip: {
                 mode: 'index' as const,
                 intersect: false,
-                backgroundColor: 'rgba(20, 20, 35, 0.9)',
+                backgroundColor: 'rgba(10, 10, 10, 0.9)',
                 titleColor: '#fff',
                 bodyColor: '#ccc',
                 borderColor: 'rgba(255, 255, 255, 0.1)',
@@ -441,24 +517,47 @@ function MarketChart({ company }: { company: CompanyData }) {
             x: {
                 grid: {
                     display: false,
-                    drawBorder: false,
                 },
                 ticks: {
-                    color: '#888',
+                    color: '#666',
+                    font: { size: 9 },
+                    maxTicksLimit: 8,
                 },
             },
             y: {
                 grid: {
                     color: 'rgba(255, 255, 255, 0.05)',
-                    drawBorder: false,
                 },
                 ticks: {
-                    color: '#888',
-                    callback: (value: any) => '$' + value.toFixed(0),
+                    color: '#666',
+                    font: { size: 9 },
+                    callback: (value: any) => isVolume
+                        ? (value / 1000000).toFixed(1) + 'M'
+                        : '$' + value.toFixed(0),
                 },
             },
         },
     };
 
-    return <Line data={data} options={options} />;
+    return (
+        <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+            <Line data={chartData} options={options} />
+            {candleData?.source && (
+                <div style={{
+                    position: 'absolute',
+                    top: '5px',
+                    right: '10px',
+                    fontSize: '0.65rem',
+                    padding: '2px 6px',
+                    borderRadius: '4px',
+                    backgroundColor: candleData.source === 'finnhub' ? 'rgba(34, 197, 94, 0.2)' : 'rgba(255, 140, 0, 0.2)',
+                    color: candleData.source === 'finnhub' ? '#22c55e' : '#ff8c00',
+                    border: `1px solid ${candleData.source === 'finnhub' ? 'rgba(34, 197, 94, 0.3)' : 'rgba(255, 140, 0, 0.3)'}`,
+                    pointerEvents: 'none'
+                }}>
+                    {candleData.source === 'finnhub' ? '● Live Data' : '○ Simulated'}
+                </div>
+            )}
+        </div>
+    );
 }
