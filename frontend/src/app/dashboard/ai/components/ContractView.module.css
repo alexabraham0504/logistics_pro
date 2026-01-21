@@ -46,10 +46,14 @@
         display: none !important;
     }
 
+    .container {
+        padding-top: 70px;
+    }
+
     .splitLayout {
         flex-direction: column;
         overflow-y: auto;
-        padding: 5rem 1rem 1rem 1rem;
+        padding: 1rem;
         gap: 1.5rem;
     }
 
