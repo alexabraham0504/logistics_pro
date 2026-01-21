@@ -97,7 +97,15 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         <div className={styles.dashboardLayout}>
             {/* Mobile Menu Toggle - only show when sidebar is closed and NOT on AI Agent sub-pages */}
             {!sidebarOpen && !pathname.includes('/ai/agent') && (
-                <button className={styles.mobileMenuBtn} onClick={() => setSidebarOpen(true)}>
+                <button
+                    className={styles.mobileMenuBtn}
+                    onClick={() => setSidebarOpen(true)}
+                    style={pathname.startsWith('/dashboard/ai') ? {
+                        backgroundColor: '#0a0a0a',
+                        color: '#ffffff',
+                        borderColor: 'rgba(255, 255, 255, 0.1)'
+                    } : {}}
+                >
                     <FiMenu size={24} />
                 </button>
             )}
