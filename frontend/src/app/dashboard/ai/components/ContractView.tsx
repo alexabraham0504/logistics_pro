@@ -222,7 +222,7 @@ export default function ContractView() {
     return (
         <div className={styles.container}>
             <header className={styles.header}>
-                <Link href="/dashboard/ai" className={styles.backBtn}>
+                <Link href="/dashboard/ai" className={`${styles.backBtn} ${styles.hideOnMobile}`}>
                     <FiChevronLeft /> Back to Dashboard
                 </Link>
             </header>

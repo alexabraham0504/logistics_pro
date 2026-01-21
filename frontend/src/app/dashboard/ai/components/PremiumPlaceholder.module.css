@@ -226,8 +226,17 @@
 }
 
 @media (max-width: 768px) {
+    .header {
+        padding: 0.5rem 1rem;
+        border-bottom: none;
+    }
+
+    .hideOnMobile {
+        display: none !important;
+    }
+
     .title {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
     }
 
     .mockGrid {
@@ -235,6 +244,6 @@
     }
 
     .content {
-        padding: 4rem 1.5rem;
+        padding: 2rem 1rem;
     }
 }

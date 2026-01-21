@@ -63,7 +63,7 @@ export default function SupportView() {
     return (
         <div className={styles.container}>
             <header className={styles.header}>
-                <Link href="/dashboard/ai" className={styles.backBtn}>
+                <Link href="/dashboard/ai" className={`${styles.backBtn} ${styles.hideOnMobile}`}>
                     <FiArrowLeft /> Back to Agent Studio
                 </Link>
                 <div className={styles.agentInfo}>

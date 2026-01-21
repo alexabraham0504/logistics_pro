@@ -221,7 +221,7 @@ export default function MarketDashboard() {
         <div className={styles.dashboard}>
             {/* Header */}
             <header className={styles.header}>
-                <Link href="/dashboard/ai" className={styles.backBtn}>
+                <Link href="/dashboard/ai" className={`${styles.backBtn} ${styles.hideOnMobile}`}>
                     ← Back to Agent Studio
                 </Link>
                 <div className={styles.headerCenter}>
