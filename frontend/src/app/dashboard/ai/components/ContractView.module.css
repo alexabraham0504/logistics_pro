@@ -181,14 +181,24 @@
 
 @media (max-width: 768px) {
     .panelHeader {
-        display: none !important;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .panelControls {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
     }
 
     .splitLayout {
         flex-direction: column;
         overflow-y: auto;
-        padding: 0.75rem;
-        gap: 1rem;
+        padding: 0.5rem;
+        gap: 1.5rem;
     }
 
     .hideOnMobile {
@@ -232,13 +242,16 @@
         font-size: 0.875rem;
     }
 
-    .container {
-        padding-top: 64px;
-    }
+
 
     .leftPanel,
     .rightPanel {
         border-radius: 12px;
+        padding: 1rem;
+    }
+
+    .documentViewer {
+        min-height: 200px;
     }
 }
 

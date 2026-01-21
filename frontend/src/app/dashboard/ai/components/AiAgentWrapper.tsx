@@ -38,22 +38,8 @@ export default function AiAgentWrapper({ children, agentName }: AiAgentWrapperPr
             width: '100%',
             fontFamily: "'Inter', sans-serif"
         }}>
-            {/* Fixed Top Header - Forced Styles */}
-            <header style={{
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                right: 0,
-                height: '60px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: '0 1rem',
-                backgroundColor: '#0a0a0a',
-                borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
-                zIndex: 999999,
-                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.8)'
-            }}>
+            {/* Fixed Top Header */}
+            <header className={styles.agentHeader}>
                 <Link href="/dashboard/ai" className={styles.agentBackBtn}>
                     <FiArrowLeft size={20} />
                 </Link>
@@ -61,12 +47,12 @@ export default function AiAgentWrapper({ children, agentName }: AiAgentWrapperPr
                     <div className={styles.agentHeaderIcon}>
                         <FiCpu size={16} />
                     </div>
-                    <h1 className={styles.agentHeaderTitle} style={{ color: '#fff' }}>{agentName || 'Agent Studio'}</h1>
+                    <h1 className={styles.agentHeaderTitle}>{agentName || 'Agent Studio'}</h1>
                 </div>
                 <button
                     className={styles.agentMenuBtn}
                     onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                    style={{ zIndex: 1000000, pointerEvents: 'auto' }}
+                    style={{ pointerEvents: 'auto' }}
                 >
                     {isSidebarOpen ? <FiX size={22} /> : <FiMenu size={22} />}
                 </button>
@@ -103,8 +89,8 @@ export default function AiAgentWrapper({ children, agentName }: AiAgentWrapperPr
                 </>
             )}
 
-            {/* Main Content - Padded top to account for fixed header */}
-            <main className={styles.agentContent} style={{ paddingTop: '60px', position: 'relative', zIndex: 1 }}>
+            {/* Main Content */}
+            <main className={styles.agentContent}>
                 {children}
             </main>
         </div>

@@ -1,5 +1,10 @@
 import ContractView from '../../components/ContractView';
+import AiAgentWrapper from '../../components/AiAgentWrapper';
 
 export default function ContractPage() {
-    return <ContractView />;
+    return (
+        <AiAgentWrapper agentName="Contract Intelligence">
+            <ContractView />
+        </AiAgentWrapper>
+    );
 }
