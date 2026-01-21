@@ -38,6 +38,8 @@
 @media (max-width: 768px) {
     .mobileMenuBtn {
         display: flex !important;
+        top: 6px;
+        left: 6px;
     }
 }
 
