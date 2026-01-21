@@ -53,9 +53,6 @@
 }
 
 .headerCenter {
-    position: absolute;
-    left: calc(50% - 25px);
-    transform: translateX(-50%);
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -475,25 +472,33 @@
 }
 
 /* Responsive */
-@media (max-width: 900px) {
-    .modalContent {
-        grid-template-columns: 1fr;
-    }
-
-    .mapPlaceholder {
-        min-height: 200px;
-    }
-
-    .infoCards {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 640px) {
+@media (max-width: 768px) {
     .header {
         flex-direction: column;
         gap: 1rem;
-        padding-top: 5rem;
+        padding-top: 4.5rem;
+        text-align: center;
+    }
+
+    .headerCenter {
+        order: -1;
+    }
+
+    .backBtn {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        padding: 0.5rem;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+    }
+
+    .content {
+        padding: 1rem;
+    }
+
+    .wheelSection {
+        margin-top: 1rem;
     }
 
     .progressWheel {
@@ -507,5 +512,24 @@
 
     .infoCards {
         grid-template-columns: 1fr;
+    }
+
+    .pageTitle {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .progressWheel {
+        width: 260px;
+        height: 260px;
+    }
+
+    .centerInput {
+        width: 120px;
+    }
+
+    .stageLabel {
+        display: none;
     }
 }
