@@ -37,6 +37,313 @@
     }
 }
 
+/* ==================== AGENT PAGE WRAPPER (No left sidebar) ==================== */
+.agentPageWrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #0a0a0a;
+    color: #ffffff;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    width: 100%;
+}
+
+.agentHeader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    background: #0a0a0a;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.agentBackBtn {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.agentBackBtn:hover {
+    background: rgba(249, 115, 22, 0.1);
+    border-color: rgba(249, 115, 22, 0.3);
+    color: #f97316;
+}
+
+.agentHeaderCenter {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.agentHeaderIcon {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+
+.agentHeaderTitle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+    white-space: nowrap;
+}
+
+.agentMenuBtn {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.agentMenuBtn:hover {
+    background: rgba(249, 115, 22, 0.1);
+    border-color: rgba(249, 115, 22, 0.3);
+    color: #f97316;
+}
+
+.agentOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1001;
+    animation: fadeIn 0.2s ease;
+}
+
+.agentSidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 280px;
+    height: 100vh;
+    background: linear-gradient(180deg, #0f0f0f 0%, #0a0a0a 100%);
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    z-index: 1002;
+    padding: 1.5rem 1rem;
+    animation: slideInRight 0.3s ease;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+}
+
+.agentSidebarHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.agentSidebarNav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.agentNavLink {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.9rem;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.agentNavLink:hover {
+    background: rgba(249, 115, 22, 0.1);
+    color: #f97316;
+}
+
+.agentContent {
+    flex: 1;
+    width: 100%;
+    padding-top: 60px;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Mobile optimizations for agent pages */
+@media (max-width: 768px) {
+    .agentHeader {
+        height: 56px;
+        padding: 0 0.75rem;
+    }
+
+    .agentBackBtn,
+    .agentMenuBtn {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+    }
+
+    .agentHeaderIcon {
+        width: 28px;
+        height: 28px;
+    }
+
+    .agentHeaderTitle {
+        font-size: 0.9rem;
+    }
+
+    .agentSidebar {
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .agentContent {
+        padding-top: 56px;
+    }
+}
+
+@media (max-width: 480px) {
+    .agentHeaderTitle {
+        font-size: 0.8rem;
+        max-width: 140px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .agentSidebar {
+        max-width: none;
+    }
+}
+
+/* Premium Entrance Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.4);
+    }
+
+    50% {
+        transform: scale(1.02);
+        box-shadow: 0 0 20px 5px rgba(249, 115, 22, 0.2);
+    }
+}
+
+@keyframes iconFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-3px);
+    }
+}
+
+@keyframes iconBounce {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.15);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes glowPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 4px 30px rgba(249, 115, 22, 0.15);
+    }
+}
+
 /* ==================== LEFT SIDEBAR ==================== */
 .sidebar {
     width: 200px;
@@ -208,9 +515,25 @@
 }
 
 .statCard:hover {
-    border-color: rgba(255, 255, 255, 0.08);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    border-color: rgba(249, 115, 22, 0.3);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(249, 115, 22, 0.1);
+}
+
+.statCard:nth-child(1) {
+    animation: fadeInUp 0.5s ease-out 0.1s both;
+}
+
+.statCard:nth-child(2) {
+    animation: fadeInUp 0.5s ease-out 0.2s both;
+}
+
+.statCard:nth-child(3) {
+    animation: fadeInUp 0.5s ease-out 0.3s both;
+}
+
+.statCard:nth-child(4) {
+    animation: fadeInUp 0.5s ease-out 0.4s both;
 }
 
 .statContent {
@@ -256,6 +579,7 @@
     justify-content: center;
     position: relative;
     z-index: 1;
+    animation: iconFloat 3s ease-in-out infinite;
 }
 
 .statIconBox.blue {
@@ -330,9 +654,29 @@
 }
 
 .quickActionCard:hover {
-    border-color: rgba(255, 255, 255, 0.08);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    border-color: rgba(249, 115, 22, 0.4);
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 16px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(249, 115, 22, 0.15);
+}
+
+.quickActionCard:hover .quickActionIcon {
+    animation: pulse 1s ease-in-out infinite;
+}
+
+.quickActionsGrid .quickActionCard:nth-child(1) {
+    animation: fadeInScale 0.4s ease-out 0.2s both;
+}
+
+.quickActionsGrid .quickActionCard:nth-child(2) {
+    animation: fadeInScale 0.4s ease-out 0.3s both;
+}
+
+.quickActionsGrid .quickActionCard:nth-child(3) {
+    animation: fadeInScale 0.4s ease-out 0.4s both;
+}
+
+.quickActionsGrid .quickActionCard:nth-child(4) {
+    animation: fadeInScale 0.4s ease-out 0.5s both;
 }
 
 .quickActionIcon {
@@ -389,6 +733,14 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 0.875rem;
+}
+
+.bottomSection>*:nth-child(1) {
+    animation: fadeInUp 0.5s ease-out 0.5s both;
+}
+
+.bottomSection>*:nth-child(2) {
+    animation: fadeInUp 0.5s ease-out 0.6s both;
 }
 
 /* Premium Black Recent Agents Section */
@@ -463,23 +815,28 @@
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.03);
     text-decoration: none;
-    transition: all 0.15s ease;
+    transition: all 0.2s ease;
+    animation: fadeInUp 0.4s ease-out both;
 }
 
 .recentAgentItem:hover {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(4px);
+}
+
+.recentAgentItem:hover .recentAgentIcon {
+    animation: iconBounce 0.4s ease;
 }
 
 .recentAgentIcon {
     width: 28px;
     height: 28px;
-    background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.08) 100%);
     border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #f97316;
+    transition: all 0.2s ease;
 }
 
 .recentAgentName {
@@ -527,6 +884,25 @@
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.03);
     border-radius: 8px;
+    animation: fadeInUp 0.4s ease-out both;
+    transition: all 0.2s ease;
+}
+
+.statusItem:nth-child(1) {
+    animation-delay: 0.7s;
+}
+
+.statusItem:nth-child(2) {
+    animation-delay: 0.8s;
+}
+
+.statusItem:nth-child(3) {
+    animation-delay: 0.9s;
+}
+
+.statusItem:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.08);
 }
 
 .statusIcon {
@@ -550,9 +926,22 @@
     font-size: 0.6875rem;
     padding: 0.1875rem 0.5rem;
     border-radius: 4px;
-    background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.08) 100%);
-    color: #f97316;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.25) 0%, rgba(16, 185, 129, 0.1) 100%);
+    color: #10b981;
     font-weight: 500;
+    animation: statusPulse 2s ease-in-out infinite;
+}
+
+@keyframes statusPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    }
+
+    50% {
+        box-shadow: 0 0 8px 2px rgba(16, 185, 129, 0.3);
+    }
 }
 
 /* ==================== RESPONSIVE ==================== */

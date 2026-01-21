@@ -1,6 +1,8 @@
+/* PremiumPlaceholder - Clean centered layout (no header, handled by wrapper) */
+
 .container {
-    min-height: 100vh;
-    background: #000;
+    min-height: calc(100vh - 60px);
+    background: #0a0a0a;
     color: #fff;
     display: flex;
     flex-direction: column;
@@ -8,48 +10,7 @@
     overflow: hidden;
 }
 
-.header {
-    padding: 1.5rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 10;
-}
-
-.backBtn {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    color: #a1a1aa;
-    text-decoration: none;
-    font-size: 0.875rem;
-    font-weight: 500;
-    transition: all 0.2s;
-}
-
-.backBtn:hover {
-    color: #fff;
-    transform: translateX(-4px);
-}
-
-.headerActions {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.iconBtn {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #fff;
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
-
+/* Content */
 .content {
     flex: 1;
     display: flex;
@@ -63,50 +24,121 @@
 
 .heroSection {
     max-width: 600px;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
+    width: 100%;
 }
 
 .badge {
     display: inline-block;
-    padding: 0.4rem 0.8rem;
-    background: rgba(249, 115, 22, 0.1);
-    border: 1px solid rgba(249, 115, 22, 0.2);
-    color: #f97316;
-    font-size: 0.7rem;
-    font-weight: 700;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid;
+    font-size: 0.75rem;
+    font-weight: 600;
     border-radius: 99px;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     margin-bottom: 2rem;
+    animation: fadeInUp 0.5s ease-out;
+}
+
+/* Agent Icon with Rings */
+.agentIconWrapper {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 2rem;
 }
 
 .agentIcon {
-    font-size: 4rem;
-    margin-bottom: 1.5rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
     color: #fff;
-    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
+    z-index: 3;
+    animation: iconPulse 2s ease-in-out infinite;
+}
+
+.iconRing {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    border: 2px solid;
+    border-radius: 50%;
+    animation: ringPulse 2s ease-in-out infinite;
+}
+
+.iconRing2 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: 120px;
+    border: 1px solid;
+    border-radius: 50%;
+    animation: ringPulse 2s ease-in-out infinite 0.3s;
+}
+
+/* Unique animation types */
+.truck {
+    animation: truckBounce 1.5s ease-in-out infinite !important;
+}
+
+.boxes {
+    animation: boxStack 2s ease-in-out infinite !important;
 }
 
 .title {
-    font-size: 3.5rem;
+    font-size: 2.5rem;
     font-weight: 800;
-    margin: 0 0 1.5rem 0;
-    background: linear-gradient(to bottom, #fff 0%, #71717a 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    margin: 0 0 1rem 0;
+    animation: fadeInUp 0.5s ease-out 0.2s both;
 }
 
 .subtitle {
-    font-size: 1.1rem;
-    color: #a1a1aa;
+    font-size: 1rem;
+    color: #71717a;
     line-height: 1.6;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
+    animation: fadeInUp 0.5s ease-out 0.3s both;
 }
 
+/* Feature Pills */
+.featurePills {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+}
+
+.featurePill {
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid;
+    border-radius: 99px;
+    font-size: 0.8rem;
+    color: #a1a1aa;
+    animation: fadeInUp 0.4s ease-out both;
+}
+
+/* Progress */
 .progressSection {
     width: 100%;
-    max-width: 400px;
+    max-width: 350px;
     margin: 0 auto;
+    animation: fadeInUp 0.5s ease-out 0.5s both;
 }
 
 .progressHeader {
@@ -126,42 +158,182 @@
 }
 
 .progressFill {
-    width: 85%;
     height: 100%;
-    background: linear-gradient(to right, #f97316, #ea580c);
-    box-shadow: 0 0 10px rgba(249, 115, 22, 0.5);
+    border-radius: 3px;
+    animation: progressGrow 1.5s ease-out both;
+    box-shadow: 0 0 10px currentColor;
 }
 
+/* Mock Grid */
 .mockGrid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    gap: 1.25rem;
     width: 100%;
-    max-width: 1000px;
+    max-width: 900px;
+    padding: 0 1rem;
 }
 
 .mockCard {
     background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 16px;
-    padding: 1.5rem;
-    backdrop-filter: blur(5px);
-    transition: transform 0.3s;
+    padding: 1.25rem;
+    min-height: 140px;
+    transition: all 0.3s;
+    animation: fadeInUp 0.5s ease-out both;
+}
+
+.mockCard:nth-child(1) {
+    animation-delay: 0.6s;
+}
+
+.mockCard:nth-child(2) {
+    animation-delay: 0.7s;
+}
+
+.mockCard:nth-child(3) {
+    animation-delay: 0.8s;
 }
 
 .mockCard:hover {
     transform: translateY(-5px);
     background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.1);
 }
 
 .mockHeader {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    font-size: 0.9rem;
-    color: #f97316;
-    margin-bottom: 1.5rem;
+    font-size: 0.85rem;
+    margin-bottom: 1.25rem;
     font-weight: 600;
+}
+
+.mockNumber {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.mockSubtext {
+    font-size: 0.8rem;
+    color: #71717a;
+    margin-top: 0.5rem;
+}
+
+/* Fleet Truck Animation */
+.truckAnimation {
+    position: relative;
+    height: 60px;
+    overflow: hidden;
+}
+
+.road {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: #333;
+}
+
+.movingTruck {
+    position: absolute;
+    bottom: 8px;
+    left: -40px;
+    font-size: 1.5rem;
+    color: #3b82f6;
+    animation: truckMove 3s linear infinite;
+}
+
+/* Inventory Boxes Animation */
+.boxesAnimation {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 8px;
+    height: 60px;
+}
+
+.box {
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    animation: boxPop 1.5s ease-in-out infinite;
+}
+
+.box:nth-child(1) {
+    animation-delay: 0s;
+    height: 25px;
+}
+
+.box:nth-child(2) {
+    animation-delay: 0.2s;
+    height: 35px;
+}
+
+.box:nth-child(3) {
+    animation-delay: 0.4s;
+    height: 20px;
+}
+
+/* Bar Chart */
+.barChart {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 10px;
+    height: 70px;
+}
+
+.chartBar {
+    width: 18px;
+    border-radius: 4px 4px 0 0;
+    animation: barGrow 1s ease-out both;
+}
+
+.chartBar:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.chartBar:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.chartBar:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.chartBar:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+/* Alert Pulse */
+.alertPulse {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 auto;
+    animation: alertBlink 1.5s ease-in-out infinite;
+}
+
+/* Gauge Animation */
+.gaugeAnimation {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 6px solid transparent;
+    border-top-color: currentColor;
+    margin: 0 auto;
+    animation: gaugeRotate 2s linear infinite;
 }
 
 .mockLines {
@@ -171,19 +343,19 @@
 }
 
 .line {
-    height: 8px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 4px;
+    height: 10px;
+    border-radius: 5px;
     width: 100%;
+    animation: lineGrow 1s ease-out both;
 }
 
 .mockCircle {
-    width: 80px;
-    height: 80px;
-    border: 8px solid rgba(255, 255, 255, 0.03);
-    border-top-color: #f97316;
+    width: 60px;
+    height: 60px;
+    border: 6px solid rgba(255, 255, 255, 0.03);
     border-radius: 50%;
     margin: 0 auto;
+    animation: circleRotate 2s linear infinite;
 }
 
 .mockBars {
@@ -191,59 +363,317 @@
     align-items: flex-end;
     justify-content: center;
     gap: 10px;
-    height: 80px;
+    height: 70px;
 }
 
 .bar {
-    width: 20px;
-    background: #27272a;
-    border-radius: 4px;
+    width: 18px;
+    border-radius: 4px 4px 0 0;
+    animation: barGrow 1s ease-out both;
 }
 
+/* Background Effects */
 .backgroundEffects {
     position: absolute;
     inset: 0;
     pointer-events: none;
+    z-index: 0;
 }
 
 .glow {
     position: absolute;
-    top: 50%;
+    top: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(249, 115, 22, 0.1) 0%, transparent 70%);
-    z-index: 1;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    filter: blur(60px);
 }
 
-.mesh {
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    opacity: 0.5;
-}
-
-@media (max-width: 768px) {
-    .header {
-        padding: 0.5rem 1rem;
-        border-bottom: none;
+/* Keyframe Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
     }
 
-    .hideOnMobile {
-        display: none !important;
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes iconPulse {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.05);
+    }
+}
+
+@keyframes ringPulse {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 0.2;
+    }
+}
+
+@keyframes truckBounce {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) translateY(0);
+    }
+
+    50% {
+        transform: translate(-50%, -50%) translateY(-5px);
+    }
+}
+
+@keyframes boxStack {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.08) rotate(3deg);
+    }
+}
+
+@keyframes truckMove {
+    0% {
+        left: -40px;
+    }
+
+    100% {
+        left: calc(100% + 40px);
+    }
+}
+
+@keyframes boxPop {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes barGrow {
+    from {
+        transform: scaleY(0);
+        transform-origin: bottom;
+    }
+
+    to {
+        transform: scaleY(1);
+        transform-origin: bottom;
+    }
+}
+
+@keyframes alertBlink {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.7;
+        transform: scale(1.05);
+    }
+}
+
+@keyframes gaugeRotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes circleRotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes lineGrow {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes progressGrow {
+    from {
+        width: 0;
+    }
+}
+
+/* ==================== MOBILE RESPONSIVE ==================== */
+@media (max-width: 768px) {
+    .container {
+        min-height: calc(100vh - 56px);
+    }
+
+    .content {
+        padding: 1.5rem 1rem;
+        justify-content: flex-start;
+        padding-top: 2rem;
+    }
+
+    .heroSection {
+        margin-bottom: 2rem;
     }
 
     .title {
-        font-size: 2.2rem;
+        font-size: 1.75rem;
+    }
+
+    .subtitle {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    .agentIconWrapper {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 1.5rem;
+    }
+
+    .agentIcon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+        border-radius: 16px;
+    }
+
+    .iconRing {
+        width: 80px;
+        height: 80px;
+    }
+
+    .iconRing2 {
+        width: 100px;
+        height: 100px;
+    }
+
+    .featurePills {
+        gap: 0.5rem;
+    }
+
+    .featurePill {
+        font-size: 0.7rem;
+        padding: 0.4rem 0.75rem;
+    }
+
+    .progressSection {
+        max-width: 300px;
     }
 
     .mockGrid {
         grid-template-columns: 1fr;
+        gap: 0.75rem;
+        max-width: 400px;
     }
 
+    .mockCard {
+        min-height: 100px;
+        padding: 1rem;
+    }
+
+    .mockHeader {
+        font-size: 0.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .mockNumber {
+        font-size: 2rem;
+    }
+
+    .glow {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+@media (max-width: 480px) {
     .content {
-        padding: 2rem 1rem;
+        padding: 1rem 0.75rem;
+    }
+
+    .title {
+        font-size: 1.5rem;
+    }
+
+    .subtitle {
+        font-size: 0.85rem;
+    }
+
+    .badge {
+        font-size: 0.65rem;
+        padding: 0.4rem 0.8rem;
+    }
+
+    .agentIconWrapper {
+        width: 80px;
+        height: 80px;
+    }
+
+    .agentIcon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.25rem;
+    }
+
+    .iconRing {
+        width: 65px;
+        height: 65px;
+    }
+
+    .iconRing2 {
+        width: 80px;
+        height: 80px;
+    }
+
+    .featurePill {
+        font-size: 0.65rem;
+        padding: 0.35rem 0.6rem;
+    }
+
+    .progressSection {
+        max-width: 100%;
+    }
+
+    .mockCard {
+        min-height: 90px;
     }
 }

@@ -1,11 +1,10 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
-import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import axios from 'axios';
 import styles from './ContractView.module.css';
-import { FiChevronLeft, FiMaximize2, FiPaperclip } from 'react-icons/fi';
+import { FiMaximize2, FiPaperclip } from 'react-icons/fi';
 import { HiOutlineSparkles } from 'react-icons/hi';
 
 interface Message {
@@ -221,12 +220,6 @@ export default function ContractView() {
 
     return (
         <div className={styles.container}>
-            <header className={styles.header}>
-                <Link href="/dashboard/ai" className={`${styles.backBtn} ${styles.hideOnMobile}`}>
-                    <FiChevronLeft /> Back to Dashboard
-                </Link>
-            </header>
-
             <div className={styles.splitLayout}>
                 {/* Left Panel: Document Interaction */}
                 <div className={styles.leftPanel}>

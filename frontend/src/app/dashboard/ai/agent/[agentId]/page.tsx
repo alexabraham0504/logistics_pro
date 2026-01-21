@@ -31,14 +31,14 @@ export default function AgentPage() {
             case 'contract':
                 return <ContractView />;
             case 'fleet':
-                return <PremiumPlaceholder agentName="Fleet Optimizer" icon={<FiTruck />} />;
+                return <PremiumPlaceholder agentName="Fleet Optimizer" agentId="fleet" icon={<FiTruck />} />;
             case 'inventory':
-                return <PremiumPlaceholder agentName="Inventory Analyst" icon={<FiPackage />} />;
+                return <PremiumPlaceholder agentName="Inventory Analyst" agentId="inventory" icon={<FiPackage />} />;
             case 'logistics':
             case 'support':
                 return <SupportView />;
             default:
-                return <PremiumPlaceholder agentName={`${agentId.charAt(0).toUpperCase() + agentId.slice(1)} Agent`} icon={<FiCpu />} />;
+                return <PremiumPlaceholder agentName={`${agentId.charAt(0).toUpperCase() + agentId.slice(1)} Agent`} agentId={agentId} icon={<FiCpu />} />;
         }
     };
 

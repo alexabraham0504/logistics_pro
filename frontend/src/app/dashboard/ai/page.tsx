@@ -47,6 +47,19 @@ const agentIcons: { [key: string]: React.ReactNode } = {
     'logistics': <FiBox size={16} />,
 };
 
+// Agent color mapping - unique color for each agent
+const agentColors: { [key: string]: string } = {
+    'fleet': '#3b82f6',      // Blue
+    'inventory': '#10b981',   // Green
+    'shipment': '#8b5cf6',    // Purple
+    'contract': '#f59e0b',    // Amber
+    'zone': '#ef4444',        // Red
+    'carrier': '#ec4899',     // Pink
+    'market': '#06b6d4',      // Cyan
+    'logistics': '#f97316',   // Orange
+    'support': '#14b8a6',     // Teal
+};
+
 export default function AiDashboard() {
     const { token } = useAuth();
     const [agents, setAgents] = useState<Agent[]>([]);
@@ -131,7 +144,7 @@ export default function AiDashboard() {
             description: 'Find ready-to-use templates',
             icon: <HiOutlineDocumentText size={18} />,
             color: '#ec4899',
-            href: '/dashboard/ai/templates',
+            href: '/dashboard/ai/browse-templates',
         },
     ];
 
@@ -145,6 +158,16 @@ export default function AiDashboard() {
             }
         }
         return <FiCpu size={16} />;
+    };
+
+    const getAgentColor = (agentId: string) => {
+        const key = agentId.toLowerCase();
+        for (const [colorKey, color] of Object.entries(agentColors)) {
+            if (key.includes(colorKey)) {
+                return color;
+            }
+        }
+        return '#f97316'; // Default orange
     };
 
     return (
@@ -300,18 +323,28 @@ export default function AiDashboard() {
                                 </button>
                             </div>
                             <div className={styles.agentsList}>
-                                {displayedAgents.map((agent, index) => (
-                                    <Link
-                                        key={agent.id}
-                                        href={`/dashboard/ai/agent/${agent.id}`}
-                                        className={styles.recentAgentItem}
-                                    >
-                                        <span className={styles.recentAgentIcon}>
-                                            {getAgentIcon(agent.id)}
-                                        </span>
-                                        <span className={styles.recentAgentName}>{agent.name}</span>
-                                    </Link>
-                                ))}
+                                {displayedAgents.map((agent, index) => {
+                                    const color = getAgentColor(agent.id);
+                                    return (
+                                        <Link
+                                            key={agent.id}
+                                            href={`/dashboard/ai/agent/${agent.id}`}
+                                            className={styles.recentAgentItem}
+                                            style={{ animationDelay: `${0.1 * index}s` }}
+                                        >
+                                            <span
+                                                className={styles.recentAgentIcon}
+                                                style={{
+                                                    background: `${color}20`,
+                                                    color: color
+                                                }}
+                                            >
+                                                {getAgentIcon(agent.id)}
+                                            </span>
+                                            <span className={styles.recentAgentName}>{agent.name}</span>
+                                        </Link>
+                                    );
+                                })}
                             </div>
                         </section>
 
