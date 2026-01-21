@@ -742,16 +742,20 @@
     }
 
     .chartBlock {
-        padding: 0.25rem;
-        min-height: 400px;
-        background: rgba(20, 20, 35, 0.4);
+        padding: 1rem 0.5rem;
+        min-height: 420px;
+        background: #0f0f15;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        margin-bottom: 1rem;
     }
 
     .chartContainer {
         height: 320px !important;
-        margin-top: 0.5rem;
+        margin-top: 0.75rem;
         padding: 0;
-        margin-left: -10px;
+        margin-left: -5px;
     }
 
 

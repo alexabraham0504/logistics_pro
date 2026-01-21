@@ -565,7 +565,7 @@ p {
   padding: var(--spacing-6);
   display: flex;
   flex-direction: column;
-  z-index: 100;
+  z-index: 11000;
   transition: transform var(--transition-normal);
   box-shadow: var(--shadow-sm);
   /* Hidden by default on desktop */

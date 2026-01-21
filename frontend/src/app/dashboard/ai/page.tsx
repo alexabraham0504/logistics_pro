@@ -151,7 +151,7 @@ export default function AiDashboard() {
         <div className={styles.pageWrapper}>
             {/* Mobile Header */}
             <div className={styles.mobileHeader}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', paddingLeft: '5rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', paddingLeft: '4.25rem' }}>
                     <div className={styles.logoIcon}>
                         <FiCpu size={18} />
                     </div>
