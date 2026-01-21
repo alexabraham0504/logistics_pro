@@ -95,8 +95,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
     return (
         <div className={styles.dashboardLayout}>
-            {/* Mobile Menu Toggle - only show when sidebar is closed and NOT on AI pages */}
-            {!sidebarOpen && !pathname.startsWith('/dashboard/ai') && (
+            {/* Mobile Menu Toggle - only show when sidebar is closed and NOT on AI Agent sub-pages */}
+            {!sidebarOpen && !pathname.includes('/ai/agent') && (
                 <button className={styles.mobileMenuBtn} onClick={() => setSidebarOpen(true)}>
                     <FiMenu size={24} />
                 </button>

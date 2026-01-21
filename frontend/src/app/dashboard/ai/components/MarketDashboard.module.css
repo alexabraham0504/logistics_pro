@@ -701,27 +701,11 @@
 
 @media (max-width: 768px) {
     .header {
-        flex-direction: column;
-        gap: 1rem;
-        padding: 4.5rem 1rem 1rem;
-        text-align: center;
-    }
-
-    .headerCenter {
-        order: -1;
-    }
-
-    .backBtn {
-        position: absolute;
-        top: 1rem;
-        left: 1rem;
-        padding: 0.5rem;
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 8px;
+        display: none !important;
     }
 
     .content {
-        padding: 1.5rem 1rem;
+        padding: 5rem 1rem 2rem;
     }
 
     .detailGrid {

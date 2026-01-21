@@ -264,7 +264,7 @@
 /* Responsive */
 @media (max-width: 768px) {
     .header {
-        padding-top: 4.5rem;
+        display: none !important;
     }
 
     .agentInfo {
@@ -283,6 +283,6 @@
     }
 
     .chatWindow {
-        padding: 1rem;
+        padding: 5rem 1rem 1rem 1rem;
     }
 }

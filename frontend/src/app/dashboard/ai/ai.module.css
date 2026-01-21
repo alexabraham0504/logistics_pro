@@ -155,6 +155,17 @@
     display: none !important;
 }
 
+.backBtnMobile {
+    display: none;
+    color: #71717a;
+    transition: color 0.2s;
+    padding: 4px;
+}
+
+.backBtnMobile:hover {
+    color: #fff;
+}
+
 .menuToggle {
     display: none !important;
 }
@@ -588,12 +599,19 @@
         display: flex !important;
         align-items: center;
         justify-content: space-between;
-        padding: 1rem;
+        padding: 0.75rem 1rem;
         background: #0a0a0a;
         border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         position: sticky;
         top: 0;
-        z-index: 900;
+        z-index: 1100;
+    }
+
+    .backBtnMobile {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 0.5rem;
     }
 
     .menuToggle {
@@ -601,8 +619,10 @@
         background: none;
         border: none;
         color: white;
-        font-size: 1.5rem;
         cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .mainContent {
