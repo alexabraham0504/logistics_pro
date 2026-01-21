@@ -1,30 +1,42 @@
 'use client';
 
 import Link from 'next/link';
-import { FiArrowLeft, FiBox } from 'react-icons/fi';
+import { FiArrowLeft } from 'react-icons/fi';
 import { HiOutlineTemplate } from 'react-icons/hi';
-import styles from '../ai.module.css';
 
 export default function BrowseTemplatesPage() {
     return (
-        <div className={styles.pageWrapper} style={{ justifyContent: 'center', alignItems: 'center', minHeight: '100vh', position: 'relative' }}>
-            {/* Fixed Back Button - Top Left */}
+        <div style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 12000,
+            background: '#0a0a0a',
+            color: '#fff',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: '1rem',
+            overflowY: 'auto'
+        }}>
+            {/* Fixed Back Button - Top Left with high z-index */}
             <Link href="/dashboard/ai" style={{
                 position: 'fixed',
-                top: '0.75rem',
-                left: '0.75rem',
+                top: '1rem',
+                left: '1rem',
                 width: '44px',
                 height: '44px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 background: 'rgba(255,255,255,0.1)',
-                borderRadius: '10px',
+                borderRadius: '12px',
                 color: '#fff',
                 textDecoration: 'none',
-                zIndex: 100,
+                zIndex: 10001,
                 transition: 'all 0.2s',
-                border: '1px solid rgba(255,255,255,0.1)'
+                border: '1px solid rgba(255,255,255,0.15)',
+                backdropFilter: 'blur(10px)'
             }}>
                 <FiArrowLeft size={20} />
             </Link>
@@ -38,7 +50,7 @@ export default function BrowseTemplatesPage() {
                 maxWidth: '400px',
                 width: '100%'
             }}>
-                {/* Card Stack Animation - Templates shuffling */}
+                {/* Card Stack Animation */}
                 <div style={{
                     position: 'relative',
                     width: '160px',
@@ -48,7 +60,6 @@ export default function BrowseTemplatesPage() {
                     alignItems: 'center',
                     justifyContent: 'center'
                 }}>
-                    {/* Stacked cards */}
                     {[...Array(4)].map((_, i) => (
                         <div key={i} style={{
                             position: 'absolute',
@@ -68,8 +79,6 @@ export default function BrowseTemplatesPage() {
                             <HiOutlineTemplate size={24} style={{ color: 'rgba(255,255,255,0.5)' }} />
                         </div>
                     ))}
-
-                    {/* Front card with icon */}
                     <div style={{
                         position: 'absolute',
                         width: '80px',

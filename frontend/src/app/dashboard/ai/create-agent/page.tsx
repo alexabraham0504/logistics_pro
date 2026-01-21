@@ -1,29 +1,41 @@
 'use client';
 
 import Link from 'next/link';
-import { FiArrowLeft, FiPlus, FiTool } from 'react-icons/fi';
-import styles from '../ai.module.css';
+import { FiArrowLeft, FiTool } from 'react-icons/fi';
 
 export default function CreateAgentPage() {
     return (
-        <div className={styles.pageWrapper} style={{ justifyContent: 'center', alignItems: 'center', minHeight: '100vh', position: 'relative' }}>
-            {/* Fixed Back Button - Top Left */}
+        <div style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 12000,
+            background: '#0a0a0a',
+            color: '#fff',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: '1rem',
+            overflowY: 'auto'
+        }}>
+            {/* Fixed Back Button - Top Left with high z-index */}
             <Link href="/dashboard/ai" style={{
                 position: 'fixed',
-                top: '0.75rem',
-                left: '0.75rem',
+                top: '1rem',
+                left: '1rem',
                 width: '44px',
                 height: '44px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 background: 'rgba(255,255,255,0.1)',
-                borderRadius: '10px',
+                borderRadius: '12px',
                 color: '#fff',
                 textDecoration: 'none',
-                zIndex: 100,
+                zIndex: 10001,
                 transition: 'all 0.2s',
-                border: '1px solid rgba(255,255,255,0.1)'
+                border: '1px solid rgba(255,255,255,0.15)',
+                backdropFilter: 'blur(10px)'
             }}>
                 <FiArrowLeft size={20} />
             </Link>

@@ -39,13 +39,16 @@
 
 /* ==================== AGENT PAGE WRAPPER (No left sidebar) ==================== */
 .agentPageWrapper {
+    position: fixed;
+    inset: 0;
+    z-index: 12000;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
     background-color: #0a0a0a;
     color: #ffffff;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     width: 100%;
+    overflow-y: auto;
 }
 
 .agentHeader {
@@ -60,7 +63,7 @@
     padding: 0 1rem;
     background: #0a0a0a;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    z-index: 1000;
+    z-index: 12010;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
@@ -136,7 +139,7 @@
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.6);
-    z-index: 1001;
+    z-index: 12020;
     animation: fadeIn 0.2s ease;
 }
 
@@ -148,7 +151,7 @@
     height: 100vh;
     background: linear-gradient(180deg, #0f0f0f 0%, #0a0a0a 100%);
     border-left: 1px solid rgba(255, 255, 255, 0.08);
-    z-index: 1002;
+    z-index: 12030;
     padding: 1.5rem 1rem;
     animation: slideInRight 0.3s ease;
     box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
