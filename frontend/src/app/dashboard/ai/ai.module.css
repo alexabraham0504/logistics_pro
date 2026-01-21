@@ -581,14 +581,16 @@
     .sidebar {
         display: none;
         position: fixed;
-        left: 0;
+        right: 0;
+        left: auto;
         top: 0;
         bottom: 0;
         z-index: 1000;
         width: 260px;
         background: #0a0a0a;
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+        border-right: none;
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
     }
 
     .sidebar.open {
@@ -599,7 +601,8 @@
         display: flex !important;
         align-items: center;
         justify-content: space-between;
-        padding: 0.75rem 1rem;
+        padding: 0 1rem;
+        height: 60px;
         background: #0a0a0a;
         border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         position: sticky;
