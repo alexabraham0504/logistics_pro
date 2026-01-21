@@ -26,21 +26,47 @@ export default function AiAgentWrapper({ children, agentName }: AiAgentWrapperPr
     ];
 
     return (
-        <div className={styles.agentPageWrapper}>
-            {/* Fixed Top Header - Back button left, Title center, Menu right */}
-            <header className={styles.agentHeader}>
+        <div style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 12000,
+            backgroundColor: '#0a0a0a',
+            color: '#ffffff',
+            display: 'flex',
+            flexDirection: 'column',
+            overflowY: 'auto',
+            width: '100%',
+            fontFamily: "'Inter', sans-serif"
+        }}>
+            {/* Fixed Top Header - Forced Styles */}
+            <header style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                height: '60px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '0 1rem',
+                backgroundColor: '#0a0a0a',
+                borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+                zIndex: 999999,
+                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.8)'
+            }}>
                 <Link href="/dashboard/ai" className={styles.agentBackBtn}>
                     <FiArrowLeft size={20} />
                 </Link>
-                <div className={styles.agentHeaderCenter}>
+                <div className={styles.agentHeaderCenter} style={{ pointerEvents: 'none' }}>
                     <div className={styles.agentHeaderIcon}>
                         <FiCpu size={16} />
                     </div>
-                    <h1 className={styles.agentHeaderTitle}>{agentName || 'Agent Studio'}</h1>
+                    <h1 className={styles.agentHeaderTitle} style={{ color: '#fff' }}>{agentName || 'Agent Studio'}</h1>
                 </div>
                 <button
                     className={styles.agentMenuBtn}
                     onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                    style={{ zIndex: 1000000, pointerEvents: 'auto' }}
                 >
                     {isSidebarOpen ? <FiX size={22} /> : <FiMenu size={22} />}
                 </button>
@@ -52,8 +78,9 @@ export default function AiAgentWrapper({ children, agentName }: AiAgentWrapperPr
                     <div
                         className={styles.agentOverlay}
                         onClick={() => setIsSidebarOpen(false)}
+                        style={{ zIndex: 1000000 }}
                     />
-                    <aside className={styles.agentSidebar}>
+                    <aside className={styles.agentSidebar} style={{ zIndex: 1000001 }}>
                         <div className={styles.agentSidebarHeader}>
                             <div className={styles.logoIcon}>
                                 <FiCpu size={18} />
@@ -76,8 +103,8 @@ export default function AiAgentWrapper({ children, agentName }: AiAgentWrapperPr
                 </>
             )}
 
-            {/* Main Content - Full Width, Centered */}
-            <main className={styles.agentContent}>
+            {/* Main Content - Padded top to account for fixed header */}
+            <main className={styles.agentContent} style={{ paddingTop: '60px', position: 'relative', zIndex: 1 }}>
                 {children}
             </main>
         </div>
