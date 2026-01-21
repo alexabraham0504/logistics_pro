@@ -50,7 +50,8 @@ export default function AgentPage() {
         'contract': 'Contract Intel',
         'fleet': 'Fleet Optimizer',
         'inventory': 'Inventory Analyst',
-        'logistics': 'Logistics Assistant'
+        'logistics': 'Logistics Assistant',
+        'support': 'Logistics Assistant'
     };
 
     return (

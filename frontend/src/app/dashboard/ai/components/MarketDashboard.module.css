@@ -738,18 +738,18 @@
 
     .chartsGrid {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 2.5rem;
     }
 
     .chartBlock {
-        padding: 1.25rem;
-        min-height: 400px;
+        padding: 1.5rem;
+        min-height: 450px;
         background: rgba(20, 20, 35, 0.4);
     }
 
     .chartContainer {
-        height: 280px !important;
-        margin-top: 1rem;
+        height: 350px !important;
+        margin-top: 1.5rem;
     }
 
 

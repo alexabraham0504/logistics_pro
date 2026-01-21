@@ -42,6 +42,10 @@
         display: none !important;
     }
 
+    .panelHeader {
+        display: none !important;
+    }
+
     .splitLayout {
         flex-direction: column;
         overflow-y: auto;
