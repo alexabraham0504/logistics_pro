@@ -24,7 +24,7 @@ export default function AiAgentWrapper({ children, agentName }: AiAgentWrapperPr
         <div className={styles.pageWrapper}>
             {/* Standard AI Mobile Header - Always on top for all agents */}
             <div className={styles.mobileHeader}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', paddingLeft: '5rem' }}>
                     <Link href="/dashboard/ai" className={styles.backBtnMobile}>
                         <FiArrowLeft size={18} />
                     </Link>

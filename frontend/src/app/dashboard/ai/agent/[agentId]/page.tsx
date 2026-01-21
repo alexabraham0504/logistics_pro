@@ -45,9 +45,11 @@ export default function AgentPage() {
     const agentNames: { [key: string]: string } = {
         'market': 'Market Intelligence',
         'tracking': 'Shipment Tracking',
+        'shipment': 'Shipment Tracking',
         'zone': 'Zone Heatmap',
         'carrier': 'Carrier Wizard',
         'contract': 'Contract Intel',
+        'contract-intel': 'Contract Intel',
         'fleet': 'Fleet Optimizer',
         'inventory': 'Inventory Analyst',
         'logistics': 'Logistics Assistant',

@@ -610,6 +610,18 @@
         z-index: 9999;
     }
 
+    @media (max-width: 480px) {
+        .logoText {
+            display: none !important;
+        }
+    }
+
+    @media (max-height: 500px) and (orientation: landscape) {
+        .mobileHeader {
+            height: 48px;
+        }
+    }
+
     .backBtnMobile {
         display: flex;
         align-items: center;
