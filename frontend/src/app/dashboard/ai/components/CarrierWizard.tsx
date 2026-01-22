@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
-import axios from 'axios';
+import api from '@/lib/api';
 import styles from './CarrierWizard.module.css';
 
 interface Phase {
@@ -59,10 +59,7 @@ export default function CarrierWizard() {
 
     const fetchProposalData = async () => {
         try {
-            const response = await axios.get(
-                `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/ai/carriers/proposal`,
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
+            const response = await api.get('/ai/carriers/proposal');
 
             if (response.data.success) {
                 setProposal(response.data.data);

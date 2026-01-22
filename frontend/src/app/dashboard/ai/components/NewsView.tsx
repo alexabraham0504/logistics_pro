@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '@/lib/api';
 import { useAuth } from '@/context/AuthContext';
 import styles from './NewsView.module.css';
 import { FiClock, FiRefreshCw, FiExternalLink, FiGlobe } from 'react-icons/fi';
@@ -29,10 +29,7 @@ export default function NewsView({ onBack }: NewsViewProps) {
     const fetchNews = async () => {
         try {
             setRefreshing(true);
-            const response = await axios.get(
-                `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/ai/market/news`,
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
+            const response = await api.get('/ai/market/news');
 
             if (response.data.success && response.data.data.articles) {
                 setNews(response.data.data.articles);

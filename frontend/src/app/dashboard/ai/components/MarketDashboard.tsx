@@ -3,7 +3,7 @@
 import { useRef, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
-import axios from 'axios';
+import api from '@/lib/api';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -103,10 +103,7 @@ export default function MarketDashboard() {
         setSearchError('');
 
         try {
-            const response = await axios.get(
-                `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/ai/market/company/${ticker}`,
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
+            const response = await api.get(`/ai/market/company/${ticker}`);
 
             if (response.data.success && response.data.data) {
                 const newCompany = response.data.data;
@@ -138,10 +135,7 @@ export default function MarketDashboard() {
 
         for (const ticker of watchedTickers) {
             try {
-                const response = await axios.get(
-                    `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/ai/market/company/${ticker}`,
-                    { headers: { Authorization: `Bearer ${token}` } }
-                );
+                const response = await api.get(`/ai/market/company/${ticker}`);
                 if (response.data.success) {
                     results.push(response.data.data);
                 }
@@ -160,10 +154,7 @@ export default function MarketDashboard() {
     const fetchNews = async () => {
         setNewsLoading(true);
         try {
-            const response = await axios.get(
-                `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/ai/market/news`,
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
+            const response = await api.get('/ai/market/news');
             if (response.data.success) {
                 setNews(response.data.data.articles || []);
             }
@@ -177,10 +168,7 @@ export default function MarketDashboard() {
     const fetchCandleData = async (ticker: string) => {
         setCandleLoading(true);
         try {
-            const response = await axios.get(
-                `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/ai/market/candles/${ticker}`,
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
+            const response = await api.get(`/ai/market/candles/${ticker}`);
             if (response.data.success && response.data.data.candles) {
                 const candles = response.data.data.candles;
                 // If API returned source info, use it. Otherwise Finnhub is default if not explicitly mock

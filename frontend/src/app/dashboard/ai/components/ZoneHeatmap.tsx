@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
-import axios from 'axios';
+import api from '@/lib/api';
 import styles from './ZoneHeatmap.module.css';
 
 interface ZoneData {
@@ -35,10 +35,7 @@ export default function ZoneHeatmap() {
 
     const fetchZoneData = async () => {
         try {
-            const response = await axios.get(
-                `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/ai/zones/heatmap`,
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
+            const response = await api.get('/ai/zones/heatmap');
 
             if (response.data.success) {
                 setZones(response.data.data.regions);

@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import axios from 'axios';
+import api from '@/lib/api';
 import styles from './ContractView.module.css';
 import { FiMaximize2, FiPaperclip } from 'react-icons/fi';
 import { HiOutlineSparkles } from 'react-icons/hi';
@@ -179,16 +179,12 @@ export default function ContractView() {
         setLoading(true);
 
         try {
-            const response = await axios.post(
-                `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/ai/chat`,
-                {
-                    agentId: 'contract',
-                    message: input,
-                    documentContent: document?.content || null,
-                    documentName: document?.name || null
-                },
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
+            const response = await api.post('/ai/chat', {
+                agentId: 'contract',
+                message: input,
+                documentContent: document?.content || null,
+                documentName: document?.name || null
+            });
 
             const assistantMessage: Message = {
                 id: (Date.now() + 1).toString(),

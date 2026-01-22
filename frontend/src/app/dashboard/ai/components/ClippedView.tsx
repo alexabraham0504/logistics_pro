@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '@/lib/api';
 import { useAuth } from '@/context/AuthContext';
 import { FiArrowLeft, FiArrowRight, FiThumbsUp, FiMessageSquare, FiExternalLink, FiSearch, FiSettings, FiX } from 'react-icons/fi';
 import styles from './ClippedView.module.css';
@@ -137,10 +137,7 @@ export default function ClippedView({ onBack }: ClippedViewProps) {
 
     const fetchComments = async (articleId: string) => {
         try {
-            const config = {
-                headers: { Authorization: `Bearer ${token}` }
-            };
-            const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/ai/clipped/${articleId}/comments`, config);
+            const response = await api.get(`/ai/clipped/${articleId}/comments`);
             if (response.data.success) {
                 setComments(response.data.data);
             }
@@ -183,16 +180,13 @@ export default function ClippedView({ onBack }: ClippedViewProps) {
         const currentArticle = selectedCategory.articles[currentArticleIndex];
 
         try {
-            const config = {
-                headers: { Authorization: `Bearer ${token}` }
-            };
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/ai/clipped/comments`, {
+            const response = await api.post('/ai/clipped/comments', {
                 articleId: currentArticle.id,
                 categoryId: selectedCategory.id,
                 title: currentArticle.title,
                 user: 'User', // In a real app, backend can extract this from the token
                 text: commentText
-            }, config);
+            });
 
             if (response.data.success) {
                 setComments(response.data.data);

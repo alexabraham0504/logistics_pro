@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
-import axios from 'axios';
+import api from '@/lib/api';
 import styles from './ai.module.css';
 import ClippedView from './components/ClippedView';
 import NewsView from './components/NewsView';
@@ -75,10 +75,7 @@ export default function AiDashboard() {
 
     const fetchAgents = async () => {
         try {
-            const response = await axios.get(
-                `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/ai/agents`,
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
+            const response = await api.get('/ai/agents');
             if (response.data.success) {
                 setAgents(response.data.data.agents);
                 setStats(response.data.data.stats);
