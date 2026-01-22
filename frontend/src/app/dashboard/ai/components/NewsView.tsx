@@ -102,6 +102,7 @@ export default function NewsView({ onBack }: NewsViewProps) {
                                         src={article.image}
                                         alt={article.title}
                                         className={styles.newsImage}
+                                        referrerPolicy="no-referrer"
                                         onError={(e) => {
                                             (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80';
                                         }}
