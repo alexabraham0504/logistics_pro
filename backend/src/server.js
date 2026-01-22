@@ -59,12 +59,16 @@ app.use(cors({
     origin: function (origin, callback) {
         // Allow requests with no origin (like mobile apps or curl requests)
         if (!origin) return callback(null, true);
-        // In development, allow all localhost origins
-        if (process.env.NODE_ENV === 'development' && origin.includes('localhost')) {
+
+        // Allow any Vercel, Render, or Localhost origin dynamically
+        if (origin.includes('localhost') || origin.includes('.onrender.com') || origin.includes('.vercel.app')) {
             return callback(null, true);
         }
+
         if (allowedOrigins.indexOf(origin) === -1) {
-            return callback(new Error('The CORS policy for this site does not allow access from the specified Origin.'), false);
+            console.warn('Blocked by CORS:', origin);
+            // Temporarily allow all for debugging if needed, but keeping it safe-ish above
+            return callback(new Error('The CORS policy for this site does not allow access from the specific Origin.'), false);
         }
         return callback(null, true);
     },
