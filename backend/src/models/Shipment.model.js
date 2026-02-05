@@ -158,7 +158,14 @@ const shipmentSchema = new mongoose.Schema({
         photo: String,
         receiverName: String,
         deliveryNotes: String,
-        deliveryTime: Date
+        deliveryTime: Date,
+        // Blockchain integration fields
+        podToken: String,              // Unique POD token ID
+        blockchainHash: String,         // Hash of POD data
+        previousHash: String,           // Link to previous block
+        blockTimestamp: Date,           // Blockchain record timestamp
+        blockNumber: Number,            // Sequential block number
+        verificationUrl: String         // URL to verify POD
     },
     delayInfo: {
         isDelayed: {

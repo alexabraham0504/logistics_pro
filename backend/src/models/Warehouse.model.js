@@ -117,6 +117,6 @@ warehouseSchema.pre('save', async function (next) {
 
 // Index for location-based queries
 warehouseSchema.index({ 'address.coordinates': '2dsphere' });
-warehouseSchema.index({ code: 1 });
+
 
 module.exports = mongoose.model('Warehouse', warehouseSchema);

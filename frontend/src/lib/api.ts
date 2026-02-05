@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_URL = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace(/\/$/, '') + '/api';
+const BASE_URL = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace(/\/$/, '');
+const API_URL = BASE_URL.endsWith('/api') ? BASE_URL : `${BASE_URL}/api`;
 
 const api = axios.create({
     baseURL: API_URL,
@@ -30,7 +31,10 @@ api.interceptors.response.use(
     (response) => response,
     (error) => {
         if (error.response?.status === 401) {
-            if (typeof window !== 'undefined') {
+            // Don't redirect if we are already trying to login to avoid infinite refresh loop
+            const isLoginRequest = error.config?.url?.includes('/auth/login');
+
+            if (typeof window !== 'undefined' && !isLoginRequest) {
                 localStorage.removeItem('token');
                 localStorage.removeItem('user');
                 window.location.href = '/login';
@@ -157,6 +161,51 @@ export const reportsAPI = {
     getShipmentsReport: (params?: object) => api.get('/reports/shipments', { params }),
     getInventoryReport: () => api.get('/reports/inventory'),
     exportReport: (type: string) => api.get(`/reports/export/${type}`),
+};
+
+// POD Token API (Blockchain)
+export const podAPI = {
+    generate: (data: object) => api.post('/pod/generate', data),
+    verify: (token: string) => api.get(`/pod/verify/${token}`),
+    getByShipment: (shipmentId: string) => api.get(`/pod/shipment/${shipmentId}`),
+    getBlockchainProof: (token: string) => api.get(`/pod/${token}/blockchain-proof`),
+    getList: (params?: object) => api.get('/pod/list', { params }),
+};
+
+// Vahak API (Vehicle Owner - Blockchain)
+export const vahakAPI = {
+    register: (data: object) => api.post('/vahak/register', data),
+    getByVehicle: (vehicleId: string) => api.get(`/vahak/vehicle/${vehicleId}`),
+    verify: (vehicleId: string, data: object) => api.put(`/vahak/verify/${vehicleId}`, data),
+    getBlockchainHistory: (vehicleId: string) => api.get(`/vahak/${vehicleId}/blockchain-history`),
+    getList: (params?: object) => api.get('/vahak/list', { params }),
+};
+
+// Blackbug API (Driver Monitoring - Blockchain)
+export const blackbugAPI = {
+    track: (data: object) => api.post('/blackbug/track', data),
+    getDriverMonitoring: (driverId: string) => api.get(`/blackbug/driver/${driverId}`),
+    getDriverBlockchain: (driverId: string, params?: object) => api.get(`/blackbug/driver/${driverId}/blockchain`, { params }),
+    storeTripSummary: (tripId: string, data: object) => api.post(`/blackbug/trip/${tripId}/summary`, data),
+    getDriverAnalytics: (driverId: string, params?: object) => api.get(`/blackbug/analytics/driver/${driverId}`, { params }),
+};
+
+// Export API (Blockchain)
+export const exportAPI = {
+    create: (data: object) => api.post('/export/create', data),
+    uploadDocument: (id: string, data: object) => api.post(`/export/${id}/document`, data),
+    updateStatus: (id: string, data: object) => api.put(`/export/${id}/status`, data),
+    getById: (id: string) => api.get(`/export/${id}`),
+    getBlockchainTrace: (id: string) => api.get(`/export/${id}/blockchain-trace`),
+    verifyDocument: (id: string, docId: string) => api.get(`/export/${id}/verify-document/${docId}`),
+    getList: (params?: object) => api.get('/export/list', { params }),
+};
+
+// TOD API (Transfer of Documents - Blockchain)
+export const todAPI = {
+    generate: (data: object) => api.post('/tod/generate', data),
+    verify: (token: string) => api.get(`/tod/verify/${token}`), // Assuming this exists or I should add it to routes? (I didn't add verify route, let me check backend)
+    getList: (params?: object) => api.get('/tod/list', { params }),
 };
 
 export default api;

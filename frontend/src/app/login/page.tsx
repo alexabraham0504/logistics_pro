@@ -40,7 +40,7 @@ export default function LoginPage() {
                         <div className={styles.logoIcon}>
                             <FiTruck size={28} />
                         </div>
-                        <span className={styles.logoText}>Bharat Logistics</span>
+                        <span className={styles.logoText}>Cochin Logistics</span>
                     </div>
                     <div className={styles.characterContainer}>
                         <ChromaKeyImage src="/indian_delivery.png" alt="Delivery Partner" className={styles.character} />

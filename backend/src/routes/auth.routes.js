@@ -59,6 +59,9 @@ router.post('/register', [
     });
 }));
 
+const fs = require('fs');
+const path = require('path');
+
 // @desc    Login user
 // @route   POST /api/auth/login
 // @access  Public
@@ -67,19 +70,36 @@ router.post('/login', [
     body('password').notEmpty().withMessage('Password is required'),
     validate
 ], asyncHandler(async (req, res) => {
-    const { email, password } = req.body;
+    let { email, password } = req.body;
+
+    // Normalize inputs
+    email = email.toLowerCase().trim();
+    // Temporary debug: trim password too, and LOG IT to see if there's a mismatch
+    const rawPassword = password;
+    password = password.trim();
+
+    const logPath = path.join(__dirname, '../../login-debug.log');
+    const log = (msg) => fs.appendFileSync(logPath, `[${new Date().toISOString()}] ${msg}\n`);
+
+    log(`Attempting login for: '${email}'`);
+    log(`Received Password: '${rawPassword}' (Length: ${rawPassword.length})`);
+    log(`Trimmed Password: '${password}' (Length: ${password.length})`);
 
     // Check for user
     const user = await User.findOne({ email }).select('+password');
     if (!user) {
+        log(`User not found: '${email}'`);
         return res.status(401).json({
             success: false,
             message: 'Invalid credentials'
         });
     }
 
+    log(`User found: ${user._id} (Role: ${user.role})`);
+
     // Check if user is active
     if (!user.isActive) {
+        log(`User inactive: ${user._id}`);
         return res.status(401).json({
             success: false,
             message: 'Account is deactivated. Please contact support.'
@@ -89,11 +109,14 @@ router.post('/login', [
     // Check password
     const isMatch = await user.matchPassword(password);
     if (!isMatch) {
+        log(`Password mismatch for user: ${user._id}`);
         return res.status(401).json({
             success: false,
             message: 'Invalid credentials'
         });
     }
+
+    log(`Login successful for: ${user._id}`);
 
     // Update last login
     user.lastLogin = new Date();

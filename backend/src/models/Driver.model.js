@@ -144,6 +144,64 @@ const driverSchema = new mongoose.Schema({
             default: Date.now
         }
     }],
+    // Blockchain profile for driver identity verification
+    blockchainProfile: {
+        profileHash: String,           // Hash of driver identity
+        verificationStatus: {
+            type: String,
+            enum: ['pending', 'verified', 'suspended', 'rejected'],
+            default: 'pending'
+        },
+        lastBlockHash: String,
+        blockchainRecordCount: {
+            type: Number,
+            default: 0
+        },
+        verifiedAt: Date,
+        createdAt: {
+            type: Date,
+            default: Date.now
+        },
+        updatedAt: Date
+    },
+    // Blackbug - Driver behavior monitoring
+    behaviorMonitoring: {
+        tripCount: {
+            type: Number,
+            default: 0
+        },
+        totalDistance: {
+            type: Number,
+            default: 0
+        },
+        averageSpeed: {
+            type: Number,
+            default: 0
+        },
+        harshBrakingEvents: {
+            type: Number,
+            default: 0
+        },
+        harshAccelerationEvents: {
+            type: Number,
+            default: 0
+        },
+        idleTimePercentage: {
+            type: Number,
+            default: 0
+        },
+        nightDrivingHours: {
+            type: Number,
+            default: 0
+        },
+        overspeedingInstances: {
+            type: Number,
+            default: 0
+        },
+        lastMonitoringUpdate: Date,
+        blockchainHash: String,        // Hash of behavior data
+        lastTripHash: String
+    },
     isActive: {
         type: Boolean,
         default: true

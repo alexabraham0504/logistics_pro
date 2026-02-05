@@ -174,6 +174,56 @@ const vehicleSchema = new mongoose.Schema({
         url: String,
         expiryDate: Date
     }],
+    // Vahak - Vehicle owner details
+    vahakDetails: {
+        ownerName: String,
+        ownerPhone: String,
+        ownerEmail: String,
+        ownerAadhar: String,          // Encrypted
+        ownerPAN: String,             // Encrypted
+        ownerAddress: {
+            street: String,
+            city: String,
+            state: String,
+            zipCode: String,
+            country: String
+        },
+        ownershipProof: String,       // Document URL
+        ownershipType: {
+            type: String,
+            enum: ['owned', 'leased', 'rented'],
+            default: 'owned'
+        },
+        blockchainHash: String,       // Hash of ownership data
+        verificationStatus: {
+            type: String,
+            enum: ['verified', 'pending', 'rejected'],
+            default: 'pending'
+        },
+        verifiedAt: Date,
+        verifiedBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    },
+    // Blockchain tracking for vehicle
+    blockchainTracking: {
+        vehicleHash: String,          // Hash of vehicle registration
+        previousHash: String,         // Previous block hash for chain linkage
+        blockNumber: Number,          // Sequential block number
+        nonce: Number,                // Proof-of-work nonce
+        timestamp: Date,              // Block creation timestamp
+        lastTripHash: String,
+        totalTrips: {
+            type: Number,
+            default: 0
+        },
+        lastBlockUpdate: Date,
+        blockchainRecordCount: {
+            type: Number,
+            default: 0
+        }
+    },
     isActive: {
         type: Boolean,
         default: true
@@ -203,8 +253,45 @@ vehicleSchema.methods.getAverageFuelConsumption = function () {
     return (distanceTraveled / totalFuel).toFixed(2);
 };
 
+// Verify Vahak blockchain integrity
+vehicleSchema.methods.verifyVahakIntegrity = function () {
+    const CryptoUtil = require('../utils/CryptoUtil');
+
+    if (!this.vahakDetails || !this.blockchainTracking || !this.blockchainTracking.blockNumber) {
+        return { valid: false, reason: 'No blockchain data found' };
+    }
+
+    // Recreate the EXACT block data used during registration
+    const blockData = {
+        blockNumber: this.blockchainTracking.blockNumber,
+        timestamp: new Date(this.blockchainTracking.timestamp).getTime(),
+        data: {
+            vehicleId: this._id.toString(),
+            ownerData: {
+                vehicleId: this._id.toString(),
+                ownerName: this.vahakDetails.ownerName,
+                ownerPhone: this.vahakDetails.ownerPhone,
+                ownerEmail: this.vahakDetails.ownerEmail,
+                ownerAddress: this.vahakDetails.ownerAddress,
+                ownershipType: this.vahakDetails.ownershipType,
+                registeredAt: this.vahakDetails.registeredAt
+            },
+            registeredAt: this.vahakDetails.registeredAt
+        },
+        previousHash: this.blockchainTracking.previousHash,
+        nonce: this.blockchainTracking.nonce
+    };
+
+    const calculatedHash = CryptoUtil.sha256(blockData);
+    return {
+        valid: calculatedHash === this.blockchainTracking.vehicleHash,
+        calculatedHash,
+        storedHash: this.blockchainTracking.vehicleHash
+    };
+};
+
 // Indexes
-vehicleSchema.index({ vehicleNumber: 1 });
+
 vehicleSchema.index({ status: 1 });
 vehicleSchema.index({ type: 1 });
 vehicleSchema.index({ 'currentLocation.coordinates': '2dsphere' });

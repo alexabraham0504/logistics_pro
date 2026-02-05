@@ -28,6 +28,8 @@ yarn-error.log*
 .env.production.local
 backend/.env
 frontend/.env
+frontend/.env.local
+smart_contracts/.env
 
 # Editor directories and files
 .idea
@@ -38,3 +40,28 @@ frontend/.env
 *.sln
 *.sw?
 .vercel
+
+# Smart Contract Build Artifacts
+smart_contracts/artifacts/
+smart_contracts/cache/
+
+# Next.js build
+frontend/.next/
+
+# TypeScript build info
+*.tsbuildinfo
+
+# Debug files
+**/debug_*.js
+**/debug_*.txt
+
+# Log files
+**/*.log
+
+# Seed output files
+**/seed_output.txt
+**/export_seed_log.txt
+
+# Temporary files
+temp_*.css
+temp_*.js

@@ -4,9 +4,10 @@ import { ReactNode, useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
+import { NotificationBell } from '@/context/NotificationContext';
 import {
     FiTruck, FiHome, FiPackage, FiMapPin, FiBox,
-    FiUsers, FiBarChart2, FiLogOut, FiMenu, FiArchive, FiCpu
+    FiUsers, FiBarChart2, FiLogOut, FiMenu, FiArchive, FiCpu, FiShield
 } from 'react-icons/fi';
 import { FaRupeeSign } from 'react-icons/fa';
 import styles from './dashboard.module.css';
@@ -70,7 +71,6 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             ];
         }
 
-        // Viewer and Admin share most navigation
         const fullNavItems: NavItem[] = [
             ...baseItems,
             { href: '/dashboard/orders', icon: FiPackage, label: 'Orders', section: 'Operations' },
@@ -81,6 +81,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             { href: '/dashboard/invoices', icon: FaRupeeSign, label: 'Invoices', section: 'Finance' },
             { href: '/dashboard/reports', icon: FiBarChart2, label: 'Reports', section: 'Analytics' },
             { href: '/dashboard/ai', icon: FiCpu, label: 'AI Intelligence', section: 'Intelligence' },
+            { href: '/dashboard/blockchain', icon: FiShield, label: 'Blockchain', section: 'Verification' },
         ];
 
         if (user?.role === 'admin') {
@@ -95,7 +96,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
     return (
         <div className={styles.dashboardLayout}>
-            {/* Mobile Menu Toggle - only show when sidebar is closed and NOT on AI Agent sub-pages */}
+            {/* Mobile Menu Toggle */}
             {!sidebarOpen && !pathname.includes('/ai/agent') && (
                 <button
                     className={styles.mobileMenuBtn}
@@ -110,13 +111,13 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 </button>
             )}
 
-            {/* Hover trigger zone on left edge - desktop only */}
+            {/* Hover trigger zone */}
             <div
                 className={styles.sidebarTrigger}
                 onMouseEnter={() => setSidebarHovered(true)}
             />
 
-            {/* Sidebar - shows on hover or mobile toggle */}
+            {/* Sidebar */}
             <aside
                 className={`sidebar ${sidebarOpen ? 'open' : ''} ${sidebarHovered ? 'hovered' : ''}`}
                 onMouseLeave={() => setSidebarHovered(false)}
@@ -125,10 +126,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                     <div className="sidebar-logo-icon">
                         <FiTruck size={20} />
                     </div>
-                    <span style={{ fontSize: '1.25rem', fontWeight: 700 }}>Bharat Logistics</span>
+                    <span style={{ fontSize: '1.25rem', fontWeight: 700 }}>Cochin Logistics</span>
                 </div>
 
-                {/* User Info Section - Moved to top */}
                 <div className={styles.userInfoTop}>
                     <div className={styles.userInfo}>
                         <div className={styles.userAvatar}>
@@ -168,13 +168,40 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 </nav>
             </aside>
 
-            {/* Backdrop for mobile */}
+            {/* Backdrop */}
             {sidebarOpen && (
                 <div className={styles.backdrop} onClick={() => setSidebarOpen(false)} />
             )}
 
-            {/* Main Content */}
-            <main className={`main-content ${sidebarHovered ? 'sidebar-visible' : ''} ${pathname.startsWith('/dashboard/ai') ? styles.fullBleed : ''}`}>
+            {/* Main Content Area */}
+            <main
+                className={`main-content ${sidebarHovered ? 'sidebar-visible' : ''} ${(pathname.startsWith('/dashboard/ai') || pathname.startsWith('/dashboard/blockchain')) ? styles.fullBleed : ''}`}
+                style={{ position: 'relative' }} // So we can position the bell
+            >
+                {/* GLOBAL PAGE-LEVEL NOTIFICATION BELL */}
+                {!pathname.startsWith('/dashboard/ai') && (
+                    <div style={{
+                        position: 'fixed',
+                        top: pathname.startsWith('/dashboard/blockchain') ? '24px' : '80px',
+                        right: '24px',
+                        zIndex: 100,
+                        backgroundColor: pathname.startsWith('/dashboard/blockchain') ? 'rgba(15, 23, 42, 0.9)' : 'white',
+                        borderRadius: '14px',
+                        boxShadow: pathname.startsWith('/dashboard/blockchain')
+                            ? '0 8px 30px rgba(0,0,0,0.4)'
+                            : '0 8px 30px rgba(0,0,0,0.12)',
+                        border: pathname.startsWith('/dashboard/blockchain')
+                            ? '1px solid rgba(255, 255, 255, 0.1)'
+                            : '1px solid #eef2f6',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: '2px'
+                    }}>
+                        <NotificationBell />
+                    </div>
+                )}
+
                 {children}
             </main>
         </div>

@@ -20,6 +20,13 @@ const invoiceRoutes = require('./routes/invoice.routes');
 const reportRoutes = require('./routes/report.routes');
 const dashboardRoutes = require('./routes/dashboard.routes');
 const aiRoutes = require('./routes/ai.routes');
+const podRoutes = require('./routes/pod.routes');
+const vahakRoutes = require('./routes/vahak.routes');
+const blackbugRoutes = require('./routes/blackbug.routes');
+const exportRoutes = require('./routes/export.routes');
+const blockchainRoutes = require('./routes/blockchain.routes');
+const todRoutes = require('./routes/tod.routes');
+const notificationService = require('./services/NotificationService');
 
 const app = express();
 // Enable trust proxy for Render deployment to fix rate limiting
@@ -42,6 +49,9 @@ const io = new Server(httpServer, {
 
 // Make io accessible in routes
 app.set('io', io);
+
+// Initialize Notification Service
+notificationService.init(io);
 
 // Security middleware
 app.use(helmet());
@@ -106,6 +116,12 @@ app.use('/api/invoices', invoiceRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/ai', aiRoutes);
+app.use('/api/pod', podRoutes);
+app.use('/api/vahak', vahakRoutes);
+app.use('/api/blackbug', blackbugRoutes);
+app.use('/api/export', exportRoutes);
+app.use('/api/blockchain', blockchainRoutes);
+app.use('/api/tod', todRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -116,9 +132,30 @@ app.get('/api/health', (req, res) => {
     });
 });
 
+// Test notification endpoint
+app.get('/api/notifications/test', (req, res) => {
+    const notificationService = require('./services/NotificationService');
+    notificationService.broadcast('POD_GENERATED', {
+        message: '📦 REAL-TIME: Proof of Delivery generated for SHP-1002'
+    });
+    res.json({ success: true, message: 'Test notification broadcasted' });
+});
+
 // Socket.io connection handling for real-time tracking
 io.on('connection', (socket) => {
     console.log('🔌 Client connected:', socket.id);
+
+    // Join specific user room
+    socket.on('joinUserRoom', (userId) => {
+        socket.join(`user_${userId}`);
+        console.log(`👤 Client joined user room: ${userId}`);
+    });
+
+    // Join role-based room
+    socket.on('joinRoleRoom', (role) => {
+        socket.join(`role_${role}`);
+        console.log(`👥 Client joined role room: ${role}`);
+    });
 
     socket.on('joinShipmentRoom', (shipmentId) => {
         socket.join(`shipment_${shipmentId}`);

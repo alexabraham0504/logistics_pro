@@ -192,7 +192,7 @@ inventorySchema.methods.addMovement = function (movement) {
 
 // Indexes
 inventorySchema.index({ sku: 1, warehouse: 1 });
-inventorySchema.index({ barcode: 1 });
+
 inventorySchema.index({ status: 1 });
 inventorySchema.index({ category: 1 });
 

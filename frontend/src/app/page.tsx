@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import Link from 'next/link';
-import { FiTruck, FiPackage, FiMapPin, FiBarChart2, FiShield, FiUsers } from 'react-icons/fi';
+import { FiTruck, FiPackage, FiMapPin, FiBarChart2, FiShield, FiUsers, FiArrowRight, FiCpu, FiGlobe, FiLock, FiTrendingUp } from 'react-icons/fi';
 import styles from './page.module.css';
 
 export default function HomePage() {
@@ -34,11 +34,13 @@ export default function HomePage() {
             <div className={styles.logoIcon}>
               <FiTruck size={24} />
             </div>
-            <span className={styles.logoText}>Bharat Logistics</span>
+            <span className={styles.logoText}>Cochin Logistics</span>
           </div>
           <div className={styles.navLinks}>
-            <Link href="/login" className="btn btn-ghost">Sign In</Link>
-            <Link href="/login" className="btn btn-primary">Get Started</Link>
+            <Link href="/login" className={styles.ctaButton}>
+              <span>Get Started</span>
+              <FiArrowRight className={styles.ctaArrow} />
+            </Link>
           </div>
         </div>
       </nav>
@@ -88,6 +90,98 @@ export default function HomePage() {
                 </div>
               </div>
               <div className={styles.previewChart}></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* About / Workflow Section */}
+      <section className={styles.aboutSection}>
+        <div className={styles.container}>
+          <div className={styles.aboutGrid}>
+            <div className={styles.aboutContent}>
+              <div className={styles.heroBadge} style={{ marginBottom: '1.5rem' }}>
+                <span>💡 Innovation & Technology</span>
+              </div>
+              <h2>
+                Redefining Logistics with <br />
+                <span>Smart Intelligence</span>
+              </h2>
+              <p>
+                Cochin Logistics isn&apos;t just a platform; it&apos;s a complete ecosystem designed to transform how businesses move goods.
+                By clicking &quot;Get Started&quot;, you gain access to a powerful suite of tools that automate, secure, and optimize every step of your supply chain.
+              </p>
+
+              <div className={styles.workflowSteps}>
+                <div className={styles.workflowStep}>
+                  <div className={`${styles.stepIcon} ${styles.plan}`}>
+                    <FiCpu />
+                  </div>
+                  <div className={styles.stepInfo}>
+                    <h3>AI-Powered Planning</h3>
+                    <p>Smart algorithms predict demand and optimize routes instantly.</p>
+                  </div>
+                </div>
+
+                <div className={styles.workflowStep}>
+                  <div className={`${styles.stepIcon} ${styles.track}`}>
+                    <FiGlobe />
+                  </div>
+                  <div className={styles.stepInfo}>
+                    <h3>Global Real-Time Tracking</h3>
+                    <p>Monitor your entire fleet with live GPS and status updates.</p>
+                  </div>
+                </div>
+
+                <div className={styles.workflowStep}>
+                  <div className={`${styles.stepIcon} ${styles.secure}`}>
+                    <FiLock />
+                  </div>
+                  <div className={styles.stepInfo}>
+                    <h3>Blockchain Security</h3>
+                    <p>Immutable Proof of Delivery (POD) ensures 100% trust & transparency.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.aboutVisual}>
+              <div className={`${styles.visualCard} ${styles.mainCard}`}>
+                <div style={{ width: '100%', height: '100%', background: 'url(/dashboard-mock.png) center/cover', opacity: 0.1 }}></div>
+                {/* Abstract graphic representation */}
+                <div style={{ position: 'absolute', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+                  <FiTruck size={60} color="#0052cc" />
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    {[1, 2, 3].map((i) => (
+                      <div key={i} style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#0052cc', animation: `pulse 1.5s infinite ${i * 0.2}s` }}></div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className={`${styles.visualCard} ${styles.floatingCard} ${styles.card1}`}>
+                <div className={styles.statItem}>
+                  <div className={styles.statIcon}>
+                    <FiTrendingUp size={20} />
+                  </div>
+                  <div className={styles.statText}>
+                    <h4>35%</h4>
+                    <span>Cost Reduction</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className={`${styles.visualCard} ${styles.floatingCard} ${styles.card2}`}>
+                <div className={styles.statItem}>
+                  <div className={styles.statIcon} style={{ background: 'rgba(16, 185, 129, 0.1)', color: '#10b981' }}>
+                    <FiShield size={20} />
+                  </div>
+                  <div className={styles.statText}>
+                    <h4 style={{ color: '#10b981' }}>100%</h4>
+                    <span>Secure Data</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -156,7 +250,7 @@ export default function HomePage() {
                 <div className={styles.logoIcon}>
                   <FiTruck size={20} />
                 </div>
-                <span className={styles.logoText}>Bharat Logistics</span>
+                <span className={styles.logoText}>Cochin Logistics</span>
               </div>
               <p>Enterprise logistics management platform for modern businesses.</p>
             </div>
@@ -182,7 +276,7 @@ export default function HomePage() {
             </div>
           </div>
           <div className={styles.footerBottom}>
-            <p>© 2026 Bharat Logistics. All rights reserved.</p>
+            <p>© 2026 Cochin Logistics. All rights reserved.</p>
           </div>
         </div>
       </footer>

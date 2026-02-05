@@ -1,0 +1,575 @@
+.container {
+    padding: 1.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Header */
+.header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.backBtn {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.backBtn:hover {
+    background: #f3f4f6;
+    color: #1f2937;
+}
+
+.headerContent {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.headerIcon {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.25rem;
+}
+
+.header p {
+    color: #6b7280;
+    font-size: 0.9rem;
+}
+
+/* Filters */
+.filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.searchBox {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 0 1rem;
+}
+
+.searchIcon {
+    color: #9ca3af;
+}
+
+.searchBox input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+}
+
+.filterBox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 0 1rem;
+    color: #6b7280;
+}
+
+.filterBox select {
+    border: none;
+    outline: none;
+    padding: 0.75rem 0;
+    font-size: 0.9rem;
+    background: transparent;
+    color: #1f2937;
+    cursor: pointer;
+}
+
+/* Main Grid */
+.mainGrid {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 1.5rem;
+}
+
+/* Export List */
+.exportList {
+    background: white;
+    border-radius: 16px;
+    padding: 1.25rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    height: fit-content;
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.listHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.listHeader h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.count {
+    background: #f3f4f6;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
+.exportGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.exportCard {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    width: 100%;
+}
+
+.exportCard:hover {
+    background: #f9fafb;
+    border-color: #f59e0b;
+}
+
+.exportCard.selected {
+    background: #fffbeb;
+    border-color: #f59e0b;
+}
+
+.exportCardHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.exportType {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.exportInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.exportId {
+    font-weight: 600;
+    color: #1f2937;
+    font-size: 0.9rem;
+}
+
+.exportCountry {
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+.chevron {
+    color: #9ca3af;
+}
+
+.exportCardBody {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.statusBadge {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.blockCount {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+/* Export Details */
+.exportDetails {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    min-height: 500px;
+}
+
+.selectPrompt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+    color: #9ca3af;
+    text-align: center;
+}
+
+.selectPrompt svg {
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.selectPrompt h3 {
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}
+
+.emptyState {
+    text-align: center;
+    padding: 2rem;
+    color: #9ca3af;
+}
+
+/* Details Header */
+.detailsHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.detailsHeader h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.exportTypeBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #fef3c7;
+    color: #b45309;
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.statusLarge {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+/* Info Grid */
+.infoGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.infoCard {
+    background: #f9fafb;
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+.infoCard h4 {
+    font-size: 0.75rem;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.infoCard p {
+    font-size: 0.9rem;
+    color: #1f2937;
+    font-weight: 500;
+}
+
+.country {
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
+.value {
+    font-size: 1.1rem !important;
+    color: #059669 !important;
+}
+
+/* Documents Section */
+.documentsSection {
+    margin-bottom: 1.5rem;
+}
+
+.documentsSection h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 1rem;
+}
+
+.noData {
+    text-align: center;
+    padding: 1rem;
+    color: #9ca3af;
+    font-size: 0.9rem;
+}
+
+.documentGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+}
+
+.documentCard {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: #f9fafb;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+}
+
+.docIcon {
+    color: #6b7280;
+}
+
+.docType {
+    flex: 1;
+    font-size: 0.8rem;
+    color: #1f2937;
+    text-transform: capitalize;
+}
+
+.docHash {
+    font-family: 'Monaco', monospace;
+    font-size: 0.65rem;
+    color: #6b7280;
+    background: #e5e7eb;
+    padding: 0.125rem 0.25rem;
+    border-radius: 3px;
+}
+
+.verified {
+    color: #10b981;
+}
+
+.pending {
+    color: #f59e0b;
+}
+
+/* Blockchain Section */
+.blockchainSection {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 1.5rem;
+}
+
+.blockchainHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.blockchainHeader h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.chainValid {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    background: #d1fae5;
+    color: #059669;
+    font-weight: 500;
+}
+
+.chainInvalid {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    background: #fee2e2;
+    color: #dc2626;
+    font-weight: 500;
+}
+
+/* Timeline */
+.timeline {
+    display: flex;
+    flex-direction: column;
+}
+
+.timelineItem {
+    display: flex;
+    gap: 1rem;
+}
+
+.timelineNode {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20px;
+}
+
+.nodeDot {
+    width: 12px;
+    height: 12px;
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    border-radius: 50%;
+    border: 2px solid #fffbeb;
+}
+
+.nodeLine {
+    flex: 1;
+    width: 2px;
+    background: #e5e7eb;
+    margin: 4px 0;
+}
+
+.timelineContent {
+    flex: 1;
+    padding-bottom: 1.5rem;
+}
+
+.timelineHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.25rem;
+}
+
+.eventType {
+    font-weight: 500;
+    color: #1f2937;
+    font-size: 0.9rem;
+}
+
+.blockNumber {
+    font-size: 0.75rem;
+    color: #6b7280;
+    background: #f3f4f6;
+    padding: 0.125rem 0.5rem;
+    border-radius: 4px;
+}
+
+.timelineTime {
+    display: block;
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-bottom: 0.25rem;
+}
+
+.timelineHash {
+    font-family: 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: #f59e0b;
+    background: #fffbeb;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .mainGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .exportList {
+        max-height: 300px;
+    }
+
+    .infoGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .documentGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .filters {
+        flex-direction: column;
+    }
+
+    .infoGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .documentGrid {
+        grid-template-columns: 1fr;
+    }
+}

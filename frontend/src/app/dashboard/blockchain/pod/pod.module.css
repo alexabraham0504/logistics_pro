@@ -1,0 +1,493 @@
+.container {
+    padding: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header */
+.header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.backBtn {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.backBtn:hover {
+    background: #f3f4f6;
+    color: #1f2937;
+}
+
+.headerContent {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.headerIcon {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #f3f4f6;
+    margin-bottom: 0.25rem;
+}
+
+.header p {
+    color: #9ca3af;
+    font-size: 0.9rem;
+}
+
+/* Search Section */
+.searchSection {
+    margin-bottom: 1.5rem;
+}
+
+.searchBox {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 0.5rem;
+    transition: border-color 0.2s;
+}
+
+.searchBox:focus-within {
+    border-color: #10b981;
+}
+
+.searchIcon {
+    margin-left: 1rem;
+    color: #9ca3af;
+}
+
+.searchBox input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    background: transparent;
+}
+
+.verifyBtn {
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+.verifyBtn:hover {
+    transform: scale(1.02);
+}
+
+.verifyBtn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.error {
+    color: #ef4444;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    padding-left: 1rem;
+}
+
+/* Result Card */
+.resultCard {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 2px solid;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.resultCard.valid {
+    border-color: #10b981;
+}
+
+.resultCard.invalid {
+    border-color: #ef4444;
+}
+
+.resultHeader {
+    margin-bottom: 1.5rem;
+}
+
+.resultStatus {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.statusIconValid {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.statusIconInvalid {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.resultStatus h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 0.25rem;
+}
+
+.resultStatus p {
+    color: #6b7280;
+    font-size: 0.9rem;
+}
+
+.resultGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.resultItem {
+    background: #f9fafb;
+    padding: 1rem;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.resultItem svg {
+    color: #10b981;
+    margin-bottom: 0.25rem;
+}
+
+.resultItem span {
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
+.resultItem strong {
+    font-size: 0.95rem;
+    color: #1f2937;
+}
+
+.blockchainProof {
+    background: #0a1929;
+    border-radius: 12px;
+    padding: 1.25rem;
+    color: white;
+}
+
+.blockchainProof h4 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: #60a5fa;
+}
+
+.proofGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.proofGrid>div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.proofGrid span {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+}
+
+.proofGrid code {
+    font-family: 'Monaco', monospace;
+    font-size: 0.85rem;
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+}
+
+.proofGrid code.passed {
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.2);
+}
+
+.proofGrid code.failed {
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.2);
+}
+
+/* List Section */
+.listSection {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.listHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.listHeader h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.refreshBtn {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: #f3f4f6;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.refreshBtn:hover {
+    background: #e5e7eb;
+    color: #1f2937;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    padding: 3rem;
+}
+
+.emptyState {
+    text-align: center;
+    padding: 3rem;
+    color: #9ca3af;
+}
+
+.emptyState svg {
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.emptyState h3 {
+    font-size: 1.1rem;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+}
+
+.emptyState p {
+    font-size: 0.9rem;
+}
+
+.podGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.podCard {
+    background: #f9fafb;
+    border-radius: 12px;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    transition: all 0.2s;
+}
+
+.podCard:hover {
+    border-color: #10b981;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);
+}
+
+.podHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.podToken {
+    font-family: 'Monaco', monospace;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.badge {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+.badge.verified {
+    background: #d1fae5;
+    color: #059669;
+}
+
+.podBody {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.podRow {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: #4b5563;
+}
+
+.podRow svg {
+    color: #9ca3af;
+}
+
+.hash {
+    font-family: 'Monaco', monospace;
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+.verifyCardBtn {
+    width: 100%;
+    padding: 0.5rem;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: #10b981;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+}
+
+.verifyCardBtn:hover {
+    background: #10b981;
+    border-color: #10b981;
+    color: white;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .resultGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .proofGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .podGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .searchBox {
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .searchBox input {
+        width: 100%;
+    }
+
+    .verifyBtn {
+        width: 100%;
+        justify-content: center;
+        margin-top: 0.5rem;
+    }
+
+    .resultGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .proofGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .podGrid {
+        grid-template-columns: 1fr;
+    }
+}

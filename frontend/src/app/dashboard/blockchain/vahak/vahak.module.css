@@ -1,0 +1,496 @@
+.container {
+    padding: 1.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Header */
+.header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.backBtn {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.backBtn:hover {
+    background: #f3f4f6;
+    color: #1f2937;
+}
+
+.headerContent {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.headerIcon {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #f3f4f6;
+    margin-bottom: 0.25rem;
+}
+
+.header p {
+    color: #9ca3af;
+    font-size: 0.9rem;
+}
+
+/* Main Grid */
+.mainGrid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 1.5rem;
+}
+
+/* Vehicle List */
+.vehicleList {
+    background: white;
+    border-radius: 16px;
+    padding: 1.25rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    height: fit-content;
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+
+.vehicleList h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 1rem;
+}
+
+.vehicleGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.vehicleCard {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    width: 100%;
+}
+
+.vehicleCard:hover {
+    background: #f9fafb;
+    border-color: #8b5cf6;
+}
+
+.vehicleCard.selected {
+    background: #f5f3ff;
+    border-color: #8b5cf6;
+}
+
+.vehicleIcon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.vehicleInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.vehicleNumber {
+    font-weight: 600;
+    color: #1f2937;
+    font-size: 0.9rem;
+}
+
+.vehicleType {
+    font-size: 0.75rem;
+    color: #6b7280;
+    text-transform: capitalize;
+}
+
+/* Status Icons */
+.statusVerified,
+.statusRejected,
+.statusPending {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.statusVerified {
+    background: #d1fae5;
+    color: #059669;
+}
+
+.statusRejected {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.statusPending {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.verified {
+    color: #059669;
+}
+
+.rejected {
+    color: #dc2626;
+}
+
+.pending {
+    color: #d97706;
+}
+
+/* Vahak Details */
+.vahakDetails {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    min-height: 500px;
+}
+
+.selectPrompt,
+.noOwner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+    color: #9ca3af;
+    text-align: center;
+}
+
+.selectPrompt svg,
+.noOwner svg {
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.selectPrompt h3,
+.noOwner h3 {
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}
+
+.emptyState {
+    text-align: center;
+    padding: 2rem;
+    color: #9ca3af;
+}
+
+/* Details Header */
+.detailsHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.vehicleHeaderInfo h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.vehicleTypeBadge {
+    display: inline-block;
+    background: #f3f4f6;
+    color: #6b7280;
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    text-transform: capitalize;
+}
+
+/* Owner Section */
+.ownerSection {
+    margin-bottom: 1.5rem;
+}
+
+.ownerSection h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 1rem;
+}
+
+.ownerGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.ownerCard {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: #f9fafb;
+    padding: 1rem;
+    border-radius: 12px;
+}
+
+.ownerAvatar {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.ownerMainInfo h4 {
+    font-size: 1.1rem;
+    color: #1f2937;
+    margin-bottom: 0.25rem;
+}
+
+.ownershipType {
+    font-size: 0.8rem;
+    color: #6b7280;
+    background: #e5e7eb;
+    padding: 0.125rem 0.5rem;
+    border-radius: 4px;
+    text-transform: capitalize;
+}
+
+.contactInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    background: #f9fafb;
+    padding: 1rem;
+    border-radius: 12px;
+}
+
+.contactItem {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #4b5563;
+    font-size: 0.9rem;
+}
+
+.contactItem svg {
+    color: #8b5cf6;
+}
+
+.addressCard {
+    background: #f9fafb;
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+}
+
+.addressCard h4 {
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.addressCard p {
+    color: #1f2937;
+    line-height: 1.5;
+}
+
+.sensitiveData {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.sensitiveItem {
+    background: #f9fafb;
+    padding: 1rem;
+    border-radius: 12px;
+}
+
+.sensitiveItem span {
+    display: block;
+    font-size: 0.75rem;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.sensitiveItem code {
+    font-family: 'Monaco', monospace;
+    font-size: 0.9rem;
+    color: #1f2937;
+}
+
+/* Blockchain Section */
+.blockchainSection {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 1.5rem;
+}
+
+.blockchainSection h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 1rem;
+}
+
+.blockchainGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.blockchainItem {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: #0a1929;
+    padding: 1rem;
+    border-radius: 10px;
+    color: white;
+}
+
+.blockchainItem svg {
+    color: #8b5cf6;
+}
+
+.blockchainItem div {
+    display: flex;
+    flex-direction: column;
+}
+
+.blockchainItem span {
+    font-size: 0.7rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+}
+
+.blockchainItem code {
+    font-family: 'Monaco', monospace;
+    font-size: 0.8rem;
+    color: #8b5cf6;
+}
+
+.blockchainItem strong {
+    font-size: 1rem;
+    color: white;
+}
+
+.verificationInfo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #d1fae5;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    color: #059669;
+    font-size: 0.9rem;
+}
+
+.verifiedIcon {
+    color: #059669;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .mainGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .vehicleList {
+        max-height: 300px;
+    }
+
+    .vehicleGrid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .ownerGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .sensitiveData {
+        grid-template-columns: 1fr;
+    }
+
+    .blockchainGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .vehicleGrid {
+        grid-template-columns: 1fr;
+    }
+}
