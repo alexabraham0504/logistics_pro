@@ -306,7 +306,7 @@ npm run seed
 1. Connect your GitHub repository to Vercel
 2. Set environment variables:
    ```
-   NEXT_PUBLIC_API_URL=https://your-backend-url.onrender.com
+   NEXT_PUBLIC_API_URL=https://alexiy05-logistics-backend.hf.space/api
    ```
 3. Deploy
 
