@@ -26,7 +26,7 @@
 
 ## 📋 Overview
 
-**Bharat Logistics ERP** is a comprehensive, production-ready logistics management solution that combines the reliability of traditional web technologies with the innovation of blockchain verification and artificial intelligence. The platform provides complete tools for managing every aspect of logistics operations—from order management to delivery confirmation—with immutable proof stored on the Polygon blockchain.
+**Bharat Logistics ERP** is a comprehensive, production-ready logistics management solution that combines the reliability of traditional web technologies with the innovation of blockchain verification and artificial intelligence. The platform provides complete tools for managing every aspect of logistics operations from order management to delivery confirmation with immutable proof stored on the Polygon blockchain.
 
 ### 🎯 Key Highlights
 
