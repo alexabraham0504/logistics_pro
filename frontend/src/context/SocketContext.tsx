@@ -33,8 +33,9 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
             return;
         }
 
-        // Enforce localhost:5000 for development testing
-        const socketUrl = 'http://localhost:5000';
+        // Use environment variable for socket URL (production vs development)
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+        const socketUrl = apiUrl.replace('/api', '').replace(/\/$/, '');
         console.log('📡 [SocketContext] User authenticated! Connecting to:', socketUrl);
 
         const newSocket = io(socketUrl, {

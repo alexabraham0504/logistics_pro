@@ -70,8 +70,8 @@ app.use(cors({
         // Allow requests with no origin (like mobile apps or curl requests)
         if (!origin) return callback(null, true);
 
-        // Allow any Vercel, Render, or Localhost origin dynamically
-        if (origin.includes('localhost') || origin.includes('.onrender.com') || origin.includes('.vercel.app')) {
+        // Allow any Vercel, Render, HuggingFace, or Localhost origin dynamically
+        if (origin.includes('localhost') || origin.includes('.onrender.com') || origin.includes('.vercel.app') || origin.includes('.hf.space')) {
             return callback(null, true);
         }
 
